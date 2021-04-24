@@ -5,10 +5,10 @@ const NavBar = () => (
   <header>
     <span id='logo'><i>Seat 'em</i></span>
     <nav>
-      <NavLink className='link' to='/about'>About</NavLink>
-      <NavLink className='link' to='/guests'>Guests</NavLink>
-      <NavLink className='link' to='/table'>Table</NavLink>
-      <NavLink className='link' to='/account'>Account</NavLink>
+      <NavLink to='/about'>About</NavLink>
+      <NavLink to='/guests'>Guests</NavLink>
+      <NavLink to='/table'>Table</NavLink>
+      <NavLink to='/account'>Account</NavLink>
     </nav>
   </header>
 )

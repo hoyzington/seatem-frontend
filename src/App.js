@@ -4,6 +4,11 @@ import {
   Route
 } from 'react-router-dom'
 import NavBar from './components/NavBar'
+import Home from './components/Home'
+import About from './components/About'
+import GuestForm from './components/GuestForm'
+import TableForm from './components/TableForm'
+import AccountArea from './components/AccountArea'
 import Guests from './containers/Guests'
 import SeatingArea from './containers/SeatingArea'
 import Footer from './components/Footer'
@@ -15,10 +20,11 @@ class App extends React.Component {
       <Router>
         <div className="App">
           <NavBar />
-          <Route exact path='/about' component={''} />
-          <Route exact path='/guests' component={''} />
-          <Route exact path='/table' component={''} />
-          <Route exact path='/account' component={''} />
+          <Route exact path='/' component={Home} />
+          <Route exact path='/about' component={About} />
+          <Route exact path='/guests' component={GuestForm} />
+          <Route exact path='/table' component={TableForm} />
+          <Route exact path='/account' component={AccountArea} />
           <Guests />
           <SeatingArea />
           <Footer />

@@ -1,4 +1,4 @@
-#logo, nav, #guest-area-rnd, #seating-area-rnd, #guest-area-rect, #seating-area-rect, footer {
+#logo, nav, #about-form, #guest-area-rnd, #seating-area-rnd, #guest-area-rect, #seating-area-rect, footer {
   position: fixed;
 }
 
@@ -23,6 +23,28 @@ nav {
   height: 3vh;
   padding: 3vh 0vw;
   text-align: center;
+}
+
+#about-form {
+  top: 15vh;
+  left: 25vw;
+  width: 44vw;
+  border-radius: 8px;
+  padding: 2vh 3vw;
+  z-index: 1;
+  background-color: rgba(183, 29, 255, 0.5);
+  backdrop-filter: blur(7px);
+  font-size: 3vh;
+}
+
+#exit {
+  position: absolute;
+  top: 0vh;
+  right: -3.5vh;
+  font-family: monospace;
+  font-size: 2em;
+  font-weight: 500;
+  color: rgb(55, 55, 55);
 }
 
 #guest-area-rnd {
