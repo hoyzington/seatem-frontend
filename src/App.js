@@ -1,4 +1,5 @@
 import React from 'react'
+import Footer from './components/footer'
 import './App.css'
 
 class App extends React.Component {
@@ -6,6 +7,7 @@ class App extends React.Component {
     return (
       <div className="App">
         Seat 'Em
+        <Footer />
       </div>
     )
   }

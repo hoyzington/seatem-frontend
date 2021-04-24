@@ -1,3 +1,21 @@
+header, footer {
+  position: fixed;
+  left: 30vw;
+  width: 70vw;
+  /* background-color: ; */
+  font-weight: bold;
+  /* color: ; */
+}
+
+footer {
+  bottom: 0px;
+  height: 2.5%;
+  padding: 1%;
+  text-align: center;
+
+}
+
+
 .App {
   text-align: center;
 }
