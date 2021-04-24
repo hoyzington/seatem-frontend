@@ -1,50 +1,66 @@
-#guest-detail, #logo, nav, #work-area, footer {
+#logo, nav, #guest-area-rnd, #seating-area-rnd, #guest-area-rect, #seating-area-rect, footer {
   position: fixed;
 }
 
 #logo, nav, footer {
-  background-color: lightseagreen;
-}
-
-#guest-detail {
-  top: 0px;
-  left: 0px;
-  width: 30vw;
-  height: 100vh;
-  background-color: lightskyblue;
+  background-color: rgba(128, 128, 128, 0.25);
 }
 
 #logo {
-  left: 30vw;
-  width: 20vw;
+  top: 0px;
+  left: 0px;
+  width: 15vw;
   height: 9vh;
-  padding: 0vh 3vw;
+  padding: 0vh 2vw;
   font-family: cursive;
   font-size: 5.5vh;
 }
 
 nav {
   top: 0px;
-  left: 50vw;
-  width: 50vw;
+  left: 19vw;
+  width: 85vw;
   height: 3vh;
   padding: 3vh 0vw;
   text-align: center;
 }
 
-#work-area {
+#guest-area-rnd {
   top: 9vh;
+  left: 0px;
+  width: 40vw;
   height: 84.5vh;
-  background-color: lightgray;
+  background-color: rgba(128, 128, 128, 0.75);
 }
 
-#work-area, footer {
-  left: 30vw;
-  width: 70vw;
+#guest-area-rect {
+  top: 9vh;
+  left: 0px;
+  width: 100vw;
+  height: 21vh;
+  background-color: rgba(128, 128, 128, 0.75);
+}
+
+#seating-area-rnd {
+  top: 9vh;
+  left: 40vw;
+  width: 60vw;
+  height: 84.5vh;
+  background-color: rgba(128, 128, 128, 0.5);
+}
+
+#seating-area-rect {
+  top: 30vh;
+  left: 0px;
+  width: 100vw;
+  height: 63.5vh;
+  background-color: rgba(128, 128, 128, 0.5);
 }
 
 footer {
   bottom: 0px;
+  left: 0px;
+  width: 100vw;
   height: 2.5vh;
   padding: 2vh 0vw;
   text-align: center;
