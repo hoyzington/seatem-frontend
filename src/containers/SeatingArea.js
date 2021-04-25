@@ -6,7 +6,7 @@ class SeatingArea extends React.Component {
     return (
       <>
         <div id='seating-area-rnd'></div>
-        <div id='seating-area-rect'></div>
+        {/* <div id='seating-area-rect'></div> */}
         {/* <GuestInfo /> */}
       </>
     )

@@ -1,28 +1,36 @@
-#logo, nav, #about-form, #guest-area-rnd, #seating-area-rnd, #guest-area-rect, #seating-area-rect, footer {
+#logo-bar, #menu-bar, #about-form, #guest-area-rnd, #seating-area-rnd, #guest-area-rect, #seating-area-rect, footer {
   position: fixed;
 }
 
-#logo, nav, footer {
+#logo-bar, #menu-bar, footer {
   background-color: rgba(128, 128, 128, 0.25);
 }
 
-#logo {
+#logo-bar {
+  display: flex;
   top: 0px;
   left: 0px;
-  width: 15vw;
+  width: 27vw;
   height: 9vh;
-  padding: 0vh 2vw;
+  padding-left: 3vw;
+  align-items: center;
+}
+
+#logo {
+  margin-right: 4vw;
+  margin-bottom: .5vh;
   font-family: cursive;
   font-size: 5.5vh;
 }
 
-nav {
+#menu-bar {
+  /* display: flex; */
   top: 0px;
-  left: 19vw;
-  width: 85vw;
+  left: 30vw;
+  width: 64vw;
   height: 3vh;
-  padding: 3vh 0vw;
-  text-align: center;
+  padding: 3vh 3vw;
+  text-align: right;
 }
 
 .card {
@@ -70,35 +78,57 @@ nav {
 }
 
 #guest-area-rnd {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
   top: 9vh;
   left: 0px;
-  width: 40vw;
-  height: 84.5vh;
+  height: 72.5vh;
+  width: 18vw;
+  padding: 6vh 6vw;
   background-color: rgba(128, 128, 128, 0.75);
 }
 
 #guest-area-rect {
+  display: grid;
+  grid-auto-flow: row;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  justify-items: flex-start;
   top: 9vh;
   left: 0px;
-  width: 100vw;
-  height: 21vh;
+  height: 26vh;
+  width: 90vw;
+  padding: 1.5vh 5vw;
   background-color: rgba(128, 128, 128, 0.75);
 }
 
 #seating-area-rnd {
   top: 9vh;
-  left: 40vw;
-  width: 60vw;
+  left: 30vw;
+  width: 70vw;
   height: 84.5vh;
   background-color: rgba(128, 128, 128, 0.5);
 }
 
 #seating-area-rect {
-  top: 30vh;
+  top: 338vh;
   left: 0px;
   width: 100vw;
   height: 63.5vh;
   background-color: rgba(128, 128, 128, 0.5);
+}
+
+.guest {
+  display: flex;
+  height: 8vh;
+  width: 8vh;
+  margin: 2.5vh 1vw;
+  border-radius: 4vh;
+  align-items: center;
+  justify-content: center;
+  background-color: darkseagreen;
 }
 
 footer {
