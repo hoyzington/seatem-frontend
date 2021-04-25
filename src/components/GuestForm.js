@@ -4,7 +4,7 @@ import AboutOrFormArea from './AboutOrFormArea'
 const content = <form >Guest Form</form>
 
 const GuestForm = () => (
-  <AboutOrFormArea content={content} />
+  <AboutOrFormArea id='about-form' class='card' content={content} />
 )
 
 export default GuestForm

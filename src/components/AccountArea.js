@@ -4,7 +4,7 @@ import AboutOrFormArea from './AboutOrFormArea'
 const content = <form >Account Area</form>
 
 const AccountArea = () => (
-  <AboutOrFormArea content={content} />
+  <AboutOrFormArea id='about-form' class='card' content={content} />
 )
 
 export default AccountArea

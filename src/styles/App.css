@@ -25,26 +25,48 @@ nav {
   text-align: center;
 }
 
-#about-form {
-  top: 15vh;
-  left: 25vw;
-  width: 44vw;
+.card {
+  position: fixed;
   border-radius: 8px;
-  padding: 2vh 3vw;
   z-index: 1;
   background-color: rgba(183, 29, 255, 0.5);
   backdrop-filter: blur(7px);
   font-size: 3vh;
 }
 
-#exit {
-  position: absolute;
-  top: 0vh;
-  right: -3.5vh;
-  font-family: monospace;
-  font-size: 2em;
-  font-weight: 500;
-  color: rgb(55, 55, 55);
+#about-form {
+  top: 15vh;
+  left: 25vw;
+  width: 44vw;
+  padding: 2vh 3vw;
+}
+
+.guest-info {
+  padding: 0vh 2.5vw;
+}
+
+#guest-info-1-rnd {
+  top: 15vh;
+  left: 30vw;
+  width: 28vw;
+}
+
+#guest-info-2-rnd {
+  top: 15vh;
+  left: 65vw;
+  width: 28vw;
+}
+
+#guest-info-1-rect {
+  top: 30vh;
+  left: 9vw;
+  width: 35vw;
+}
+
+#guest-info-2-rect {
+  top: 30vh;
+  left: 51vw;
+  width: 35vw;
 }
 
 #guest-area-rnd {

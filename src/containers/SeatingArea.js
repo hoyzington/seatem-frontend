@@ -1,4 +1,5 @@
 import React from 'react'
+// import GuestInfo from '../components/GuestInfo'
 
 class SeatingArea extends React.Component {
   render() {
@@ -6,6 +7,7 @@ class SeatingArea extends React.Component {
       <>
         <div id='seating-area-rnd'></div>
         <div id='seating-area-rect'></div>
+        {/* <GuestInfo /> */}
       </>
     )
   }

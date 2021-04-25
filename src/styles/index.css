@@ -26,3 +26,13 @@ a:link, a:active, a:visited {
 a:hover {
   color: #484848;
 }
+
+#exit {
+  position: absolute;
+  top: 0vh;
+  right: -3.5vh;
+  font-family: monospace;
+  font-size: 2em;
+  font-weight: 500;
+  color: rgb(55, 55, 55);
+}
