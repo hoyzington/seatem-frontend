@@ -1,13 +1,13 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 
-const guest = 'M G'
 const url = '/guests/' + '1'
+const initials = 'M G'
 
 const Guest = () => (
   <div className='guest'>
     <NavLink to={url}>
-      <div>{guest}</div>
+      <div>{initials}</div>
     </NavLink>
   </div>
 )
