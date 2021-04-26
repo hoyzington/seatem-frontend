@@ -152,11 +152,12 @@ footer, #logo-bar, #menu-bar {
 
 #table {
   display: flex;
+  flex-direction: column;
   top: 24vh;
   left: 50vw;
-  height: 380px;
-  width: 380px;
-  border-radius: 190px;
+  height: 378px;
+  width: 378px;
+  border-radius: 189px;
   font-size: 2.75vh;
   align-items: center;
   justify-content: center;

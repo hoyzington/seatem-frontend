@@ -5,11 +5,9 @@ const url = '/guests/' + '1'
 const initials = 'M G'
 
 const Guest = () => (
-  <div className='guest'>
-    <NavLink to={url}>
-      <div>{initials}</div>
-    </NavLink>
-  </div>
+  <NavLink to={url}>
+    <div className='guest'>{initials}</div>
+  </NavLink>
 )
 
 export default Guest

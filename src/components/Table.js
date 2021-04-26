@@ -1,9 +1,12 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 
-const Table = props => (
-  <NavLink id='table' to='/table'>
-    <div>{props.size}</div>
+const Table = ({ size }) => (
+  <NavLink to='/table'>
+    <div id='table'>
+      <span>Table Size:</span><br/>
+      <span>{size}</span>
+    </div>
   </NavLink>
 )
 

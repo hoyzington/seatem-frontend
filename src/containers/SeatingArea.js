@@ -12,8 +12,6 @@ class SeatingArea extends React.Component {
       <>
         <div id='seating-area-rnd'>
           <Table size={size} />
-        </div>
-        <div id='seating-area-rnd'>
           <Chair a={a} b={b} />
           {/* <Chair a={a} b={b} />
           <Chair a={a} b={b} />
