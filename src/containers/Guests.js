@@ -4,7 +4,7 @@ import Guest from '../components/Guest'
 class Guests extends React.Component {
   render() {
     return (
-      <div id='guest-area-rnd'>
+      <div id='guest-area-rnd' className='guest-area'>
         <Guest />
         <Guest />
         <Guest />
