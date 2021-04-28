@@ -9,7 +9,7 @@ import About from './components/About'
 import GuestForm from './components/GuestForm'
 import TableForm from './components/TableForm'
 import AccountArea from './components/AccountArea'
-import Guests from './containers/Guests'
+import GuestArea from './containers/GuestArea'
 import GuestInfo from './components/GuestInfo'
 import EventArea from './components/EventArea'
 import Footer from './components/Footer'
@@ -19,7 +19,7 @@ class App extends React.Component {
   render() {
     return (
       <Router>
-        <div className="App">
+        <>
           <NavBar />
           <Route exact path='/' component={Home} />
           <Route exact path='/about' component={About} />
@@ -27,10 +27,10 @@ class App extends React.Component {
           <Route exact path='/guests/1' component={GuestInfo} />
           <Route exact path='/table' component={TableForm} />
           <Route exact path='/account' component={AccountArea} />
-          <Guests />
+          <GuestArea />
           <EventArea />
           <Footer />
-        </div>
+        </>
       </Router>
     )
   }

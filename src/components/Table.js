@@ -1,11 +1,11 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 
-const Table = ({ size }) => (
+const Table = ({ id, size }) => (
   <NavLink to='/table'>
-    <div id='table'>
-      <span>Table Size:</span><br/>
-      <span>{size}</span>
+    <div id={id}>
+      <span>Table Size: {size} ft</span>
+      <span>(Recommended)</span>
     </div>
   </NavLink>
 )

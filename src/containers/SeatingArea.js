@@ -91,18 +91,56 @@ class SeatingArea extends React.Component {
     {id: '12', x: '208', y: '416'},
   ]
 
-  buildChairs = (setup) => (
+  peopleQty = 10
+  tableType = 'rectangle'
+
+  buildChairsRnd = (setup) => (
     setup.map(chair => (
       <Chair key={chair.id} x={chair.x} y={chair.y} />
     ))
   )
 
+  buildChairsRect = (qty) => {
+    qty = (qty %2 == 0 ? qty : qty + 1)
+    const chr = 66, buf = 4, spc = 11, sect = 88
+    const num = (qty - 2) / 2
+    const total = (chr + (buf * 2)) + (num * sect)
+    const chairs = []
+    chairs.push(<Chair id='1' x='0' y='103' />)
+    let id = 2, x = 81
+    for (let i = num; i > 0; i--) {
+      chairs.push(<Chair id={id} x={x} y='0' />)
+      chairs.push(<Chair id={id + 1} x={x} y='206' />)
+      id += 2
+      x += 88
+    }
+    chairs.push(<Chair id={qty} x={total} y='103' />)
+    return chairs
+  }
+
+  nominalTableSize = (type, qty) => {
+    switch (type) {
+      case 'rectangle':
+        return qty - (qty %2 == 0 ? 2 : 1)
+    
+      default:
+        return '6'
+    }
+  }
+
+  calcSeatingAreaWidth = (qty) => (
+    (((qty - (qty %2 == 0 ? 2 : 1)) / 2) * 88) + 140
+  )
+
   render() {
-    const size = '6 Feet | 72 Inches | 1.8 Meters'
+    const id = 'table-rect'
+    const size = this.nominalTableSize(this.tableType, this.peopleQty)
+    const amt = this.calcSeatingAreaWidth(this.peopleQty)
     return (
-      <div id='seating-area-rnd'>
-        <Table size={size} />
-        {this.buildChairs(this.rnd7)}
+      <div id='seating-area-rect' style={{width: amt + 'px'}}>
+        <Table id={id} size={size} />
+        {this.buildChairsRect(this.peopleQty)}
+        {/* {this.buildChairsRnd(rnd12)} */}
       </div>
     )
   }

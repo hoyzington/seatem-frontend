@@ -63,7 +63,7 @@ footer, #logo-bar, #menu-bar {
   box-shadow: 2px 2px 9px rgb(130, 130, 130);
   border-radius: 8px;
   z-index: 1;
-  background-color: rgba(27, 133, 233, 0.45);
+  background-color: rgba(38, 139, 233, 0.6);
   backdrop-filter: blur(6px);
   font-size: 3vh;
 }
@@ -126,16 +126,16 @@ footer, #logo-bar, #menu-bar {
   grid-auto-flow: row;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr;
-  height: 26vh;
-  width: 90vw;
-  padding: 1.5vh 5vw;
+  height: 22vh;
+  width: 92vw;
+  padding: 4vh 4vw 3vh 4vw;
 }
 
 #event-area-rnd, #event-area-rect {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: rgba(128, 128, 128, 0.4);
+  /* background-color: rgba(128, 128, 128, 0.4); */
 }
 
 #event-area-rnd {
@@ -146,63 +146,73 @@ footer, #logo-bar, #menu-bar {
 }
 
 #event-area-rect {
-  top: 338vh;
+  top: 36.1vh;
   left: 0px;
-  height: 63.5vh;
+  height: 58.9vh;
   width: 100vw;
+}
+
+#seating-area-rnd, #seating-area-rect {
+  position: absolute;
+  /* background-color: rgba(128, 128, 128, 0.5); */
 }
 
 #seating-area-rnd {
-  position: absolute;
   height: 495px;
   width: 495px;
-  background-color: rgba(128, 128, 128, 0.5);
 }
 
 #seating-area-rect {
-  height: 63.5vh;
-  width: 100vw;
-  background-color: rgba(128, 128, 128, 0.5);
+  height: 272px;
 }
 
 
 /* ITEMS */
 
-#table, .chair {
+#table-rnd, #table-rect, .chair {
+  display: flex;
   position: absolute;
+  align-items: center;
+  justify-content: center;
 }
 
-#table {
-  display: flex;
+#table-rnd {
   flex-direction: column;
   top: 82.5px;
   left: 82.5px;
-  height: 330px;
-  width: 330px;
+  height: 264px;
+  width: 264px;
   border-radius: 167px;
   font-size: 2.75vh;
-  align-items: center;
-  justify-content: center;
+  background-color: white;
+  box-shadow: 1px 1px 3.5px rgb(130, 130, 130);
+}
+
+#table-rect {
+  flex-direction: column;
+  top: 70px;
+  left: 70px;
+  height: 132px;
+  width: 352px;
+  border-radius: 9px;
+  font-size: 2.75vh;
   background-color: white;
   box-shadow: 1px 1px 3.5px rgb(130, 130, 130);
 }
 
 .chair {
-  display: flex;
-  height: 78px;
-  width: 78px;
+  height: 66px;
+  width: 66px;
   border-radius: 39px;
-  align-items: center;
-  justify-content: center;
   background-color: tan;
   box-shadow: 1px 1px 4px rgb(130, 130, 130);
 }
 
 .guest {
   display: flex;
-  height: 68px;
-  width: 68px;
-  margin: 1vh 0vw;
+  height: 58px;
+  width: 58px;
+  margin: 1vh 1vw;
   border-radius: 33px;
   align-items: center;
   justify-content: center;

@@ -1,10 +1,10 @@
 import React from 'react'
 import Guest from '../components/Guest'
 
-class Guests extends React.Component {
+class GuestArea extends React.Component {
   render() {
     return (
-      <div id='guest-area-rnd' className='guest-area'>
+      <div id='guest-area-rect' className='guest-area'>
         <Guest />
         <Guest />
         <Guest />
@@ -14,7 +14,6 @@ class Guests extends React.Component {
         <Guest />
         <Guest />
         <Guest />
-        {/* <Guest />
         <Guest />
         <Guest />
         <Guest />
@@ -22,10 +21,11 @@ class Guests extends React.Component {
         <Guest />
         <Guest />
         <Guest />
-        <Guest /> */}
+        <Guest />
+        <Guest />
       </div>
     )
   }
 }
 
-export default Guests
+export default GuestArea
