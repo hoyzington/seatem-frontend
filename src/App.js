@@ -11,7 +11,7 @@ import TableForm from './components/TableForm'
 import AccountArea from './components/AccountArea'
 import Guests from './containers/Guests'
 import GuestInfo from './components/GuestInfo'
-import SeatingArea from './containers/SeatingArea'
+import EventArea from './components/EventArea'
 import Footer from './components/Footer'
 import './styles/App.css'
 
@@ -28,7 +28,7 @@ class App extends React.Component {
           <Route exact path='/table' component={TableForm} />
           <Route exact path='/account' component={AccountArea} />
           <Guests />
-          <SeatingArea />
+          <EventArea />
           <Footer />
         </div>
       </Router>

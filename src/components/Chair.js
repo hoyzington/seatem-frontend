@@ -1,14 +1,14 @@
 import React from 'react'
-import Guest from './Guest'
+// import Guest from './Guest'
 
-const Chair = ({ a, b }) => (
+const Chair = ({ x, y }) => (
   <div
     className='chair'
     style={{
-      top: `${a}vh`,
-      left: `${b}vw`
+      top: `${y}px`,
+      left: `${x}px`
     }}>
-    <Guest />
+    {/* <Guest /> */}
   </div>
 )
 
