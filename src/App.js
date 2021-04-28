@@ -16,6 +16,9 @@ import Footer from './components/Footer'
 import './styles/App.css'
 
 class App extends React.Component {
+
+  eventData = {type: 'rect', qty: 26}
+
   render() {
     return (
       <Router>
@@ -28,7 +31,7 @@ class App extends React.Component {
           <Route exact path='/table' component={TableForm} />
           <Route exact path='/account' component={AccountArea} />
           <GuestArea />
-          <EventArea />
+          <EventArea data={this.eventData}/>
           <Footer />
         </>
       </Router>

@@ -106,7 +106,7 @@ footer, #logo-bar, #menu-bar {
 
 /* PAGE ZONES */
 
-.guest-area {
+#guest-area-rnd, #guest-area-rect {
   display: grid;
   top: 7.1vh;
   left: 0px;
@@ -169,55 +169,48 @@ footer, #logo-bar, #menu-bar {
 
 /* ITEMS */
 
-#table-rnd, #table-rect, .chair {
+#table-rnd, #table-rect, .chair, .guest {
   display: flex;
   position: absolute;
   align-items: center;
   justify-content: center;
+  box-shadow: 1px 1px 4px rgb(130, 130, 130);
+}
+
+#table-rnd, #table-rect {
+  flex-direction: column;
+  font-size: 2.5vh;
+  background-color: white;
 }
 
 #table-rnd {
-  flex-direction: column;
   top: 82.5px;
   left: 82.5px;
   height: 264px;
-  width: 264px;
   border-radius: 167px;
-  font-size: 2.75vh;
-  background-color: white;
-  box-shadow: 1px 1px 3.5px rgb(130, 130, 130);
 }
 
 #table-rect {
-  flex-direction: column;
   top: 70px;
   left: 70px;
   height: 132px;
-  width: 352px;
   border-radius: 9px;
-  font-size: 2.75vh;
-  background-color: white;
-  box-shadow: 1px 1px 3.5px rgb(130, 130, 130);
 }
 
 .chair {
   height: 66px;
   width: 66px;
   border-radius: 39px;
-  background-color: tan;
-  box-shadow: 1px 1px 4px rgb(130, 130, 130);
+  background-color: rgb(150, 123, 105);
 }
 
 .guest {
-  display: flex;
   height: 58px;
   width: 58px;
   margin: 1vh 1vw;
   border-radius: 33px;
-  align-items: center;
-  justify-content: center;
   background-color: darkseagreen;
-  box-shadow: 1px 1px 4px rgb(130, 130, 130);
+  font-size: 2.5vh;
 }
 
 
