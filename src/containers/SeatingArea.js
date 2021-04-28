@@ -1,6 +1,6 @@
 import React from 'react'
 import Chair from '../components/Chair'
-import Table from '../components/Table'
+// import Table from '../components/Table'
 
 class SeatingArea extends React.Component {
 
@@ -177,13 +177,13 @@ class SeatingArea extends React.Component {
     const type = this.props.tableType,
           qty = this.props.peopleQty,
           areaId = 'seating-area-' + type,
-          areaWidth = this.calcAreaWidth(qty),
-          tId = 'table-' + type,
-          tSize = this.recommendedTableSize(type, qty),
-          tStyle = this.tableStyle(type, qty)
+          areaWidth = this.calcAreaWidth(qty)
+          // tId = 'table-' + type,
+          // tSize = this.recommendedTableSize(type, qty),
+          // tStyle = this.tableStyle(type, qty)
     return (
       <div id={areaId} style={areaWidth}>
-        <Table id={tId} size={tSize} style={tStyle}/>
+        {/* <Table id={tId} size={tSize} style={tStyle}/> */}
         {this.buildChairs(type, qty)}
       </div>
     )

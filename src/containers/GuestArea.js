@@ -3,7 +3,7 @@ import Guest from '../components/Guest'
 
 class GuestArea extends React.Component {
 
-  tableType = 'rect'
+  tableType = 'rnd'
 
   render() {
     return (
@@ -20,6 +20,7 @@ class GuestArea extends React.Component {
         <Guest />
         <Guest />
         <Guest />
+        {/* <Guest />
         <Guest />
         <Guest />
         <Guest />
@@ -32,8 +33,7 @@ class GuestArea extends React.Component {
         <Guest />
         <Guest />
         <Guest />
-        <Guest />
-        <Guest />
+        <Guest /> */}
       </div>
     )
   }

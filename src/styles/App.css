@@ -117,9 +117,9 @@ footer, #logo-bar, #menu-bar {
   grid-auto-flow: column;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
-  height: 76.9vh;
-  width: 16vw;
-  padding: 5.5vh 4vw 5vh 6vw;
+  height: 75.4vh;
+  width: 15vw;
+  padding: 7.5vh 5vw 5vh 6vw;
 }
 
 #guest-area-rect {
@@ -135,7 +135,7 @@ footer, #logo-bar, #menu-bar {
   display: flex;
   align-items: center;
   justify-content: center;
-  /* background-color: rgba(128, 128, 128, 0.4); */
+  background-color: rgba(128, 128, 128, 0.4);
 }
 
 #event-area-rnd {
@@ -154,7 +154,7 @@ footer, #logo-bar, #menu-bar {
 
 #seating-area-rnd, #seating-area-rect {
   position: absolute;
-  /* background-color: rgba(128, 128, 128, 0.5); */
+  background-color: rgba(128, 128, 128, 0.5);
 }
 
 #seating-area-rnd {
@@ -171,10 +171,13 @@ footer, #logo-bar, #menu-bar {
 
 #table-rnd, #table-rect, .chair, .guest {
   display: flex;
-  position: absolute;
   align-items: center;
   justify-content: center;
   box-shadow: 1px 1px 4px rgb(130, 130, 130);
+}
+
+#table-rnd, #table-rect, .chair {
+  position: absolute;
 }
 
 #table-rnd, #table-rect {
@@ -210,7 +213,6 @@ footer, #logo-bar, #menu-bar {
   margin: 1vh 1vw;
   border-radius: 33px;
   background-color: darkseagreen;
-  font-size: 2.5vh;
 }
 
 

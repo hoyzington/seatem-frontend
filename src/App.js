@@ -17,7 +17,7 @@ import './styles/App.css'
 
 class App extends React.Component {
 
-  eventData = {type: 'rect', qty: 26}
+  eventData = {type: 'rnd', qty: 12}
 
   render() {
     return (
