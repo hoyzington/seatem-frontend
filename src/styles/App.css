@@ -158,10 +158,8 @@ footer, #logo-bar, #menu-bar {
 }
 
 #seating-area-rnd {
-  height: 495px;
-  width: 495px;
+  height: 462px;
 }
-
 #seating-area-rect {
   height: 272px;
 }
@@ -182,14 +180,15 @@ footer, #logo-bar, #menu-bar {
 
 #table-rnd, #table-rect {
   flex-direction: column;
-  font-size: 2.5vh;
+  font-size: large;
+  line-height: 1.75em;
   background-color: white;
 }
 
 #table-rnd {
-  top: 82.5px;
-  left: 82.5px;
-  height: 264px;
+  top: 70px;
+  left: 70px;
+  height: 322px;
   border-radius: 167px;
 }
 
