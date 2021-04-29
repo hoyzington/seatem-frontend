@@ -3,7 +3,7 @@ import Guest from '../components/Guest'
 
 class GuestArea extends React.Component {
 
-  tableType = 'rect'
+  tableType = this.props.data.type
 
   render() {
     return (

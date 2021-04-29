@@ -17,7 +17,7 @@ import './styles/App.css'
 
 class App extends React.Component {
 
-  eventData = {type: 'rect', qty: 13}
+  eventData = {type: 'rnd', qty: 12}
 
   render() {
     return (
@@ -30,7 +30,7 @@ class App extends React.Component {
           <Route exact path='/guests/1' component={GuestInfo} />
           <Route exact path='/table' component={TableForm} />
           <Route exact path='/account' component={AccountArea} />
-          <GuestArea />
+          <GuestArea data={this.eventData}/>
           <EventArea data={this.eventData}/>
           <Footer />
         </>

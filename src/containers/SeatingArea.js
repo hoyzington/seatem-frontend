@@ -5,7 +5,7 @@ import Table from '../components/Table'
 class SeatingArea extends React.Component {
 
   recommendedTableSize = (tableType, qty) => {
-    if (tableType == 'rnd') {
+    if (tableType === 'rnd') {
       switch (qty) {
         case 4:
           return '2.5-3.5 ft | 30-42 in | .76-1.07 m'
@@ -29,7 +29,7 @@ class SeatingArea extends React.Component {
           return ''
       }
     }
-    const feet = qty - (qty %2 == 0 ? 2 : 1)
+    const feet = qty - (qty %2 === 0 ? 2 : 1)
     const meters = Math.round(feet * .3048 * 100) / 100
     return `${feet} ft | ${feet * 12} in | ${meters} m`
   }
@@ -37,7 +37,7 @@ class SeatingArea extends React.Component {
   calcTableWidth = (type, qty) => {
     let width = 322
     if (type === 'rect') {
-      width = ((qty - (qty %2 == 0 ? 2 : 1)) / 2) * 88
+      width = ((qty - (qty %2 === 0 ? 2 : 1)) / 2) * 88
     }
     return width
   }
@@ -167,7 +167,7 @@ class SeatingArea extends React.Component {
   }
 
   rectangleTableChairs = (qty) => {
-    qty = (qty %2 == 0 ? qty : qty + 1)
+    qty = (qty %2 === 0 ? qty : qty + 1)
     const chr = 66, buf = 4, sect = 88,
           num = (qty - 2) / 2,
           total = (chr + (buf * 2)) + (num * sect),
