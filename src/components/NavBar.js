@@ -9,8 +9,8 @@ const NavBar = () => (
         <NavLink className='navbar' to='/about'>About</NavLink>
       </span>
       <span id='menu-bar'>
-        <NavLink className='navbar' to='/guests'>Guests</NavLink>
-        <NavLink className='navbar' to='/table'>Table</NavLink>
+        <NavLink className='navbar' to='/event-form'>Event</NavLink>
+        {/* <NavLink className='navbar' to='/guests'>Guests</NavLink> */}
         <NavLink className='navbar' to='/account'>Account</NavLink>
       </span>
     </nav>

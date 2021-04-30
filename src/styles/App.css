@@ -63,12 +63,12 @@ footer, #logo-bar, #menu-bar {
   box-shadow: 2px 2px 9px rgb(130, 130, 130);
   border-radius: 8px;
   z-index: 1;
-  background-color: rgba(38, 139, 233, 0.6);
+  background-color: rgba(50, 125, 205, 0.6);
   backdrop-filter: blur(6px);
   font-size: 3vh;
 }
 
-#about-form {
+#form-or-about {
   top: 15vh;
   left: 25vw;
   width: 44vw;
@@ -135,7 +135,7 @@ footer, #logo-bar, #menu-bar {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: rgba(128, 128, 128, 0.4);
+  /* background-color: rgba(128, 128, 128, 0.4); */
 }
 
 #event-area-rnd {
@@ -154,7 +154,7 @@ footer, #logo-bar, #menu-bar {
 
 #seating-area-rnd, #seating-area-rect {
   position: absolute;
-  background-color: rgba(128, 128, 128, 0.5);
+  /* background-color: rgba(128, 128, 128, 0.5); */
 }
 
 #seating-area-rnd {

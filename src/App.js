@@ -6,8 +6,8 @@ import {
 import NavBar from './components/NavBar'
 import Home from './components/Home'
 import About from './components/About'
-import GuestForm from './components/GuestForm'
-import TableForm from './components/TableForm'
+// import GuestForm from './components/GuestForm'
+import EventForm from './components/EventForm'
 import AccountArea from './components/AccountArea'
 import GuestArea from './containers/GuestArea'
 import GuestInfo from './components/GuestInfo'
@@ -26,9 +26,9 @@ class App extends React.Component {
           <NavBar />
           <Route exact path='/' component={Home} />
           <Route exact path='/about' component={About} />
-          <Route exact path='/guests' component={GuestForm} />
+          {/* <Route exact path='/guests' component={GuestForm} /> */}
           <Route exact path='/guests/1' component={GuestInfo} />
-          <Route exact path='/table' component={TableForm} />
+          <Route exact path='/event-form' component={EventForm} />
           <Route exact path='/account' component={AccountArea} />
           <GuestArea data={this.eventData}/>
           <EventArea data={this.eventData}/>

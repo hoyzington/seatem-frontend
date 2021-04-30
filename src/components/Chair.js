@@ -1,5 +1,5 @@
 import React from 'react'
-import Guest from './Guest'
+// import Guest from './Guest'
 
 const Chair = ({ x, y }) => (
   <div
@@ -8,7 +8,7 @@ const Chair = ({ x, y }) => (
       top: `${y}px`,
       left: `${x}px`
     }}>
-    <Guest />
+    {/* <Guest /> */}
   </div>
 )
 
