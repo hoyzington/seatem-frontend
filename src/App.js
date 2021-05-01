@@ -18,12 +18,13 @@ import './styles/App.css'
 class App extends React.Component {
 
   eventData = {type: 'rnd', qty: 12}
+  title = "John's Birthday Bash"
 
   render() {
     return (
       <Router>
         <>
-          <NavBar />
+          <NavBar title={this.title}/>
           <Route exact path='/' component={Home} />
           <Route exact path='/about' component={About} />
           {/* <Route exact path='/guests' component={GuestForm} /> */}

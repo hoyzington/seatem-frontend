@@ -2,14 +2,24 @@ import React from 'react'
 import { NavLink } from 'react-router-dom'
 
 class GuestForm extends React.Component {
-  state = { first: '', middle: null, last: null }
+  state = { first: '', mid: null, last: null }
 
   handleChange = e => {
     this.setState({ [e.target.name]: e.target.value })
   }
 
+  buildFullName = () => {
+    const { first, mid, last } = this.state
+    const f = first
+    const m = mid ? ' ' + mid : ''
+    const l = last ? ' ' + last : ''
+    return f + m + l
+  }
+
   handleSubmit = e => {
     e.preventDefault()
+    const name = this.buildFullName()
+    console.log(name)
   }
 
   render() {
@@ -24,7 +34,7 @@ class GuestForm extends React.Component {
               type="text"
               name='first'
               onChange={this.handleChange}
-              value={this.state.name}
+              value={this.state.first}
               maxLength='12'
               autoFocus
               required/>
@@ -33,21 +43,19 @@ class GuestForm extends React.Component {
             Middle Name&nbsp;
             <input
               type="text"
-              name='first'
+              name='mid'
               onChange={this.handleChange}
-              value={this.state.name}
-              maxLength='12'
-              autoFocus/>
+              value={this.state.mid}
+              maxLength='12'/>
           </label>&nbsp;<i>optional</i>
           <label>
             Last Name&nbsp;
             <input
               type="text"
-              name='first'
+              name='last'
               onChange={this.handleChange}
-              value={this.state.name}
-              maxLength='12'
-              autoFocus/>
+              value={this.state.last}
+              maxLength='12'/>
           </label>&nbsp;<i>optional</i>
           <input type="submit"/>
         </form>

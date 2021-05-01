@@ -1,4 +1,4 @@
-#logo-bar, #menu-bar, .card, #about-form, #guest-area-rnd, #guest-area-rect, #event-area-rnd, #event-area-rect, footer {
+#logo-bar, #title-bar, #menu-bar, .card, #about-form, #guest-area-rnd, #guest-area-rect, #event-area-rnd, #event-area-rect, footer {
   position: fixed;
 }
 
@@ -25,31 +25,40 @@ footer {
   box-shadow: 0px -1px 6px rgb(130, 130, 130);
 }
 
-footer, #logo-bar, #menu-bar {
+footer, #logo-bar, #title-bar, #menu-bar {
   display: flex;
   align-items: center;
 }
 
-#logo-bar, #menu-bar {
+#logo-bar, #title-bar, #menu-bar {
   top: 0px;
   height: 7vh;
+  /* background-color: rgba(128, 128, 128, 0.5); */
 }
 
 #logo-bar {
   left: 0px;
-  width: 27vw;
+  width: 24vw;
   padding-left: 3vw;
 }
 
+#title-bar {
+  left: 27vw;
+  width: 47vw;
+  font-family: cursive;
+  font-size: 1.7em;
+  justify-content: center;
+}
+
 #menu-bar {
-  left: 30vw;
-  width: 68vw;
+  right: 0px;
+  width: 24vw;
   padding-right: 2vw;
   justify-content: flex-end;
 }
 
 #logo {
-  margin: .25vh 4.5vw 0vh 0vw;
+  margin: .25vh 2vw 0vh 0vw;
   margin-bottom: .5vh;
   font-family: cursive;
   font-size: 5.5vh;
