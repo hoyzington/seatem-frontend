@@ -1,11 +1,9 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
-// import AboutOrFormArea from './AboutOrFormArea'
-
-// const content = <form >Event Form</form>
+import GuestForm from '../components/GuestForm'
 
 class EventForm extends React.Component {
-  state = { name: '', table: '' }
+  state = { name: '', table: '', guests: [] }
 
   handleChange = e => {
     this.setState({ [e.target.name]: e.target.value })
@@ -13,7 +11,8 @@ class EventForm extends React.Component {
 
   handleSubmit = e => {
     e.preventDefault()
-    console.log(this.state)
+    const max = this.state.table === 'rnd' ? '12' : '26'
+    return (<GuestForm maxGuests={max} />)
   }
 
   render() {
@@ -29,7 +28,8 @@ class EventForm extends React.Component {
               onChange={this.handleChange}
               value={this.state.name}
               maxLength='30'
-              autoFocus/>
+              autoFocus
+              required/>
             <br/>
           </label>
           <label>Table </label>
@@ -38,7 +38,8 @@ class EventForm extends React.Component {
               type="radio"
               name='table'
               value='rect'
-              onChange={this.handleChange}/>
+              onChange={this.handleChange}
+              checked/>
             Rectangular&nbsp;
           </label>
           <label>
@@ -55,9 +56,5 @@ class EventForm extends React.Component {
     )
   }
 }
-
-// (
-//   <AboutOrFormArea id='about-form' class='card' content={content} />
-// )
 
 export default EventForm
