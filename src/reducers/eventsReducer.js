@@ -35,7 +35,7 @@ function eventsReducer(state = {
 
     case 'ADD_GUEST':
       idx = state.events.findIndex(event => event.id === state.currentEvent.id)
-      let newGuest = { name: action.name, id: uuidv4() }
+      let newGuest = { name: action.name, id: uuidv4(), loc: 0 }
       let updatedEvent = state.events[idx]
       updatedEvent = { ...updatedEvent, guests: [...updatedEvent.guests, newGuest]}
       return {
