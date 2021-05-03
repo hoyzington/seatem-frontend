@@ -1,5 +1,5 @@
 import React from 'react'
-import { NavLink } from 'react-router-dom'
+import { NavLink, Redirect } from 'react-router-dom'
 
 class GuestForm extends React.Component {
   state = { id: '', first: '', mid: '', last: '' }
@@ -32,6 +32,11 @@ class GuestForm extends React.Component {
   }
 
   render() {
+    const event = this.props.event
+    const roundTable = event.table === 'rnd'
+    if (event.guests.length === (roundTable ? 12 : 26)) {
+      return (<Redirect to='/' />)
+    }
     return (
       <div id='form-or-about' className='card'>
         <NavLink id='exit' to='/'>&times;</NavLink>
