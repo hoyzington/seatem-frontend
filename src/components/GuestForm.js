@@ -2,7 +2,7 @@ import React from 'react'
 import { NavLink } from 'react-router-dom'
 
 class GuestForm extends React.Component {
-  state = { first: '', mid: null, last: null }
+  state = { id: '', first: '', mid: '', last: '' }
 
   handleChange = e => {
     this.setState({ [e.target.name]: e.target.value })
@@ -11,15 +11,24 @@ class GuestForm extends React.Component {
   buildFullName = () => {
     const { first, mid, last } = this.state
     const f = first
-    const m = mid ? ' ' + mid : ''
-    const l = last ? ' ' + last : ''
+    const m = mid.length > 0 ? ' ' + mid : ''
+    const l = last.length > 0 ? ' ' + last : ''
     return f + m + l
   }
 
   handleSubmit = e => {
     e.preventDefault()
     const name = this.buildFullName()
-    console.log(name)
+    this.props.addGuest(name)
+    this.setState({ id: '', first: '', mid: '', last: '' })
+    document.getElementById('first-name').focus()
+  }
+
+  maxGuests = () => {
+    const event = this.props.event
+    const guests = event.guests.length
+    const max = event.table === 'rnd' ? '12' : '26'
+    return (guests + ' of ' + max)
   }
 
   render() {
@@ -27,10 +36,11 @@ class GuestForm extends React.Component {
       <div id='form-or-about' className='card'>
         <NavLink id='exit' to='/'>&times;</NavLink>
         <form onSubmit={this.handleSubmit}>
-          <p>Add guests ({this.props.maxGuests} max)</p>
+          <p>Add guests ({this.maxGuests()} max)</p>
           <label>
             First Name&nbsp;
             <input
+              id='first-name'
               type="text"
               name='first'
               onChange={this.handleChange}
@@ -38,7 +48,7 @@ class GuestForm extends React.Component {
               maxLength='12'
               autoFocus
               required/>
-          </label>&nbsp;<i>required</i>
+          </label>&nbsp;<i>(required)</i><br/>
           <label>
             Middle Name&nbsp;
             <input
@@ -47,7 +57,7 @@ class GuestForm extends React.Component {
               onChange={this.handleChange}
               value={this.state.mid}
               maxLength='12'/>
-          </label>&nbsp;<i>optional</i>
+          </label>&nbsp;<i>(optional)</i><br/>
           <label>
             Last Name&nbsp;
             <input
@@ -56,7 +66,7 @@ class GuestForm extends React.Component {
               onChange={this.handleChange}
               value={this.state.last}
               maxLength='12'/>
-          </label>&nbsp;<i>optional</i>
+          </label>&nbsp;<i>(optional)</i>
           <input type="submit"/>
         </form>
       </div>

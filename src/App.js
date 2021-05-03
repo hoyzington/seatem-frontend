@@ -3,10 +3,11 @@ import {
   BrowserRouter as Router,
   Route
 } from 'react-router-dom'
+import { connect } from 'react-redux'
 import NavBar from './components/NavBar'
 import Home from './components/Home'
 import About from './components/About'
-// import GuestForm from './components/GuestForm'
+import GuestForm from './components/GuestForm'
 import EventForm from './containers/EventForm'
 import AccountArea from './components/AccountArea'
 import GuestArea from './containers/GuestArea'
@@ -18,18 +19,21 @@ import './styles/App.css'
 class App extends React.Component {
 
   eventData = {type: 'rnd', qty: 12}
-  title = "John's Birthday Bash"
 
   render() {
+    console.log(this.props.state)
+    const { addEvent, addGuest } = this.props
+    const event = this.props.state.currentEvent
     return (
       <Router>
         <>
-          <NavBar title={this.title}/>
+          <NavBar title={event.name} />
           <Route exact path='/' component={Home} />
           <Route exact path='/about' component={About} />
           {/* <Route exact path='/guests' component={GuestForm} /> */}
           <Route exact path='/guests/1' component={GuestInfo} />
-          <Route exact path='/event-form' component={EventForm} />
+          <Route exact path='/event-form' render={() => <EventForm event={event} addEvent={addEvent} />} />
+          <Route exact path='/guest-form' render={() => <GuestForm event={event} addGuest={addGuest} />} />
           <Route exact path='/account' component={AccountArea} />
           <GuestArea data={this.eventData}/>
           <EventArea data={this.eventData}/>
@@ -40,4 +44,12 @@ class App extends React.Component {
   }
 }
 
-export default App
+const mapStateToProps = state => ({ state })
+
+const mapDispatchToProps = dispatch => ({
+  addEvent: event => dispatch({ type: 'ADD_EVENT', event }),
+  deleteEvent: id => dispatch({ type: 'DELETE_EVENT', id }),
+  addGuest: name => dispatch({ type: 'ADD_GUEST', name })
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(App)

@@ -1,10 +1,8 @@
 import React from 'react'
-import { NavLink } from 'react-router-dom'
-import { v4 as uuidv4 } from 'uuid'
-// import GuestForm from '../components/GuestForm'
+import { NavLink, Redirect } from 'react-router-dom'
 
 class EventForm extends React.Component {
-  state = { id: null, name: '', table: 'rect', guests: [] }
+  state = { id: '', name: '', table: 'rect', guests: [] }
 
   handleChange = e => {
     this.setState({ [e.target.name]: e.target.value })
@@ -12,13 +10,13 @@ class EventForm extends React.Component {
 
   handleSubmit = e => {
     e.preventDefault()
-    this.state.id = uuidv4()
-    // console.log(this.state)
-    // const max = this.state.table === 'rnd' ? '12' : '26'
-    // return (<GuestForm maxGuests={max} />)
+    this.props.addEvent(this.state)
   }
 
   render() {
+    if (this.props.event.name !== '') {
+      return (<Redirect to='/guest-form' />)
+    }
     return (
       <div id='form-or-about' className='card'>
         <NavLink id='exit' to='/'>&times;</NavLink>
