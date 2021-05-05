@@ -10,14 +10,14 @@ import About from './components/About'
 import GuestForm from './components/GuestForm'
 import EventForm from './containers/EventForm'
 import AccountArea from './components/AccountArea'
-import GuestArea from './containers/GuestArea'
+import NonEventArea from './components/NonEventArea'
 import EventArea from './components/EventArea'
 import Footer from './components/Footer'
 import './styles/App.css'
 
 class App extends React.Component {
 
-  eventData = {type: 'rnd', qty: 12}
+  eventData = {type: 'rect', qty: 18}
 
   render() {
     const { addEvent, addGuest } = this.props
@@ -32,7 +32,7 @@ class App extends React.Component {
           <Route exact path='/guest-form' render={() => <GuestForm event={event} addGuest={addGuest} />} />
           <Route exact path='/account' component={AccountArea} />
           <EventArea data={this.eventData} event={event} />
-          <GuestArea guests={event.guests} table={event.table} />
+          <NonEventArea guests={event.guests} table={event.table} />
           <Footer />
         </>
       </Router>

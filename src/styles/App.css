@@ -1,4 +1,4 @@
-#logo-bar, #title-bar, #menu-bar, .card, #about-form, #guest-area-rnd, #guest-area-rect, #event-area-rnd, #event-area-rect, footer {
+#logo-bar, #title-bar, #menu-bar, .card, #form-or-about, #guest-area-rnd, #guest-area-rect, #event-area-rnd, #event-area-rect, footer {
   position: fixed;
 }
 
@@ -72,16 +72,17 @@ footer, #logo-bar, #title-bar, #menu-bar {
   box-shadow: 2px 2px 9px rgb(130, 130, 130);
   border-radius: 8px;
   z-index: 1;
-  background-color: rgba(50, 125, 205, 0.6);
+  background-color: rgba(84, 155, 231, 0.65);
   backdrop-filter: blur(6px);
   font-size: 3vh;
+  line-height: 1.75em;
 }
 
 #form-or-about {
-  top: 15vh;
-  left: 25vw;
-  width: 44vw;
-  padding: 2vh 3vw;
+  top: 23vh;
+  left: 30.5vw;
+  width: 35vw;
+  padding: 2vh 2vw;
 }
 
 .guest-info {
@@ -117,15 +118,15 @@ footer, #logo-bar, #title-bar, #menu-bar {
 
 #guest-area-rnd, #guest-area-rect {
   display: grid;
-  top: 7.1vh;
-  left: 0px;
-  background-color: rgba(128, 128, 128, 0.15);
+  /* top: 7.1vh; */
+  /* background-color: rgba(128, 128, 128, 0.15); */
 }
 
 #guest-area-rnd {
   grid-auto-flow: column;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+  left: 0px;
   height: 75.4vh;
   width: 15vw;
   padding: 7.5vh 5vw 5vh 6vw;
@@ -133,14 +134,14 @@ footer, #logo-bar, #title-bar, #menu-bar {
 
 #guest-area-rect {
   grid-auto-flow: row;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
-  height: 22vh;
-  width: 92vw;
-  padding: 4vh 4vw 3vh 4vw;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  padding: 12px;
+  border-bottom-left-radius: 30px;
+  border-bottom-right-radius: 30px;
 }
 
-#event-area-rnd, #event-area-rect {
+#event-area-rnd, #event-area-rect, #non-event-area-rnd, #non-event-area-rect {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -155,10 +156,23 @@ footer, #logo-bar, #title-bar, #menu-bar {
 }
 
 #event-area-rect {
-  top: 36.1vh;
+  top: 47.1vh;
   left: 0px;
-  height: 58.9vh;
+  height: 47.9vh;
   width: 100vw;
+  /* background-color: rgba(128, 128, 128, 0.4); */
+}
+
+/* #non-event-area-rnd {
+
+} */
+
+#non-event-area-rect {
+  top: 7.1vh;
+  left: 0px;
+  height: 40vh;
+  width: 100vw;
+  background-color: rgba(128, 128, 128, 0.15);
 }
 
 #seating-area-rnd, #seating-area-rect {
@@ -218,7 +232,7 @@ footer, #logo-bar, #title-bar, #menu-bar {
 .guest {
   height: 58px;
   width: 58px;
-  margin: 1vh 1vw;
+  margin: 10px;
   border-radius: 33px;
   background-color: darkseagreen;
 }
