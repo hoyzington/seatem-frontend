@@ -1,9 +1,11 @@
 import React from 'react'
 import GuestArea from '../containers/GuestArea'
+import GuestInfo from './GuestInfo'
 
-const NonEventArea = ({ guests, table }) => (
+const NonEventArea = ({ table }) => (
   <div id={'non-event-area-' + table}>
-    <GuestArea table={table} guests={guests} />
+    <GuestArea />
+    <GuestInfo />
   </div>
 )
 

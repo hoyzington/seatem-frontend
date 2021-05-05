@@ -1,20 +1,24 @@
 import React from 'react'
 import Guest from '../components/Guest'
+import { connect } from 'react-redux'
 
 class GuestArea extends React.Component {
 
-  renderGuests = () => {
-    const guests = this.props.guests.filter(guest => guest.loc === 0)
+  renderGuests = event => {
+    const guests = event.guests.filter(guest => guest.loc === 0)
     return guests.map(guest => (<Guest key={guest.id} data={guest} />))
   }
 
   render() {
+    const event = this.props.state.currentEvent
     return (
-      <div id={'guest-area-' + this.props.table}>
-        {this.renderGuests()}
+      <div id={'guest-area-' + event.table}>
+        {this.renderGuests(event)}
       </div>
     )
   }
 }
 
-export default GuestArea
+const mapStateToProps = state => ({ state })
+
+export default connect(mapStateToProps)(GuestArea)

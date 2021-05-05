@@ -1,19 +1,29 @@
 import React from 'react'
-import { NavLink, Route } from 'react-router-dom'
-import GuestInfo from './GuestInfo'
+import { NavLink } from 'react-router-dom'
+import { connect } from 'react-redux'
 
-const Guest = ({ data }) => {
-  const initialsArray = data.name.split(' ').map(word => word[0])
-  const url = '/guests/' + initialsArray.join('')
-  const initials = initialsArray.join(' ')
-  return (
-    <>
+class Guest extends React.Component {
+
+  handleClick = () => {
+    this.props.selectGuest(this.props.data.id)
+  }
+
+  render() {
+    const initialsArray = this.props.data.name.split(' ').map(word => word[0])
+    const url = '/guests/' + initialsArray.join('')
+    const initials = initialsArray.join(' ')
+    return (
       <NavLink to={url}>
-        <div className='guest' >{initials}</div>
+        <div className='guest' onClick={this.handleClick}>
+          {initials}
+        </div>
       </NavLink>
-      <Route path={url} render={() => <GuestInfo data={data} />}/>
-    </>
-  )
+    )
+  }
 }
 
-export default Guest
+const mapDispatchToProps = dispatch => ({
+  selectGuest: id => dispatch({ type: 'SELECT_GUEST', id })
+})
+
+export default connect(null, mapDispatchToProps)(Guest)

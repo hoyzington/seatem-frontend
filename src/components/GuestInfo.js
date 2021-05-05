@@ -1,15 +1,25 @@
 import React from 'react'
-import AboutOrFormArea from './AboutOrFormArea'
+import { connect } from 'react-redux'
 
-const content = <h4 >M Guest</h4>
+class GuestInfo extends React.Component {
 
-const GuestInfo = () => (
-  <>
-    <AboutOrFormArea id='guest-info-1-rnd' class='card guest-info' content={content} />
-    <AboutOrFormArea id='guest-info-2-rnd' class='card guest-info' content={content} />
-    {/* <AboutOrFormArea id='guest-info-1-rect' class='card guest-info' content={content} />
-    <AboutOrFormArea id='guest-info-2-rect' class='card guest-info' content={content} /> */}
-  </>
-)
+  showGuest = () => {
+    const guest = this.props.state.selectedGuest
+    if (guest) {
+      return (guest.name)
+    }
+  }
 
-export default GuestInfo
+  render() {
+    const event = this.props.state.currentEvent
+    return (
+      <div id={'guest-info-' + event.table} className='guest-info'>
+        {this.showGuest()}
+      </div>
+    )
+  }
+}
+
+const mapStateToProps = state => ({ state })
+
+export default connect(mapStateToProps)(GuestInfo)

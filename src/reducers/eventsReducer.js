@@ -3,7 +3,8 @@ import { v4 as uuidv4 } from 'uuid'
 function eventsReducer(state = {
     user: null,
     events: [],
-    currentEvent: { name: '', table: '', guests: [] }
+    currentEvent: { name: '', table: '', guests: [] },
+    selectedGuest: null
   }, action) {
 
   let idx
@@ -21,18 +22,6 @@ function eventsReducer(state = {
         ...state.events.slice(idx + 1)
       ] }
 
-    // case 'ADD_NAME':
-    //   return {
-    //     ...state,
-    //     name: action.name
-    //   }
-
-    // case 'ADD_TABLE':
-    //   return {
-    //     ...state,
-    //     table: action.table
-    //   }
-
     case 'ADD_GUEST':
       idx = state.events.findIndex(event => event.id === state.currentEvent.id)
       let newGuest = { name: action.name, id: uuidv4(), loc: 0 }
@@ -47,6 +36,13 @@ function eventsReducer(state = {
         ],
         currentEvent: updatedEvent
       }
+
+      case 'SELECT_GUEST':
+        const guest = state.currentEvent.guests.find(guest => guest.id === action.id)
+        return {
+          ...state,
+          selectedGuest: guest
+        }
 
     // case 'REMOVE_GUEST':
     //   idx = state.guests.findIndex(guest => guest.id === action.id)
