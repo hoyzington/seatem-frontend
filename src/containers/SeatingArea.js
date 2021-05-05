@@ -17,7 +17,6 @@ class SeatingArea extends React.Component {
           return '4-4.5 ft | 48-54 in | 1.22-1.37 m'
         case 8:
           return '4.5-5.5 ft | 54-66 in | 1.37-1.68 m'
-          // return (<><span>4.5-5.5 ft | 54-66 in</span><span>1.37-1.68 m</span></>)
         case 9:
           return '5-5.5 ft | 60-66 in | 1.52-1.68 m'
         case 10:
