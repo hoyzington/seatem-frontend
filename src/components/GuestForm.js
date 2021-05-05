@@ -38,7 +38,7 @@ class GuestForm extends React.Component {
       return (<Redirect to='/' />)
     }
     return (
-      <div id='form-or-about' className='card'>
+      <div id='form' className='card'>
         <NavLink id='exit' to='/'>&times;</NavLink>
         <form onSubmit={this.handleSubmit}>
           <b>ADD GUESTS</b> ({this.maxGuests()} max)<br/>

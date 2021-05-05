@@ -22,7 +22,7 @@ a:hover {
 
 #exit {
   position: absolute;
-  top: 0vh;
+  top: .5vh;
   right: 1.5vh;
   font-family: monospace;
   font-size: 2em;

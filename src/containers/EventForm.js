@@ -18,7 +18,7 @@ class EventForm extends React.Component {
       return (<Redirect to='/guest-form' />)
     }
     return (
-      <div id='form-or-about' className='card'>
+      <div id='form' className='card'>
         <NavLink id='exit' to='/'>&times;</NavLink>
         <form onSubmit={this.handleSubmit}>
           <label>

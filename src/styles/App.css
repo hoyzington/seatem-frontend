@@ -72,17 +72,24 @@ footer, #logo-bar, #title-bar, #menu-bar {
   box-shadow: 2px 2px 9px rgb(130, 130, 130);
   border-radius: 8px;
   z-index: 1;
-  background-color: rgba(84, 155, 231, 0.65);
+  background-color: rgba(89, 142, 199, 0.65);
   backdrop-filter: blur(6px);
   font-size: 3vh;
   line-height: 1.75em;
 }
 
-#form-or-about {
+#form {
   top: 23vh;
   left: 30.5vw;
   width: 35vw;
   padding: 2vh 2vw;
+}
+
+#about {
+  top: 15vh;
+  left: 22vw;
+  width: 50vw;
+  padding: 1vh 3vw;
 }
 
 .guest-info {
