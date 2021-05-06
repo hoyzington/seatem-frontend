@@ -6,7 +6,7 @@ class GuestArea extends React.Component {
 
   renderGuests = event => {
     const guests = event.guests.filter(guest => guest.loc === 0)
-    return guests.map(guest => (<Guest key={guest.id} data={guest} />))
+    return guests.map(guest => (<Guest key={guest.id} guest={guest} />))
   }
 
   render() {

@@ -236,6 +236,10 @@ footer, #logo-bar, #title-bar, #menu-bar {
   background-color: darkseagreen;
 }
 
+#selected {
+  background-color: rgb(165, 215, 165);
+}
+
 
 /* .App {
   text-align: center;
