@@ -2,10 +2,10 @@ import React from 'react'
 import SeatingArea from '../containers/SeatingArea'
 
 const EventArea = ({ data }) => (
-  <div id={'event-area-' + data.type}>
+  <div id={'event-area-' + data.currentEvent.table}>
     <SeatingArea
-      tableType={data.type}
-      peopleQty={data.qty}
+      tableType={data.currentEvent.table}
+      peopleQty={data.currentEvent.guests.length}
     />
   </div>
 )

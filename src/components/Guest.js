@@ -9,7 +9,8 @@ class Guest extends React.Component {
   }
 
   setId = () => {
-    if (this.props.guest.id === this.props.state.selectedGuest.id) {
+    const selectedGuest = this.props.state.selectedGuest
+    if (selectedGuest && selectedGuest.id === this.props.guest.id) {
       return 'selected'
     }
     return ''

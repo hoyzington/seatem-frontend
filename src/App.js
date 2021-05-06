@@ -31,7 +31,7 @@ class App extends React.Component {
           <Route exact path='/event-form' render={() => <EventForm event={event} addEvent={addEvent} />} />
           <Route exact path='/guest-form' render={() => <GuestForm event={event} addGuest={addGuest} />} />
           <Route exact path='/account' component={AccountArea} />
-          <EventArea data={this.eventData} event={event} />
+          <EventArea data={this.props.state} />
           <NonEventArea guests={event.guests} table={event.table} />
           <Footer />
         </>

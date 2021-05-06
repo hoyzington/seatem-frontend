@@ -7,6 +7,9 @@ class SeatingArea extends React.Component {
   recommendedTableSize = (tableType, qty) => {
     if (tableType === 'rnd') {
       switch (qty) {
+        case 1:
+        case 2:
+        case 3:
         case 4:
           return '2.5-3.5 ft | 30-42 in | .76-1.07 m'
         case 5:
@@ -30,13 +33,26 @@ class SeatingArea extends React.Component {
     }
     const feet = qty - (qty %2 === 0 ? 2 : 1)
     const meters = Math.round(feet * .3048 * 100) / 100
-    return `${feet} ft | ${feet * 12} in | ${meters} m`
+    switch (qty) {
+      case 0:
+      case 1:
+      case 2:
+      case 3:
+      case 4:
+        return '3 ft | 36 in'
+      default:
+        return `${feet} ft | ${feet * 12} in | ${meters} m`
+    }
   }
 
   calcTableWidth = (type, qty) => {
     let width = 322
     if (type === 'rect') {
-      width = ((qty - (qty %2 === 0 ? 2 : 1)) / 2) * 88
+      if (qty < 5) {
+        width = 132
+      } else {
+        width = ((qty - (qty %2 === 0 ? 2 : 1)) / 2) * 88
+      }
     }
     return width
   }
@@ -166,20 +182,29 @@ class SeatingArea extends React.Component {
   }
 
   rectangleTableChairs = (qty) => {
+    const chairs = []
+    if (qty === 0) {
+      return chairs
+    }
     qty = (qty %2 === 0 ? qty : qty + 1)
     const chr = 66, buf = 4, sect = 88,
           num = (qty - 2) / 2,
-          total = (chr + (buf * 2)) + (num * sect),
-          chairs = []
+          total = (chr + (buf * 2)) + (num * sect)
     chairs.push(<Chair key='1' x='0' y='103' />)
-    let id = 2, x = 81
-    for (let i = num; i > 0; i--) {
-      chairs.push(<Chair key={id} x={x} y='0' />)
-      chairs.push(<Chair key={id + 1} x={x} y='206' />)
-      id += 2
-      x += 88
+    if (qty < 5) {
+      chairs.push(<Chair key='2' x='103' y='0' />)
+      chairs.push(<Chair key='3' x='103' y='206' />)
+      chairs.push(<Chair key='4' x='206' y='103' />)
+    } else {
+      let id = 2, x = 81
+      for (let i = num; i > 0; i--) {
+        chairs.push(<Chair key={id} x={x} y='0' />)
+        chairs.push(<Chair key={id + 1} x={x} y='206' />)
+        id += 2
+        x += 88
+      }
+      chairs.push(<Chair key={qty} x={total} y='103' />)
     }
-    chairs.push(<Chair key={qty} x={total} y='103' />)
     return chairs
   }
 
@@ -196,11 +221,12 @@ class SeatingArea extends React.Component {
           areaId = 'seating-area-' + type,
           areaWidth = this.calcAreaWidth(type, qty),
           tId = 'table-' + type,
-          tSize = this.recommendedTableSize(type, qty),
+          tSizeA = this.recommendedTableSize(type, qty),
+          tSizeB = (tSizeA === '3 ft | 36 in' ? '.91 m' : ''),
           tStyle = this.tableStyle(type, qty)
     return (
       <div id={areaId} style={areaWidth}>
-        <Table id={tId} size={tSize} style={tStyle}/>
+        <Table id={tId} sizeA={tSizeA} sizeB={tSizeB} style={tStyle}/>
         {this.buildChairs(type, qty)}
       </div>
     )
