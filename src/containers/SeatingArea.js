@@ -190,20 +190,20 @@ class SeatingArea extends React.Component {
     const chr = 66, buf = 4, sect = 88,
           num = (qty - 2) / 2,
           total = (chr + (buf * 2)) + (num * sect)
-    chairs.push(<Chair key='1' x='0' y='103' />)
+    chairs.push(<Chair key='0' id='0' x='0' y='103' />)
     if (qty < 5) {
-      chairs.push(<Chair key='2' x='103' y='0' />)
-      chairs.push(<Chair key='3' x='103' y='206' />)
-      chairs.push(<Chair key='4' x='206' y='103' />)
+      chairs.push(<Chair key='1' id='1' x='103' y='0' />)
+      chairs.push(<Chair key='2' id='2' x='103' y='206' />)
+      chairs.push(<Chair key='3' id='3' x='206' y='103' />)
     } else {
-      let id = 2, x = 81
+      let id = 1, x = 81
       for (let i = num; i > 0; i--) {
-        chairs.push(<Chair key={id} x={x} y='0' />)
-        chairs.push(<Chair key={id + 1} x={x} y='206' />)
+        chairs.push(<Chair key={id} id={id} x={x} y='0' />)
+        chairs.push(<Chair key={id + 1} id={id} x={x} y='206' />)
         id += 2
         x += 88
       }
-      chairs.push(<Chair key={qty} x={total} y='103' />)
+      chairs.push(<Chair key={qty} id={id} x={total} y='103' />)
     }
     return chairs
   }
@@ -217,7 +217,7 @@ class SeatingArea extends React.Component {
 
   render() {
     const type = this.props.tableType,
-          qty = this.props.peopleQty,
+          qty = this.props.chairQty,
           areaId = 'seating-area-' + type,
           areaWidth = this.calcAreaWidth(type, qty),
           tId = 'table-' + type,

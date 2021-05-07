@@ -5,8 +5,7 @@ import { connect } from 'react-redux'
 class GuestArea extends React.Component {
 
   renderGuests = event => {
-    const guests = event.guests.filter(guest => guest.loc === 0)
-    return guests.map(guest => (<Guest key={guest.id} guest={guest} />))
+    return event.guests.map(guest => (<Guest key={guest.id} guest={guest} />))
   }
 
   render() {

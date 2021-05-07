@@ -13,7 +13,7 @@ class Guest extends React.Component {
     if (selectedGuest && selectedGuest.id === this.props.guest.id) {
       return 'selected'
     }
-    return ''
+    return 'not-selected'
   }
 
   render() {
