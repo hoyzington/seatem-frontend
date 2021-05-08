@@ -1,17 +1,8 @@
 import React from 'react'
+import Button from './components/Button'
 import { connect } from 'react-redux'
 
 class GuestInfo extends React.Component {
-
-  unseatButton = () => {
-    if (this.props.guest.seated) {
-      return (
-        <button type='button' onClick={this.handleClick}>
-          Unseat {this.props.guest.name}
-        </button>
-      )
-    }
-  }
 
   showGuest = () => {
     const guest = this.props.guest
@@ -19,17 +10,28 @@ class GuestInfo extends React.Component {
       return (
         <>
           <h4>{guest.name}</h4>
-          {this.unseatButton()}
         </>
       )
     }
   }
 
-  handleClick = () => {
+  addUnseatButton = () => {
+    if (this.props.guest.seated) {
+      return (
+        <Button className='unseat' handleClick={this.handleUnseatClick} name='Unseat' />
+      )
+    }
+  }
+
+  handleUnseatClick = () => {
     const { guest, unseat } = this.props
     if (guest && guest.seated) {
       unseat(guest)
     }
+  }
+
+  handleDeleteClick = () => {
+    this.props.deleteGuest(this.props.guest)
   }
 
   render() {
@@ -37,6 +39,8 @@ class GuestInfo extends React.Component {
     return (
       <div id={'guest-info-' + event.table} className='guest-info'>
         {this.showGuest()}
+        {this.addUnseatButton()}
+        <Button className='delete' handleClick={this.handleDeleteClick} name='Delete' />
       </div>
     )
   }
