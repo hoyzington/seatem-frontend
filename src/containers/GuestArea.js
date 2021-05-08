@@ -9,15 +9,19 @@ class GuestArea extends React.Component {
   }
 
   render() {
-    const event = this.props.state.currentEvent
     return (
-      <div id={'guest-area-' + event.table}>
-        {this.renderGuests(event)}
+      <div id={`guest-area-${this.props.event.table}`}>
+        {this.renderGuests(this.props.event)}
       </div>
     )
   }
 }
 
-const mapStateToProps = state => ({ state })
+const mapStateToProps = (state) => ({
+  user: state.user,
+  events: state.events,
+  event: state.currentEvent,
+  guest: state.selectedGuest,
+})
 
 export default connect(mapStateToProps)(GuestArea)

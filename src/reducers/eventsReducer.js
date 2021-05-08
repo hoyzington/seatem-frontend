@@ -3,108 +3,162 @@ import { v4 as uuidv4 } from 'uuid'
 function eventsReducer(state = {
     user: null,
     events: [],
-    currentEvent: { id: '', name: '', table: '', chairs: [], guests: [] },
-    selectedGuest: null
+    currentEvent: {
+      id: '',
+      name: '',
+      table: '',
+      chairs: [],
+      guests: [],
+    },
+    selectedGuest: null,
   }, action) {
 
-  let idx, updatedEvent, event
+  let eventIdx, chairIdx, guestIdx, event, currentEvent, updatedEvent, chairId, guest
 
   switch (action.type) {
     case 'ADD_EVENT':
       let newEvent = { ...action.event, id: uuidv4() }
-      return { ...state, events: [...state.events, newEvent], currentEvent: newEvent }
+      return {
+        ...state,
+        events: [
+          ...state.events,
+          newEvent,
+        ],
+        currentEvent: newEvent,
+      }
 
     case 'REMOVE_EVENT':
-      idx = state.events.findIndex(event => event.id === action.id)
+      eventIdx = state.events.findIndex(event => event.id === action.id)
       // ADDRESS currentEvent !!
-      return { ...state, events: [
-        ...state.events.slice(0, idx),
-        ...state.events.slice(idx + 1)
-      ] }
+      return {
+        ...state,
+        events: [
+          ...state.events.slice(0, eventIdx),
+          ...state.events.slice(eventIdx + 1),
+        ],
+      }
 
     case 'ADD_GUEST':
-      idx = state.events.findIndex(event => event.id === state.currentEvent.id)
-      let newGuest = { id: uuidv4(), name: action.name }
-      event = state.events[idx]
-      if (event.guests.length > 4) {
-        event = { ...event, guests: [...event.guests, newGuest], chairs: [...event.chairs, ''] }
-      } else {
-        event = { ...event, guests: [...event.guests, newGuest] }
+      let newGuest = {
+        id: uuidv4(),
+        name: action.name,
+        seated: false,
+      }
+      eventIdx = state.events.findIndex(event => event.id === state.currentEvent.id)
+      event = state.events[eventIdx]
+      updatedEvent = {
+        ...event,
+        guests: [...event.guests, newGuest],
+      }
+      if (updatedEvent.guests.length > 4) {
+        updatedEvent = {
+          ...updatedEvent,
+          chairs: [...updatedEvent.chairs, ''],
+        }
       }
       return {
         ...state,
         events: [
-          ...state.events.slice(0, idx),
-          event,
-          ...state.events.slice(idx + 1)
+          ...state.events.slice(0, eventIdx),
+          updatedEvent,
+          ...state.events.slice(eventIdx + 1),
         ],
-        currentEvent: event
+        currentEvent: updatedEvent,
       }
 
       case 'SELECT_GUEST':
-        const guest = state.currentEvent.guests.find(guest => guest.id === action.id) || state.currentEvent.chairs.find(chair => chair.id === action.id)
+        currentEvent = state.currentEvent
+        guest = currentEvent.guests.find(guest => guest.id === action.id) || currentEvent.chairs.find(chair => chair.id === action.id)
         return {
           ...state,
-          selectedGuest: guest
+          selectedGuest: guest,
         }
 
       case 'SEAT_GUEST':
-        const eventIdx = state.events.findIndex(event => event.id === state.currentEvent.id)
-        const guestIdx = event.guests.findIndex(guest => guest.id === state.selectedGuest.id)
-        const chairId = parseInt(action.chairId)
+        chairId = parseInt(action.chairId)
+        eventIdx = state.events.findIndex(event => event.id === state.currentEvent.id)
         event = state.events[eventIdx]
-
+        guestIdx = event.guests.findIndex(guest => guest.id === action.guest.id)
+        guest = { ...action.guest, seated: true }
         if (guestIdx >= 0) {
           updatedEvent = {
             ...event,
             guests: [
               ...event.guests.slice(0, guestIdx),
-              ...event.guests.slice(guestIdx + 1)
+              ...event.guests.slice(guestIdx + 1),
             ],
             chairs: [
               ...event.chairs.slice(0, chairId),
-              state.selectedGuest,
-              ...event.chairs.slice(chairId + 1)
-            ]
+              guest,
+              ...event.chairs.slice(chairId + 1),
+            ],
           }
-        } else if (chairId >= 0) {
-          const chairIdx = event.chairs.findIndex(chair => chair.id === state.selectedGuest.id)
+        } else {
+          chairIdx = event.chairs.findIndex(chair => chair === action.guest)
           event = {
             ...event,
             chairs: [
               ...event.chairs.slice(0, chairIdx),
               '',
-              ...event.chairs.slice(chairIdx + 1)
-            ]
+              ...event.chairs.slice(chairIdx + 1),
+            ],
           }
           updatedEvent = {
             ...event,
             chairs: [
               ...event.chairs.slice(0, chairId),
-              state.selectedGuest,
-              ...event.chairs.slice(chairId + 1)
-            ]
+              guest,
+              ...event.chairs.slice(chairId + 1),
+            ],
           }
         }
-
         return {
           ...state,
           events: [
             ...state.events.slice(0, eventIdx),
             updatedEvent,
-            ...state.events.slice(eventIdx + 1)
+            ...state.events.slice(eventIdx + 1),
           ],
           currentEvent: updatedEvent,
-          selectedGuest: null
+          selectedGuest: null,
         }
 
-    // case 'REMOVE_GUEST':
+        case 'UNSEAT_GUEST':
+          chairId = parseInt(action.chairId)
+          eventIdx = state.events.findIndex(event => event.id === state.currentEvent.id)
+          event = state.events[eventIdx]
+          chairIdx = event.chairs.findIndex(chair => chair === action.guest)
+          guest = { ...action.guest, seated: false }
+          updatedEvent = {
+            ...event,
+            chairs: [
+              ...event.chairs.slice(0, chairIdx),
+              '',
+              ...event.chairs.slice(chairIdx + 1),
+            ],
+            guests: [
+              ...event.guests,
+              guest,
+            ],
+          }
+          return {
+            ...state,
+            events: [
+              ...state.events.slice(0, eventIdx),
+              updatedEvent,
+              ...state.events.slice(eventIdx + 1),
+            ],
+            currentEvent: updatedEvent,
+            selectedGuest: null,
+          }
+
+        // case 'REMOVE_GUEST':
     //   idx = state.guests.findIndex(guest => guest.id === action.id)
     //   return {
     //     ...state,
     //     guests: [
     //       ...state.guests.slice(0, idx),
-    //       ...state.guests.slice(idx + 1)
+    //       ...state.guests.slice(idx + 1),
     //     ]
     //   }
 

@@ -4,23 +4,26 @@ import Guest from './Guest'
 
 class Chair extends React.Component {
 
+  guestInChair = () => {
+    const chairId = this.props.id
+    const chairs = this.props.event.chairs
+    return chairs[parseInt(chairId)]
+  }
+
   handleClick = () => {
-    const chairs = this.props.state.currentEvent.chairs
-    if (!chairs[parseInt(this.props.id)]) {
-      const guest = this.props.state.selectedGuest
-      if (guest) {
-        const chairId = this.props.id
-        this.props.seatGuest(chairId)
-      }
+    let guest = this.props.guest
+    const emptyChair = !this.guestInChair()
+    const chairId = this.props.id
+    if (guest && emptyChair) {
+      this.props.seatGuest(chairId, guest)
     }
   }
 
   fillChair = () => {
-    const chairs = this.props.state.currentEvent.chairs
-    const guest = chairs[parseInt(this.props.id)]
-    if (guest) {
+    const guestInChair = this.guestInChair()
+    if (guestInChair) {
       return (
-        <Guest guest={guest} />
+        <Guest guest={guestInChair} />
       )
     }
   }
@@ -42,10 +45,15 @@ class Chair extends React.Component {
   }
 }
 
-const mapStateToProps = state => ({ state })
+const mapStateToProps = (state) => ({
+  user: state.user,
+  events: state.events,
+  event: state.currentEvent,
+  guest: state.selectedGuest,
+})
 
-const mapDispatchToProps = dispatch => ({
-  seatGuest: chairId => dispatch({ type: 'SEAT_GUEST', chairId })
+const mapDispatchToProps = (dispatch) => ({
+  seatGuest: (chairId, guest) => dispatch({ type: 'SEAT_GUEST', chairId, guest })
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Chair)

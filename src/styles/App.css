@@ -118,6 +118,8 @@ footer, #logo-bar, #title-bar, #menu-bar {
 
   #guest-area-rnd, #guest-area-rect {
     display: grid;
+    border: 2px solid rgba(127, 127, 127, 0.35);
+    border-radius: 30px;
   }
 
   #guest-area-rnd {
@@ -142,7 +144,7 @@ footer, #logo-bar, #title-bar, #menu-bar {
 
   .guest-info {
     border-radius: 30px;
-    background-color: rgba(250, 235, 215, 0.733);
+    background-color: rgba(250, 235, 215, 0.6);
     box-shadow: 1px 1px 3.5px rgb(130, 130, 130);
   }
 
