@@ -30,7 +30,23 @@ class Chair extends React.Component {
   }
 
   render() {
-    const { id, x, y } = this.props
+    const guestInChair = this.guestInChair()
+    const { guest, id, x, y } = this.props
+    if (guestInChair || !guest) {
+      return (
+        <div
+          id={id}
+          className='chair'
+          to='/'
+          onClick={this.handleClick}
+          style={{
+            top: `${y}px`,
+            left: `${x}px`
+          }}>
+          {this.fillChair()}
+        </div>
+      )
+    }
     return (
       <NavLink
         id={id}
