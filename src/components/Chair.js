@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { NavLink } from 'react-router-dom'
 import Guest from './Guest'
 
 class Chair extends React.Component {
@@ -31,16 +32,17 @@ class Chair extends React.Component {
   render() {
     const { id, x, y } = this.props
     return (
-      <div
+      <NavLink
         id={id}
         className='chair'
+        to='/'
         onClick={this.handleClick}
         style={{
           top: `${y}px`,
           left: `${x}px`
         }}>
         {this.fillChair()}
-      </div>
+      </NavLink>
     )
   }
 }

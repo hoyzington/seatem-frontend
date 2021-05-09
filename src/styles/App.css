@@ -2,6 +2,36 @@
   position: fixed;
 }
 
+#button-area {
+  position: relative;
+  top: 120px;
+  text-align: center;
+}
+
+.button {
+  width: 80px;
+  padding: 7px 12px 7.5px 12px;
+  margin: 0px 17px;
+  border-radius: 20px;
+  border-style: hidden;
+  font-family: inherit;
+  font-size: large;
+}
+
+.delete {
+  right: 0px;
+  background-color: rgb(252, 120, 120, 0.7);
+  box-shadow: .5px .5px 2px rgb(126, 60, 60);
+}
+
+.unseat {
+  /* position: relative; */
+  left: 0px;
+  background-color: rgba(110, 176, 250, 0.7);
+  /* background-color: rgb(126, 190, 252); */
+  box-shadow: .5px .5px 2px rgb(55, 88, 125);
+}
+
 
 /* HEADER, FOOTER, & CHILDREN */
 

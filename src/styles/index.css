@@ -16,9 +16,9 @@ a:link, a:active, a:visited {
   color: black;
 }
 
-a:hover {
-  color: #505050;
-}
+/* a:hover {
+  color: #404040;
+} */
 
 #exit {
   position: absolute;

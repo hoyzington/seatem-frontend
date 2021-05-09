@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { NavLink } from 'react-router-dom'
 
 class GuestInfo extends React.Component {
 
@@ -8,8 +9,11 @@ class GuestInfo extends React.Component {
       return (
         <>
           <h4>{this.props.guest.name}</h4>
-          {this.addUnseatButton()}
-          <button className='delete' onClick={this.handleDeleteClick}>Delete</button>
+          <div id='button-area'>
+            {this.addUnseatButton()}
+              <NavLink className='button delete' to='/' onClick={this.handleDeleteClick}>Delete</NavLink>
+          </div>
+
         </>
       )
     }
@@ -18,7 +22,7 @@ class GuestInfo extends React.Component {
   addUnseatButton = () => {
     if (this.props.guest.seated) {
       return (
-        <button className='unseat' onClick={this.handleUnseatClick}>Unseat</button>
+        <NavLink className='button unseat' to='/' onClick={this.handleUnseatClick}>Unseat</NavLink>
       )
     }
   }
