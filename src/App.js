@@ -45,7 +45,7 @@ const mapStateToProps = state => ({ state })
 const mapDispatchToProps = dispatch => ({
   addEvent: event => dispatch({ type: 'ADD_EVENT', event }),
   deleteEvent: id => dispatch({ type: 'DELETE_EVENT', id }),
-  addGuest: name => dispatch({ type: 'ADD_GUEST', name })
+  addGuest: guest => dispatch({ type: 'ADD_GUEST', guest })
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)

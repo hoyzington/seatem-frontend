@@ -4,11 +4,19 @@ import { NavLink } from 'react-router-dom'
 
 class GuestInfo extends React.Component {
 
+  buildFullName = () => {
+    const { firstName, midName, lastName } = this.props.guest
+    const f = firstName
+    const m = (midName.length > 0) ? ` ${midName}` : ''
+    const l = (lastName.length > 0) ? ` ${lastName}` : ''
+    return f + m + l
+  }
+
   showGuest = () => {
     if (this.props.guest) {
       return (
         <>
-          <h4>{this.props.guest.name}</h4>
+          <h4>{this.buildFullName()}</h4>
           <div id='button-area'>
             {this.addUnseatButton()}
               <NavLink className='button delete' to='/' onClick={this.handleDeleteClick}>Delete</NavLink>

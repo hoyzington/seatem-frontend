@@ -2,25 +2,16 @@ import React from 'react'
 import { NavLink, Redirect } from 'react-router-dom'
 
 class GuestForm extends React.Component {
-  state = { id: '', first: '', mid: '', last: '' }
+  state = { first: '', mid: '', last: '' }
 
   handleChange = e => {
     this.setState({ [e.target.name]: e.target.value })
   }
 
-  buildFullName = () => {
-    const { first, mid, last } = this.state
-    const f = first
-    const m = mid.length > 0 ? ' ' + mid : ''
-    const l = last.length > 0 ? ' ' + last : ''
-    return f + m + l
-  }
-
   handleSubmit = e => {
     e.preventDefault()
-    const name = this.buildFullName()
-    this.props.addGuest(name)
-    this.setState({ id: '', first: '', mid: '', last: '' })
+    this.props.addGuest(this.state)
+    this.setState({ first: '', mid: '', last: '' })
     document.getElementById('first-name').focus()
   }
 

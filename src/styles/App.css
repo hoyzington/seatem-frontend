@@ -4,7 +4,7 @@
 
 #button-area {
   position: relative;
-  top: 120px;
+  top: 145px;
   text-align: center;
 }
 
@@ -183,9 +183,9 @@ footer, #logo-bar, #title-bar, #menu-bar {
   }
 
   #guest-info-rect {
-    height: 214px;
-    width: 230px;
-    padding: 20px;
+    height: 229px;
+    width: 220px;
+    padding: 0px 25px 25px 25px;
     margin-left: 480px;
   }
 
