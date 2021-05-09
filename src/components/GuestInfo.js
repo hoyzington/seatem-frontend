@@ -1,15 +1,15 @@
 import React from 'react'
-import Button from './components/Button'
 import { connect } from 'react-redux'
 
 class GuestInfo extends React.Component {
 
   showGuest = () => {
-    const guest = this.props.guest
-    if (guest) {
+    if (this.props.guest) {
       return (
         <>
-          <h4>{guest.name}</h4>
+          <h4>{this.props.guest.name}</h4>
+          {this.addUnseatButton()}
+          <button className='delete' onClick={this.handleDeleteClick}>Delete</button>
         </>
       )
     }
@@ -18,15 +18,15 @@ class GuestInfo extends React.Component {
   addUnseatButton = () => {
     if (this.props.guest.seated) {
       return (
-        <Button className='unseat' handleClick={this.handleUnseatClick} name='Unseat' />
+        <button className='unseat' onClick={this.handleUnseatClick}>Unseat</button>
       )
     }
   }
 
   handleUnseatClick = () => {
-    const { guest, unseat } = this.props
+    const { guest, unseatGuest } = this.props
     if (guest && guest.seated) {
-      unseat(guest)
+      unseatGuest(guest)
     }
   }
 
@@ -39,8 +39,6 @@ class GuestInfo extends React.Component {
     return (
       <div id={'guest-info-' + event.table} className='guest-info'>
         {this.showGuest()}
-        {this.addUnseatButton()}
-        <Button className='delete' handleClick={this.handleDeleteClick} name='Delete' />
       </div>
     )
   }
@@ -54,7 +52,8 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  unseat: (guest) => dispatch({ type: 'UNSEAT_GUEST', guest })
+  unseatGuest: (guest) => dispatch({ type: 'UNSEAT_GUEST', guest }),
+  deleteGuest: (guest) => dispatch({ type: 'DELETE_GUEST', guest }),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(GuestInfo)
