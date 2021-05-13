@@ -44,6 +44,7 @@ function eventsReducer(state = {
         firstName: action.guest.first,
         midName: action.guest.mid,
         lastName: action.guest.last,
+        neighbors: [],
         seated: false,
       }
       eventIdx = state.events.findIndex(event => event.id === state.currentEvent.id)
