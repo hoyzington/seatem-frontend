@@ -12,9 +12,9 @@ class Chair extends React.Component {
   }
 
   handleClick = () => {
-    let guest = this.props.guest
-    const emptyChair = !this.guestInChair()
-    const chairId = this.props.id
+    const guest = this.props.guest,
+          emptyChair = !this.guestInChair(),
+          chairId = this.props.id
     if (guest && emptyChair) {
       this.props.seatGuest(chairId, guest)
     }

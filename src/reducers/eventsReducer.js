@@ -53,12 +53,15 @@ function eventsReducer(state = {
         ...event,
         guests: [...event.guests, newGuest],
       }
-      if (updatedEvent.guests.length > 4) {
-        updatedEvent = {
-          ...updatedEvent,
-          chairs: [...updatedEvent.chairs, ''],
-        }
-      }
+      // if (updatedEvent.guests.length > updatedEvent.chairs.length) {
+      //   updatedEvent = {
+      //     ...updatedEvent,
+      //     chairs: [
+      //       ...updatedEvent.chairs.slice(0, ),
+      //       '',
+      //     ],
+      //   }
+      // }
       return {
         ...state,
         events: [
@@ -114,12 +117,12 @@ function eventsReducer(state = {
           ],
           chairs: [
             ...event.chairs.slice(0, chairId),
-            guest,
+            guest.id,
             ...event.chairs.slice(chairId + 1),
           ],
         }
       } else {
-        chairIdx = event.chairs.findIndex(chair => chair === action.guest)
+        chairIdx = event.chairs.findIndex(chair => chair === action.guest.id)
         event = {
           ...event,
           chairs: [
@@ -132,7 +135,7 @@ function eventsReducer(state = {
           ...event,
           chairs: [
             ...event.chairs.slice(0, chairId),
-            guest,
+            guest.id,
             ...event.chairs.slice(chairId + 1),
           ],
         }
@@ -152,8 +155,8 @@ function eventsReducer(state = {
       chairId = parseInt(action.chairId)
       eventIdx = state.events.findIndex(event => event.id === state.currentEvent.id)
       event = state.events[eventIdx]
-      chairIdx = event.chairs.findIndex(chair => chair === action.guest)
-      guest = { ...action.guest, seated: false }
+      chairIdx = event.chairs.findIndex(chair => chair === action.guest.id)
+      guest = { ...action.guest, neighbors: [], seated: false }
       updatedEvent = {
         ...event,
         chairs: [
@@ -189,7 +192,7 @@ function eventsReducer(state = {
         ],
       }
       if (action.guest.seated) {
-        chairIdx = event.chairs.findIndex(chair => chair === action.guest)
+        chairIdx = event.chairs.findIndex(chair => chair === action.guest.id)
         updatedEvent = {
           ...updatedEvent,
           chairs: [
