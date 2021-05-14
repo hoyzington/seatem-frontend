@@ -18,6 +18,7 @@ class Chair extends React.Component {
           chairId = this.props.id
     if (guest && emptyChair) {
       this.props.seatGuest(chairId, guest)
+      this.props.updateNeighbors()
     }
   }
 
@@ -72,7 +73,8 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  seatGuest: (chairId, guest) => dispatch({ type: 'SEAT_GUEST', chairId, guest })
+  seatGuest: (chairId, guest) => dispatch({ type: 'SEAT_GUEST', chairId, guest }),
+  updateNeighbors: () => dispatch({ type: 'UPDATE_NEIGHBORS' }),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Chair)

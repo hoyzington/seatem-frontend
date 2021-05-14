@@ -13,7 +13,7 @@ function eventsReducer(state = {
     selectedGuest: null,
   }, action) {
 
-  let eventIdx, chairIdx, guestIdx, event, currentEvent, updatedEvent, chairId, guest, newNeighbors
+  let eventIdx, chairIdx, guestIdx, event, currentEvent, updatedEvent, chairId, guest
 
   switch (action.type) {
     case 'ADD_EVENT':
@@ -76,29 +76,8 @@ function eventsReducer(state = {
       eventIdx = state.events.findIndex(event => event.id === state.currentEvent.id)
       event = state.events[eventIdx]
       guestIdx = event.guests.findIndex(guest => guest.id === action.guest.id)
-      const last = event.chairs.length - 1
-      switch (guestIdx) {
-        case 0:
-          newNeighbors = [
-            event.chairs[last],
-            event.chairs[1],
-          ]
-          break
-        case last:
-          newNeighbors = [
-            event.chairs[last - 1],
-            event.chairs[0],
-          ]
-          break
-        default:
-          newNeighbors = [
-            event.chairs[chairId - 1],
-            event.chairs[chairId + 1],
-          ]
-      }
       guest = {
         ...action.guest,
-        neighbors: newNeighbors,
         seated: true,
       }
       if (guestIdx >= 0) {
@@ -207,6 +186,49 @@ function eventsReducer(state = {
         ],
         currentEvent: updatedEvent,
         selectedGuest: null,
+      }
+
+    case 'UPDATE_NEIGHBORS':
+      eventIdx = state.events.findIndex(event => event.id === state.currentEvent.id)
+      event = state.events[eventIdx]
+      const chairs = event.chairs
+      const guests = event.guests.map((guest) => {
+        if (guest.seated) {
+          let newNeighbors
+          const chairIdx = chairs.findIndex(chair => chair === guest.id)
+          const last = chairs.length - 1
+          switch (chairIdx) {
+            case 0:
+              newNeighbors = [
+                chairs[last],
+                chairs[1],
+              ]
+              break
+            case last:
+              newNeighbors = [
+                chairs[last - 1],
+                chairs[0],
+              ]
+              break
+            default:
+              newNeighbors = [
+                chairs[chairIdx - 1],
+                chairs[chairIdx + 1],
+              ]
+          }
+          return { ...guest, neighbors: newNeighbors }
+        }
+        return guest
+      })
+      updatedEvent = { ...event, guests: guests }
+      return {
+        ...state,
+        events: [
+          ...state.events.slice(0, eventIdx),
+          updatedEvent,
+          ...state.events.slice(eventIdx + 1),
+        ],
+        currentEvent: updatedEvent,
       }
 
     default:
