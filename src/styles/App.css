@@ -168,7 +168,7 @@ footer, #logo-bar, #title-bar, #menu-bar {
     margin-left: -142px;
   }
 
-  .guest-info {
+  #guest-info-rnd, #guest-info-rect {
     border-radius: 30px;
     border: 3px solid rgba(127, 127, 127, 0.35);
   }

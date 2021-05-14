@@ -13,7 +13,7 @@ function eventsReducer(state = {
     selectedGuest: null,
   }, action) {
 
-  let eventIdx, chairIdx, guestIdx, event, currentEvent, updatedEvent, chairId, guest
+  let eventIdx, chairIdx, guestIdx, event, currentEvent, updatedEvent, chairId, guest, newNeighbors
 
   switch (action.type) {
     case 'ADD_EVENT':
@@ -82,7 +82,29 @@ function eventsReducer(state = {
       eventIdx = state.events.findIndex(event => event.id === state.currentEvent.id)
       event = state.events[eventIdx]
       guestIdx = event.guests.findIndex(guest => guest.id === action.guest.id)
-      guest = { ...action.guest, seated: true }
+      const last = event.chairs.length - 1
+      switch (guestIdx) {
+        case 0:
+          newNeighbors = [
+            event.chairs[last],
+            event.chairs[1],
+          ]
+        case last:
+          newNeighbors = [
+            event.chairs[last - 1],
+            event.chairs[0],
+          ]
+        default:
+          newNeighbors = [
+            event.chairs[chairId - 1],
+            event.chairs[chairId + 1],
+          ]
+      }
+      guest = {
+        ...action.guest,
+        neighbors: newNeighbors,
+        seated: true,
+      }
       if (guestIdx >= 0) {
         updatedEvent = {
           ...event,

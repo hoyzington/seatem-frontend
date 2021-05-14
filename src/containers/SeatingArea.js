@@ -193,17 +193,21 @@ class SeatingArea extends React.Component {
     chairs.push(<Chair key='0' id='0' x='0' y='103' />)
     if (qty < 5) {
       chairs.push(<Chair key='1' id='1' x='103' y='0' />)
-      chairs.push(<Chair key='2' id='2' x='103' y='206' />)
-      chairs.push(<Chair key='3' id='3' x='206' y='103' />)
+      chairs.push(<Chair key='2' id='2' x='206' y='103' />)
+      chairs.push(<Chair key='3' id='3' x='103' y='206' />)
     } else {
-      let id = 1, x = 81
+      let id = 1, x = -7
       for (let i = num; i > 0; i--) {
-        chairs.push(<Chair key={id} id={id} x={x} y='0' />)
-        chairs.push(<Chair key={id + 1} id={id} x={x} y='206' />)
-        id += 2
         x += 88
+        chairs.push(<Chair key={id} id={id} x={x} y='0' />)
+        id += 1
       }
-      chairs.push(<Chair key={qty} id={id} x={total} y='103' />)
+      chairs.push(<Chair key={id} id={id} x={total} y='103' />)
+      for (let i = num; i > 0; i--) {
+        chairs.push(<Chair key={id} id={id} x={x} y='206' />)
+        id += 1
+        x -= 88
+      }
     }
     return chairs
   }

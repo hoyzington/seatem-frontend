@@ -49,7 +49,7 @@ class GuestInfo extends React.Component {
   render() {
     const event = this.props.event
     return (
-      <div id={'guest-info-' + event.table} className='guest-info'>
+      <div id={'guest-info-' + event.table}>
         {this.showGuest()}
       </div>
     )
