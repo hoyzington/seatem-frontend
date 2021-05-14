@@ -18,21 +18,20 @@ class GuestForm extends React.Component {
   maxGuests = () => {
     const event = this.props.event
     const guests = event.guests.length
-    const max = event.table === 'rnd' ? '12' : '18'
+    const max = event.guestQty
     return (guests + ' of ' + max)
   }
 
   render() {
     const event = this.props.event
-    const roundTable = event.table === 'rnd'
-    if (event.guests.length === (roundTable ? 12 : 18)) {
+    if (event.guests.length === event.chairs.length) {
       return (<Redirect to='/' />)
     }
     return (
       <div id='form' className='card'>
         <NavLink id='exit' to='/'>&times;</NavLink>
         <form onSubmit={this.handleSubmit}>
-          <b>ADD GUESTS</b> ({this.maxGuests()} max)<br/>
+          <b>ADD GUESTS</b> ({this.maxGuests()})<br/>
           <label>
             First Name&nbsp;
             <input

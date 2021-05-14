@@ -203,6 +203,7 @@ class SeatingArea extends React.Component {
         id += 1
       }
       chairs.push(<Chair key={id} id={id} x={total} y='103' />)
+      id += 1
       for (let i = num; i > 0; i--) {
         chairs.push(<Chair key={id} id={id} x={x} y='206' />)
         id += 1

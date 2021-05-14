@@ -7,8 +7,9 @@ class Chair extends React.Component {
 
   guestInChair = () => {
     const chairId = this.props.id
-    const chairs = this.props.event.chairs
-    return chairs[parseInt(chairId)]
+    const event = this.props.event
+    const guestId = event.chairs[parseInt(chairId)]
+    return event.guests.find(guest => guest.id === guestId)
   }
 
   handleClick = () => {

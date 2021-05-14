@@ -53,15 +53,6 @@ function eventsReducer(state = {
         ...event,
         guests: [...event.guests, newGuest],
       }
-      // if (updatedEvent.guests.length > updatedEvent.chairs.length) {
-      //   updatedEvent = {
-      //     ...updatedEvent,
-      //     chairs: [
-      //       ...updatedEvent.chairs.slice(0, ),
-      //       '',
-      //     ],
-      //   }
-      // }
       return {
         ...state,
         events: [
@@ -92,11 +83,13 @@ function eventsReducer(state = {
             event.chairs[last],
             event.chairs[1],
           ]
+          break
         case last:
           newNeighbors = [
             event.chairs[last - 1],
             event.chairs[0],
           ]
+          break
         default:
           newNeighbors = [
             event.chairs[chairId - 1],
@@ -113,6 +106,7 @@ function eventsReducer(state = {
           ...event,
           guests: [
             ...event.guests.slice(0, guestIdx),
+            guest,
             ...event.guests.slice(guestIdx + 1),
           ],
           chairs: [
@@ -155,6 +149,7 @@ function eventsReducer(state = {
       chairId = parseInt(action.chairId)
       eventIdx = state.events.findIndex(event => event.id === state.currentEvent.id)
       event = state.events[eventIdx]
+      guestIdx = event.guests.findIndex(guest => guest.id === action.guest.id)
       chairIdx = event.chairs.findIndex(chair => chair === action.guest.id)
       guest = { ...action.guest, neighbors: [], seated: false }
       updatedEvent = {
@@ -165,8 +160,9 @@ function eventsReducer(state = {
           ...event.chairs.slice(chairIdx + 1),
         ],
         guests: [
-          ...event.guests,
+          ...event.guests.slice(0, guestIdx),
           guest,
+          ...event.guests.slice(guestIdx + 1),
         ],
       }
       return {

@@ -4,8 +4,12 @@ import { connect } from 'react-redux'
 
 class GuestArea extends React.Component {
 
-  renderGuests = event => {
-    return event.guests.map(guest => (<Guest key={guest.id} guest={guest} />))
+  renderGuests = (event) => {
+    return event.guests.map((guest) => {
+      if (guest.seated === false) {
+        return (<Guest key={guest.id} guest={guest} />)
+      }
+    })
   }
 
   render() {
