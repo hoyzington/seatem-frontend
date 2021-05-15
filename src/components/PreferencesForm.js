@@ -3,53 +3,55 @@ import { NavLink } from 'react-router-dom'
 
 class PreferencesForm extends React.Component {
   state = {
-    guest: '',
-    shouldPrefType: '',
-    should: '',
-    shoulds: [],
-    shouldNotPrefType: '',
-    shouldNot: '',
-    shouldNots: [],
+    guestId: '',
+    prefTypeYes: '',
+    guestIdYes: '',
+    guestsYes: [],
+    descriptionYes: '',
+    descriptionsYes: [],
+    prefTypeNo: '',
+    guestIdNo: '',
+    guestsNo: [],
+    descriptionNo: '',
+    descriptionsNo: []
+  }
+
+  buildFullName = (guest) => {
+    const { firstName, midName, lastName } = guest
+    const f = firstName
+    const m = (midName.length > 0) ? ` ${midName}` : ''
+    const l = (lastName.length > 0) ? ` ${lastName}` : ''
+    return f + m + l
+  }
+
+  createGuestOptions = (type) => {
+    let guests = this.props.event.guests
+    if (type === 'preference') {
+      guests = guests.filter(guest => guest.id !== this.state.guestId)
+    }
+    return guests.map((guest) => (
+      <option key={guest.id} value={guest.id}>
+        {this.buildFullName(guest)}
+      </option>
+    ))
   }
 
   handleChange = (e) => {
     this.setState({ [e.target.name]: e.target.value })
   }
 
-  setSelectInputStyleForShould = () => {
-    if (this.state.shouldPrefType === 'guest') {
+  setInputDisplay = (attribute, type) => {
+    // console.log(this.state)
+    if (this.state[attribute] === type) {
       return { display: 'inline' }
     }
     return { display: 'none' }
   }
 
-  setTextInputStyleForShould = () => {
-    if (this.state.shouldPrefType === 'description') {
-      return { display: 'inline' }
-    }
-    return { display: 'none' }
-  }
-
-  setSelectInputStyleForShouldNot = () => {
-    if (this.state.shouldNotPrefType === 'guest') {
-      return { display: 'inline' }
-    }
-    return { display: 'none' }
-  }
-
-  setTextInputStyleForShouldNot = () => {
-    if (this.state.shouldNotPrefType === 'description') {
-      return { display: 'inline' }
-    }
-    return { display: 'none' }
-  }
-
-  handleSubmit = (e) => {
+  handleAdd = (pref) => {
     this.props.addPreference(this.state)
-    this.setState({ guest: '', shoulds: [], shouldNots: [] })
+    this.setState({ [`prefType${pref}`]: '', [pref]: '' })
   }
-
-
 
   render() {
     return (
@@ -57,88 +59,125 @@ class PreferencesForm extends React.Component {
         <NavLink id='exit' to='/'>&times;</NavLink>
         <form>
           <p><b>ADD SEATING PREFERENCES</b></p>
+
           <p>
             <label>
               Those Sitting Beside&nbsp;
-              <select name='guest' autoFocus required>
+              <select
+                name='guestId'
+                value={this.state.guestId}
+                onChange={this.handleChange}
+                autoFocus
+                required
+              >
                 <option value="" hidden>Choose A Guest</option>
-                <option value="">Charlie Brown</option>
-                <option value="">Sally Brown</option>
+                {this.createGuestOptions('guest')}
               </select>
-            </label>:
+            </label>...
           </p>
+
           <div id='pref-area'>
             <div className='pref-box'>
-              Should Be...<br/>
+              Should Be...
+              <NavLink
+                id='add-should'
+                className='button'
+                to='/preferences-form'
+                onClick={() => this.handleAdd('should')}
+              >ADD</NavLink><br/>
+
               <label>
                 <input
                   type="radio"
-                  name='shouldPrefType'
+                  name='prefTypeYes'
                   value='guest'
                   onChange={this.handleChange}
                 />&nbsp;
                 <i>choose a guest</i>
               </label>&nbsp;&nbsp;
-              <select name='should' style={this.setSelectInputStyleForShould()}>
-                <option value="" hidden>Guest</option>
-                <option value="">Charlie Brown</option>
-                <option value="">Sally Brown</option>
+
+              <select
+                name='guestIdYes'
+                value={this.guestIdYes}
+                onChange={this.handleChange} 
+                style={this.setInputDisplay('prefTypeYes', 'guest')}
+              >
+                <option value="" hidden>Guests</option>
+                {this.createGuestOptions('preference')}
               </select><br/>
+
               <label>
                 <input
                   type="radio"
-                  name='shouldPrefType'
+                  name='prefTypeYes'
                   value='description'
                   onChange={this.handleChange}
                 />&nbsp;
                 <i>enter a description</i>
               </label>&nbsp;&nbsp;
+
                 <input
                   type="text"
-                  name='should'
+                  name='descriptionYes'
+                  value={this.state.descriptionYes}
                   onChange={this.handleChange}
-                  value={this.state.should}
                   placeholder='Description'
-                  style={this.setTextInputStyleForShould()}
+                  style={this.setInputDisplay('prefTypeYes', 'description')}
                 />
             </div>
+
             <div className='pref-box'>
-              Should Not Be...<br/>
+              Should Not Be...
+              <NavLink
+                id='add-should-not'
+                className='button'
+                to='/preferences-form'
+                onClick={() => this.handleAdd('shouldNot')}
+              >ADD</NavLink><br/>
+
               <label>
                 <input
                   type="radio"
-                  name='shouldNotPrefType'
+                  name='prefTypeNo'
                   value='guest'
                   onChange={this.handleChange}
                 />&nbsp;
                 <i>choose a guest</i>
               </label>&nbsp;&nbsp;
-              <select name='shouldNot' style={this.setSelectInputStyleForShouldNot()}>
-                <option value="" hidden>Guest</option>
-                <option value="">Charlie Brown</option>
-                <option value="">Sally Brown</option>
+
+              <select
+                name='guestIdNo'
+                value={this.state.guestIdNo}
+                onChange={this.handleChange} 
+                style={this.setInputDisplay('prefTypeNo', 'guest')}
+              >
+                <option value="" hidden>Guests</option>
+                {this.createGuestOptions('preference')}
               </select><br/>
+
               <label>
                 <input
                   type="radio"
-                  name='shouldNotPrefType'
+                  name='prefTypeNo'
                   value='description'
                   onChange={this.handleChange}
                 />&nbsp;
                 <i>enter a description</i>
               </label>&nbsp;&nbsp;
+
               <input
                 type="text"
-                name='shouldNot'
+                name='descriptionNo'
+                value={this.state.descriptionNo}
                 onChange={this.handleChange}
-                value={this.state.should}
                 placeholder='Description'
-                style={this.setTextInputStyleForShouldNot()}
+                style={this.setInputDisplay('prefTypeNo', 'description')}
               />
             </div>
           </div>
+
           <br/>
-          <NavLink className='button form' to='/guest-form' onClick={this.handleSubmit}>ADD ANOTHER</NavLink>
+          {/* <NavLink className='button form' to='/guest-form' onClick={this.handleSubmit}>ADD ANOTHER</NavLink> */}
           <NavLink className='button form' to='/'>NEXT STEP</NavLink>
         </form>
       </div>
