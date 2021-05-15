@@ -8,8 +8,7 @@ class EventForm extends React.Component {
     this.setState({ [e.target.name]: e.target.value })
   }
 
-  handleSubmit = (e) => {
-    e.preventDefault()
+  handleSubmit = () => {
     let submittedState = this.state
     let qty = parseInt(this.state.guestQty)
     if (qty < 5) {
@@ -30,7 +29,8 @@ class EventForm extends React.Component {
     return (
       <div id='form' className='card'>
         <NavLink id='exit' to='/'>&times;</NavLink>
-        <form onSubmit={this.handleSubmit}>
+        <p><b>ADD AN EVENT</b></p>
+        <form>
           <label>
             Event Name&nbsp;
             <input
@@ -71,8 +71,10 @@ class EventForm extends React.Component {
               value={this.state.guestQty}
               max={this.state.table === 'rnd' ? '12' : '26'}
               required/>&nbsp;
-          </label>
-          <input type="submit"/>
+          </label><br/><br/>
+          <div id='button-area'>
+            <NavLink className='button form' to='/guest-form' onClick={this.handleSubmit} >Next Step</NavLink>
+          </div>
         </form>
       </div>
     )

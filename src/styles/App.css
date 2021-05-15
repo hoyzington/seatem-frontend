@@ -4,26 +4,36 @@
 
 #button-area {
   position: relative;
-  top: 145px;
+  bottom: 0px;
   text-align: center;
 }
 
 .button {
-  width: 80px;
-  padding: 7px 12px 7.5px 12px;
-  margin: 0px 15px;
+  padding: 7px 15px 7px 15px;
   border-radius: 20px;
   border-style: hidden;
   font-family: inherit;
-  font-size: large;
+  font-size: medium;
+  /* font-weight: 600; */
+}
+
+.form {
+  margin: 0px 31px;
+  /* background-color: rgba(142, 188, 142, 1); */
+  background-color: rgb(240, 240, 240);
+  box-shadow: .5px .5px 2.5px rgb(120, 120, 120);
 }
 
 .delete {
+  width: 80px;
+  margin: 0px 15px;
   background-color: rgb(252, 120, 120, 0.7);
   box-shadow: .5px .5px 2px rgb(126, 60, 60);
 }
 
 .unseat {
+  width: 80px;
+  margin: 0px 15px;
   background-color: rgba(110, 176, 250, 0.7);
   box-shadow: .5px .5px 2px rgb(55, 88, 125);
 }
@@ -95,20 +105,43 @@ footer, #logo-bar, #title-bar, #menu-bar {
 /* CARDS */
 
 .card {
-  box-shadow: 2px 2px 9px rgb(130, 130, 130);
-  border-radius: 8px;
+  /* box-shadow: 2px 2px 9px rgb(130, 130, 130); */
+  border-radius: 20px;
   z-index: 1;
-  background-color: rgba(89, 142, 199, 0.65);
+  /* background-color: rgba(89, 142, 199, 0.65); */
+  background-color: rgba(116, 160, 212, 0.6);
+  box-shadow: 2px 2px 8px rgb(58, 80, 106);
   backdrop-filter: blur(6px);
-  font-size: 3vh;
+  font-size: larger;
   line-height: 1.75em;
 }
 
 #form {
   top: 23vh;
   left: 30.5vw;
-  width: 35vw;
-  padding: 2vh 2vw;
+  /* width: 35vw; */
+  padding: 8px 30px 25px 30px;
+}
+
+#pref-form {
+  top: 10vh;
+  left: 60px;
+  width: 800px;
+  padding: 8px 30px 25px 30px;
+}
+
+#pref-area {
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+}
+
+.pref-box {
+  width: 375px;
+  border: 3px solid rgba(127, 127, 127, 0.35);
+  border-radius: 15px;
+  padding: 0px 10px 5px 10px;
 }
 
 #about {

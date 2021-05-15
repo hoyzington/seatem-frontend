@@ -4,15 +4,20 @@ import { NavLink, Redirect } from 'react-router-dom'
 class GuestForm extends React.Component {
   state = { first: '', mid: '', last: '' }
 
-  handleChange = e => {
+  handleChange = (e) => {
     this.setState({ [e.target.name]: e.target.value })
   }
 
-  handleSubmit = e => {
-    e.preventDefault()
+  handleSubmit = () => {
     this.props.addGuest(this.state)
     this.setState({ first: '', mid: '', last: '' })
     document.getElementById('first-name').focus()
+  }
+
+  handleClick = () => {
+    if (this.state.first !== '') {
+      this.props.addGuest(this.state)
+    }
   }
 
   maxGuests = () => {
@@ -25,13 +30,13 @@ class GuestForm extends React.Component {
   render() {
     const event = this.props.event
     if (event.guests.length === event.chairs.length) {
-      return (<Redirect to='/' />)
+      return (<Redirect to='/preferences-form' />)
     }
     return (
       <div id='form' className='card'>
         <NavLink id='exit' to='/'>&times;</NavLink>
-        <form onSubmit={this.handleSubmit}>
-          <b>ADD GUESTS</b> ({this.maxGuests()})<br/>
+        <form>
+          <p><b>ADD GUESTS</b> ({this.maxGuests()})</p>
           <label>
             First Name&nbsp;
             <input
@@ -61,8 +66,11 @@ class GuestForm extends React.Component {
               onChange={this.handleChange}
               value={this.state.last}
               maxLength='12'/>
-          </label>&nbsp;<i>(optional)</i>&nbsp;
-          <input type="submit"/>
+          </label>&nbsp;<i>(optional)</i><br/><br/>
+          <div id='button-area'>
+            <NavLink className='button form' to='/guest-form' onClick={this.handleSubmit} >ADD ANOTHER</NavLink>
+            <NavLink className='button form' to='/preferences-form'onClick={this.handleClick} >NEXT STEP</NavLink>
+          </div>
         </form>
       </div>
     )

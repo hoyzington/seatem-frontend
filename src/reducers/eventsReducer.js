@@ -63,6 +63,23 @@ function eventsReducer(state = {
         currentEvent: updatedEvent,
       }
 
+    case 'ADD_PREFERENCE':
+      eventIdx = state.events.findIndex(event => event.id === state.currentEvent.id)
+      event = state.events[eventIdx]
+      updatedEvent = {
+        ...event,
+        // guests: [...event.guests, newGuest],
+      }
+      return {
+        ...state,
+        events: [
+          ...state.events.slice(0, eventIdx),
+          updatedEvent,
+          ...state.events.slice(eventIdx + 1),
+        ],
+        currentEvent: updatedEvent,
+      }
+
     case 'SELECT_GUEST':
       currentEvent = state.currentEvent
       guest = currentEvent.guests.find(guest => guest.id === action.id) || currentEvent.chairs.find(chair => chair.id === action.id)

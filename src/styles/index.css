@@ -22,8 +22,8 @@ a:link, a:active, a:visited {
 
 #exit {
   position: absolute;
-  top: .5vh;
-  right: 1.5vh;
+  top: 10px;
+  right: 17px;
   font-family: monospace;
   font-size: 2em;
   font-weight: 500;
