@@ -45,6 +45,12 @@ function eventsReducer(state = {
         midName: action.guest.mid,
         lastName: action.guest.last,
         neighbors: [],
+        preferences: {
+          guestsYes: [],
+          guestsNo: [],
+          descriptionsYes: [],
+          descriptionsNo: [],
+        },
         seated: false,
       }
       eventIdx = state.events.findIndex(event => event.id === state.currentEvent.id)
@@ -66,9 +72,14 @@ function eventsReducer(state = {
     case 'ADD_PREFERENCE':
       eventIdx = state.events.findIndex(event => event.id === state.currentEvent.id)
       event = state.events[eventIdx]
+      guestIdx = event.guests.findIndex(guest => guest.id === action.guest.id)
       updatedEvent = {
         ...event,
-        // guests: [...event.guests, newGuest],
+        guests: [
+          ...event.guests.slice(0, guestIdx),
+          action.guest,
+          ...event.guests.slice(guestIdx + 1),
+        ],
       }
       return {
         ...state,
@@ -78,6 +89,7 @@ function eventsReducer(state = {
           ...state.events.slice(eventIdx + 1),
         ],
         currentEvent: updatedEvent,
+        selectedGuest: action.guest,
       }
 
     case 'SELECT_GUEST':

@@ -21,7 +21,7 @@ class App extends React.Component {
   eventData = {type: 'rect', qty: 18}
 
   render() {
-    const { addEvent, addGuest, addPreference } = this.props
+    const { addEvent, addGuest } = this.props
     const event = this.props.state.currentEvent
     return (
       <Router>
@@ -31,7 +31,7 @@ class App extends React.Component {
           <Route exact path='/about' component={About} />
           <Route exact path='/event-form' render={() => <EventForm event={event} addEvent={addEvent} />} />
           <Route exact path='/guest-form' render={() => <GuestForm event={event} addGuest={addGuest} />} />
-          <Route exact path='/preferences-form' render={() => <PreferencesForm event={event} addPreference={addPreference} />} />
+          <Route exact path='/preferences-form' component={PreferencesForm} />
           <Route exact path='/account' component={AccountArea} />
           <EventArea data={this.props.state} />
           <NonEventArea guests={event.guests} table={event.table} />
@@ -48,7 +48,6 @@ const mapDispatchToProps = dispatch => ({
   addEvent: event => dispatch({ type: 'ADD_EVENT', event }),
   deleteEvent: id => dispatch({ type: 'DELETE_EVENT', id }),
   addGuest: guest => dispatch({ type: 'ADD_GUEST', guest }),
-  addPreference: guest => dispatch({ type: 'ADD_PREFERENCE', guest }),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)

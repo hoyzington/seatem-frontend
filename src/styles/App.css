@@ -39,20 +39,13 @@
   box-shadow: .5px .5px 2px rgb(55, 88, 125);
 }
 
-#add-should, #add-should-not {
+#add {
   position: relative;
-  top: 3px;
+  top: -96px;
+  left: 319px;
   padding: 3px 9px;
   background-color: rgb(240, 240, 240);
   box-shadow: .5px .5px 2.5px rgb(120, 120, 120);
-}
-
-#add-should {
-  left: 215px;
-}
-
-#add-should-not {
-  left: 180px;
 }
 
 /* HEADER, FOOTER, & CHILDREN */
@@ -138,7 +131,7 @@ footer, #logo-bar, #title-bar, #menu-bar {
 }
 
 #pref-form {
-  top: 10vh;
+  top: 9vh;
   left: 60px;
   width: 800px;
   padding: 8px 30px 25px 30px;
@@ -156,7 +149,14 @@ footer, #logo-bar, #title-bar, #menu-bar {
   margin-right: 15px;
   border: 3px solid rgba(127, 127, 127, 0.35);
   border-radius: 15px;
-  padding: 0px 10px 5px 10px;
+  padding: 1px 10px 15px 10px;
+}
+
+.pref-list {
+  height: 290px;
+  border-top: 1px solid rgba(127, 127, 127, 0.35);
+  border-bottom: 1px solid rgba(127, 127, 127, 0.35);
+  overflow-y: auto;
 }
 
 #about {

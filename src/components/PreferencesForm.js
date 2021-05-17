@@ -1,43 +1,58 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
+import { connect } from 'react-redux'
+import { v4 as uuidv4 } from 'uuid'
 
 class PreferencesForm extends React.Component {
   state = {
-    guestId: '',
+    guestId: this.props.guest.id,
     prefTypeYes: '',
-    guestIdYes: '',
-    guestsYes: [],
+    guestYes: '',
     descriptionYes: '',
-    descriptionsYes: [],
     prefTypeNo: '',
-    guestIdNo: '',
-    guestsNo: [],
+    guestNo: '',
     descriptionNo: '',
-    descriptionsNo: []
   }
 
   buildFullName = (guest) => {
-    const { firstName, midName, lastName } = guest
-    const f = firstName
-    const m = (midName.length > 0) ? ` ${midName}` : ''
-    const l = (lastName.length > 0) ? ` ${lastName}` : ''
+    const { firstName, midName, lastName } = guest,
+          f = firstName,
+          m = (midName.length > 0) ? ` ${midName}` : '',
+          l = (lastName.length > 0) ? ` ${lastName}` : ''
     return f + m + l
   }
 
-  createGuestOptions = (type) => {
-    let guests = this.props.event.guests
+  createGuestOptions = (type, bool) => {
+    let guests = this.props.guests
     if (type === 'preference') {
-      guests = guests.filter(guest => guest.id !== this.state.guestId)
+      const prefGuests = this.props.guest.preferences[`guests${bool}`]
+      guests = guests.filter(guest => {
+        return (guest.id !== this.state.guestId && !prefGuests.includes(guest.id))
+      })
     }
-    return guests.map((guest) => (
-      <option key={guest.id} value={guest.id}>
-        {this.buildFullName(guest)}
-      </option>
-    ))
+    return guests.map((guest) => {
+      if (guest.id !== this.state.guestId) {
+        return (
+          <option key={guest.id} value={guest.id}>
+            {this.buildFullName(guest)}
+          </option>
+        )
+      }
+      return (
+        <option key={guest.id} value={guest.id} selected>
+          {this.buildFullName(guest)}
+        </option>
+      )
+    })
   }
 
   handleChange = (e) => {
     this.setState({ [e.target.name]: e.target.value })
+  }
+
+  handleGuestChange = (e) => {
+    this.handleChange(e)
+    this.props.selectGuest(e.target.value)
   }
 
   setInputDisplay = (attribute, type) => {
@@ -48,9 +63,64 @@ class PreferencesForm extends React.Component {
     return { display: 'none' }
   }
 
-  handleAdd = (pref) => {
-    this.props.addPreference(this.state)
-    this.setState({ [`prefType${pref}`]: '', [pref]: '' })
+  handleAdd = (bool) => {
+    let guest = this.props.guest
+    const type = this.state[`prefType${bool}`]
+    if (guest && type !== '') {
+      const newPref = this.state[`${type}${bool}`]
+      let prefArray = guest.preferences[`${type}s${bool}`]
+      if (!prefArray.includes(newPref)) {
+        if (type === 'guest' && prefArray.length > 1) {
+          prefArray = [prefArray[prefArray.length - 1], newPref]
+        } else {
+          prefArray = [...prefArray, newPref]
+        }
+      }
+      guest = {
+        ...guest,
+        preferences: {
+          ...guest.preferences,
+          [`${type}s${bool}`]: prefArray,
+        }
+      }
+      this.props.addPreference(guest)
+      this.setState({
+        // [`prefType${bool}`]: '',
+        [`${type}${bool}`]: '',
+      })
+    }
+  }
+
+  renderPreferences = (type, bool) => {
+    const guest = this.props.guest
+    if (guest) {
+      return guest.preferences[`${type}${bool}`].map(pref => {
+        if (type === 'guests') {
+          const prefGuest = this.props.guests.find(guest => guest.id === pref)
+          return (
+            <li key={uuidv4()}>
+              {this.buildFullName(prefGuest)}
+            </li>
+          )
+        }
+        return (<li key={uuidv4()}>{pref}</li>)
+      })
+    }
+  }
+
+  buildPreferencesArea = (bool) => {
+    return (
+      <div className='pref-list'>
+        Guests
+        <ul>
+          {this.renderPreferences('guests', bool)}
+        </ul>
+        <p>Descriptions</p>
+        <ul>
+          {this.renderPreferences('descriptions', bool)}
+        </ul>
+      </div>
+    )
   }
 
   render() {
@@ -58,7 +128,10 @@ class PreferencesForm extends React.Component {
       <div id='pref-form' className='card'>
         <NavLink id='exit' to='/'>&times;</NavLink>
         <form>
-          <p><b>ADD SEATING PREFERENCES</b></p>
+          <p>
+            <b>ADD SEATING PREFERENCES</b>
+            <NavLink className='button form' to='/'>NEXT STEP</NavLink>
+          </p>
 
           <p>
             <label>
@@ -66,7 +139,7 @@ class PreferencesForm extends React.Component {
               <select
                 name='guestId'
                 value={this.state.guestId}
-                onChange={this.handleChange}
+                onChange={this.handleGuestChange}
                 autoFocus
                 required
               >
@@ -78,13 +151,7 @@ class PreferencesForm extends React.Component {
 
           <div id='pref-area'>
             <div className='pref-box'>
-              Should Be...
-              <NavLink
-                id='add-should'
-                className='button'
-                to='/preferences-form'
-                onClick={() => this.handleAdd('should')}
-              >ADD</NavLink><br/>
+              <b>Should Be...</b><br/>
 
               <label>
                 <input
@@ -97,13 +164,13 @@ class PreferencesForm extends React.Component {
               </label>&nbsp;&nbsp;
 
               <select
-                name='guestIdYes'
-                value={this.guestIdYes}
+                name='guestYes'
+                value={this.guestYes}
                 onChange={this.handleChange} 
                 style={this.setInputDisplay('prefTypeYes', 'guest')}
               >
                 <option value="" hidden>Guests</option>
-                {this.createGuestOptions('preference')}
+                {this.createGuestOptions('preference', 'Yes')}
               </select><br/>
 
               <label>
@@ -116,24 +183,28 @@ class PreferencesForm extends React.Component {
                 <i>enter a description</i>
               </label>&nbsp;&nbsp;
 
-                <input
-                  type="text"
-                  name='descriptionYes'
-                  value={this.state.descriptionYes}
-                  onChange={this.handleChange}
-                  placeholder='Description'
-                  style={this.setInputDisplay('prefTypeYes', 'description')}
-                />
+              <input
+                type="text"
+                name='descriptionYes'
+                value={this.state.descriptionYes}
+                onChange={this.handleChange}
+                placeholder='Description'
+                style={this.setInputDisplay('prefTypeYes', 'description')}
+              /><br/>
+
+              <NavLink
+                id='add'
+                className='button'
+                to='/preferences-form'
+                onClick={() => this.handleAdd('Yes')}
+              >ADD</NavLink>
+
+              {this.buildPreferencesArea('Yes')}
+
             </div>
 
             <div className='pref-box'>
-              Should Not Be...
-              <NavLink
-                id='add-should-not'
-                className='button'
-                to='/preferences-form'
-                onClick={() => this.handleAdd('shouldNot')}
-              >ADD</NavLink><br/>
+              <b>Should Not Be...</b><br/>
 
               <label>
                 <input
@@ -146,13 +217,13 @@ class PreferencesForm extends React.Component {
               </label>&nbsp;&nbsp;
 
               <select
-                name='guestIdNo'
-                value={this.state.guestIdNo}
+                name='guestNo'
+                value={this.state.guestNo}
                 onChange={this.handleChange} 
                 style={this.setInputDisplay('prefTypeNo', 'guest')}
               >
                 <option value="" hidden>Guests</option>
-                {this.createGuestOptions('preference')}
+                {this.createGuestOptions('preference', 'No')}
               </select><br/>
 
               <label>
@@ -172,17 +243,34 @@ class PreferencesForm extends React.Component {
                 onChange={this.handleChange}
                 placeholder='Description'
                 style={this.setInputDisplay('prefTypeNo', 'description')}
-              />
+              /><br/>
+
+              <NavLink
+                id='add'
+                className='button'
+                to='/preferences-form'
+                onClick={() => this.handleAdd('No')}
+              >ADD</NavLink><br/>
+
+              {this.buildPreferencesArea('No')}
+
             </div>
           </div>
-
-          <br/>
-          {/* <NavLink className='button form' to='/guest-form' onClick={this.handleSubmit}>ADD ANOTHER</NavLink> */}
-          <NavLink className='button form' to='/'>NEXT STEP</NavLink>
         </form>
       </div>
     )
   }
 }
 
-export default PreferencesForm
+const mapStateToProps = (state) => ({
+  user: state.user,
+  guests: state.currentEvent.guests,
+  guest: state.selectedGuest,
+})
+
+const mapDispatchToProps = (dispatch) => ({
+  addPreference: (guest) => dispatch({ type: 'ADD_PREFERENCE', guest }),
+  selectGuest: (id) => dispatch({ type: 'SELECT_GUEST', id })
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(PreferencesForm)
