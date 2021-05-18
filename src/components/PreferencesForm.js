@@ -5,13 +5,20 @@ import { v4 as uuidv4 } from 'uuid'
 
 class PreferencesForm extends React.Component {
   state = {
-    guestId: this.props.guest.id,
+    guestId: '',
     prefTypeYes: '',
     guestYes: '',
     descriptionYes: '',
     prefTypeNo: '',
     guestNo: '',
     descriptionNo: '',
+  }
+
+  componentDidMount() {
+    const guest = this.props.guest
+    if (guest) {
+      this.setState({ guestId: guest.id })
+    }
   }
 
   buildFullName = (guest) => {
@@ -23,10 +30,11 @@ class PreferencesForm extends React.Component {
   }
 
   createGuestOptions = (type, bool) => {
+    const guest = this.props.guest
     let guests = this.props.guests
-    if (type === 'preference') {
-      const prefGuests = this.props.guest.preferences[`guests${bool}`]
-      guests = guests.filter(guest => {
+    if (type === 'preference' && guest) {
+      const prefGuests = guest.preferences[`guests${bool}`]
+      guests = guests.filter((guest) => {
         return (guest.id !== this.state.guestId && !prefGuests.includes(guest.id))
       })
     }
@@ -83,7 +91,7 @@ class PreferencesForm extends React.Component {
           [`${type}s${bool}`]: prefArray,
         }
       }
-      this.props.addPreference(guest)
+      this.props.updatePreferences(guest, type)
       this.setState({
         // [`prefType${bool}`]: '',
         [`${type}${bool}`]: '',
@@ -91,20 +99,54 @@ class PreferencesForm extends React.Component {
     }
   }
 
+  handleDelete = (type, bool, pref) => {
+    let guest = this.props.guest
+    let prefs = guest.preferences[`${type}${bool}`]
+    const prefIdx = prefs.findIndex(item => item === pref)
+    guest = {
+      ...guest,
+      preferences: {
+        ...guest.preferences,
+        [`${type}${bool}`]: [
+          ...prefs.slice(0, prefIdx),
+          ...prefs.slice(prefIdx + 1)
+        ],
+      }
+    }
+    this.props.updatePreferences(guest)
+  }
+
   renderPreferences = (type, bool) => {
     const guest = this.props.guest
     if (guest) {
-      return guest.preferences[`${type}${bool}`].map(pref => {
-        if (type === 'guests') {
-          const prefGuest = this.props.guests.find(guest => guest.id === pref)
+      const prefs = guest.preferences[`${type}${bool}`]
+      if (prefs.length > 0) {
+        return prefs.map(pref => {
+          if (type === 'guests') {
+            const prefGuest = this.props.guests.find(guest => guest.id === pref)
+            return (
+              <li key={uuidv4()} className={bool}>
+                <b>{this.buildFullName(prefGuest)}</b>
+                <NavLink
+                  className='button delete-pref'
+                  to='/preferences-form'
+                  onClick={() => this.handleDelete(type,bool, pref)}
+                >&times;</NavLink>
+              </li>
+            )
+          }
           return (
-            <li key={uuidv4()}>
-              {this.buildFullName(prefGuest)}
+            <li key={uuidv4()} className={bool}>
+              <b>{pref}</b>
+              <NavLink
+                className='button delete-pref'
+                to='/preferences-form'
+                onClick={() => this.handleDelete(type,bool, pref)}
+              >&times;</NavLink>
             </li>
           )
-        }
-        return (<li key={uuidv4()}>{pref}</li>)
-      })
+        })
+      }
     }
   }
 
@@ -115,7 +157,7 @@ class PreferencesForm extends React.Component {
         <ul>
           {this.renderPreferences('guests', bool)}
         </ul>
-        <p>Descriptions</p>
+        Descriptions
         <ul>
           {this.renderPreferences('descriptions', bool)}
         </ul>
@@ -151,7 +193,7 @@ class PreferencesForm extends React.Component {
 
           <div id='pref-area'>
             <div className='pref-box'>
-              <b>Should Be...</b><br/>
+              <span className='Yes'><b>Should Be...</b></span><br/>
 
               <label>
                 <input
@@ -204,7 +246,7 @@ class PreferencesForm extends React.Component {
             </div>
 
             <div className='pref-box'>
-              <b>Should Not Be...</b><br/>
+            <span className='No'><b>Should Not Be...</b></span><br/>
 
               <label>
                 <input
@@ -269,7 +311,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  addPreference: (guest) => dispatch({ type: 'ADD_PREFERENCE', guest }),
+  updatePreferences: (guest, type) => dispatch({ type: 'UPDATE_PREFERENCES', guest, type }),
   selectGuest: (id) => dispatch({ type: 'SELECT_GUEST', id })
 })
 

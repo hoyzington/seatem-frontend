@@ -2,11 +2,16 @@
   position: fixed;
 }
 
-#button-area {
-  position: relative;
-  bottom: 0px;
-  text-align: center;
+.Yes {
+  color: rgb(0, 120, 10, .8);
 }
+
+.No {
+  color: rgb(130, 0, 30, .6);
+}
+
+
+/* BUTTONS & LINKS */
 
 .button {
   border-radius: 20px;
@@ -47,6 +52,20 @@
   background-color: rgb(240, 240, 240);
   box-shadow: .5px .5px 2.5px rgb(120, 120, 120);
 }
+
+.delete-pref {
+  position: relative;
+  top: 1px;
+  left: 20px;
+  font-size: larger;
+}
+
+#button-area {
+  position: relative;
+  bottom: 0px;
+  text-align: center;
+}
+
 
 /* HEADER, FOOTER, & CHILDREN */
 
