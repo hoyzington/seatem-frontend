@@ -28,15 +28,15 @@ class App extends React.Component {
       <Router>
         <>
           <NavBar title={event.name} />
-          <Route exact path='/' component={Home} />
+          <Route exact path='/' />
           <Route exact path='/about' component={About} />
           <Route exact path='/event-form' render={() => <EventForm event={event} addEvent={addEvent} />} />
           <Route exact path='/guest-form' render={() => <GuestForm event={event} addGuest={addGuest} />} />
           <Route exact path='/preferences-form' component={PreferencesForm} />
           <Route exact path='/checklist-form' component={ChecklistForm} />
           <Route exact path='/account' component={AccountArea} />
-          <EventArea data={this.props.state} />
           <NonEventArea guests={event.guests} table={event.table} />
+          <EventArea data={this.props.state} />
           <Footer />
         </>
       </Router>

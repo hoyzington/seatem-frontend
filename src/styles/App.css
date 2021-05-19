@@ -1,3 +1,11 @@
+body {
+  background-color: rgb(230, 230, 230);
+  margin: 0;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 #logo-bar, #title-bar, #menu-bar, .card, #form-or-about, #guest-area-rnd, #guest-area-rect, #event-area-rnd, #event-area-rect, footer {
   position: fixed;
 }
@@ -10,8 +18,19 @@
   color: rgb(130, 0, 30, .6);
 }
 
+li {
+  list-style-type: none;
+  position: relative;
+  left: -14px;
+}
+
 
 /* BUTTONS & LINKS */
+
+a:link, a:active, a:visited {
+  text-decoration: none;
+  color: black;
+}
 
 #exit {
   position: absolute;
@@ -53,7 +72,6 @@
   position: absolute;
   top: 26px;
   right: 47px;
-  /* padding: 3px 15px; */
 }
 
 .bottom {
@@ -144,6 +162,11 @@ footer, #logo-bar, #title-bar, #menu-bar {
   font-family: cursive;
   font-size: 5.5vh;
   word-spacing: -4px;
+}
+
+.navbar {
+  margin: 0vw 2vw;
+  font-weight: 500;
 }
 
 

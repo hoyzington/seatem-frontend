@@ -4,7 +4,7 @@ import { createStore, applyMiddleware, compose } from 'redux'
 import eventsReducer from './reducers/eventsReducer'
 import thunk from 'redux-thunk'
 import { Provider } from 'react-redux'
-import './styles/index.css'
+// import './styles/index.css'
 import App from './App'
 // import reportWebVitals from './reportWebVitals'
 
