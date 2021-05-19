@@ -21,13 +21,3 @@ a:link, a:active, a:visited {
   text-decoration: none;
   color: black;
 }
-
-#exit {
-  position: absolute;
-  top: 10px;
-  right: 17px;
-  font-family: monospace;
-  font-size: 2em;
-  /* font-weight: 00; */
-  color: rgb(55, 55, 55);
-}

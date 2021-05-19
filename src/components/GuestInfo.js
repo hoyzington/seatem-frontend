@@ -17,9 +17,9 @@ class GuestInfo extends React.Component {
       return (
         <>
           <h4>{this.buildFullName()}</h4>
-          <div id='button-area'>
+          <div id='btn-area'>
             {this.addUnseatButton()}
-              <NavLink className='button delete' to='/' onClick={this.handleDeleteClick}>Delete</NavLink>
+            <NavLink className='btn delete' to='/' onClick={this.handleDeleteClick}>Delete</NavLink>
           </div>
 
         </>
@@ -30,7 +30,7 @@ class GuestInfo extends React.Component {
   addUnseatButton = () => {
     if (this.props.guest.seated) {
       return (
-        <NavLink className='button unseat' to='/' onClick={this.handleUnseatClick}>Unseat</NavLink>
+        <NavLink className='btn unseat' to='/' onClick={this.handleUnseatClick}>Unseat</NavLink>
       )
     }
   }

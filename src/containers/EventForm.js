@@ -2,7 +2,7 @@ import React from 'react'
 import { NavLink, Redirect } from 'react-router-dom'
 
 class EventForm extends React.Component {
-  state = { id: '', name: '', table: 'rect', chairs: [], guests: [], guestQty: '0' }
+  state = { id: '', name: '', table: 'rect', chairs: [], guests: [], guestQty: '0', descriptions: [] }
 
   handleChange = (e) => {
     this.setState({ [e.target.name]: e.target.value })
@@ -27,7 +27,7 @@ class EventForm extends React.Component {
       return (<Redirect to='/guest-form' />)
     }
     return (
-      <div id='form' className='card'>
+      <div id='event-form' className='card'>
         <NavLink id='exit' to='/'>&times;</NavLink>
         <p><b>ADD AN EVENT</b></p>
         <form>
@@ -71,11 +71,11 @@ class EventForm extends React.Component {
               value={this.state.guestQty}
               max={this.state.table === 'rnd' ? '12' : '26'}
               required/>&nbsp;
-          </label><br/><br/>
-          <div id='button-area'>
-            <NavLink className='button form' to='/guest-form' onClick={this.handleSubmit} >Next Step</NavLink>
-          </div>
+          </label><br/>
         </form>
+        <div id='btn-area'>
+          <NavLink className='btn form bottom' to='/guest-form' onClick={this.handleSubmit} >NEXT STEP</NavLink>
+        </div>
       </div>
     )
   }

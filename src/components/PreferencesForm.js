@@ -15,7 +15,7 @@ class PreferencesForm extends React.Component {
   }
 
   componentDidMount() {
-    const guest = this.props.guest
+    const guest = this.props.selectedGuest
     if (guest) {
       this.setState({ guestId: guest.id })
     }
@@ -30,7 +30,7 @@ class PreferencesForm extends React.Component {
   }
 
   createGuestOptions = (type, bool) => {
-    const guest = this.props.guest
+    const guest = this.props.selectedGuest
     let guests = this.props.guests
     if (type === 'preference' && guest) {
       const prefGuests = guest.preferences[`guests${bool}`]
@@ -64,7 +64,6 @@ class PreferencesForm extends React.Component {
   }
 
   setInputDisplay = (attribute, type) => {
-    // console.log(this.state)
     if (this.state[attribute] === type) {
       return { display: 'inline' }
     }
@@ -72,7 +71,7 @@ class PreferencesForm extends React.Component {
   }
 
   handleAdd = (bool) => {
-    let guest = this.props.guest
+    let guest = this.props.selectedGuest
     const type = this.state[`prefType${bool}`]
     if (guest && type !== '') {
       const newPref = this.state[`${type}${bool}`]
@@ -91,44 +90,58 @@ class PreferencesForm extends React.Component {
           [`${type}s${bool}`]: prefArray,
         }
       }
-      this.props.updatePreferences(guest, type)
+      let descriptions = this.props.descriptions
+      if (type === 'description') {
+        descriptions = [
+          ...descriptions,
+          newPref,
+        ]
+      }
+      this.props.updatePreferences(guest, descriptions)
       this.setState({
-        // [`prefType${bool}`]: '',
         [`${type}${bool}`]: '',
       })
     }
   }
 
   handleDelete = (type, bool, pref) => {
-    let guest = this.props.guest
-    let prefs = guest.preferences[`${type}${bool}`]
+    let guest = this.props.selectedGuest
+    let prefs = guest.preferences[`${type}s${bool}`]
     const prefIdx = prefs.findIndex(item => item === pref)
     guest = {
       ...guest,
       preferences: {
         ...guest.preferences,
-        [`${type}${bool}`]: [
+        [`${type}s${bool}`]: [
           ...prefs.slice(0, prefIdx),
-          ...prefs.slice(prefIdx + 1)
+          ...prefs.slice(prefIdx + 1),
         ],
       }
     }
-    this.props.updatePreferences(guest)
+    let descriptions = this.props.descriptions
+    if (type === 'description') {
+      const descIdx = descriptions.findIndex(item => item === pref)
+      descriptions = [
+        ...descriptions.slice(0, descIdx),
+        ...descriptions.slice(descIdx + 1),
+      ]
+    }
+    this.props.updatePreferences(guest, descriptions)
   }
 
   renderPreferences = (type, bool) => {
-    const guest = this.props.guest
+    const guest = this.props.selectedGuest
     if (guest) {
-      const prefs = guest.preferences[`${type}${bool}`]
+      const prefs = guest.preferences[`${type}s${bool}`]
       if (prefs.length > 0) {
         return prefs.map(pref => {
-          if (type === 'guests') {
+          if (type === 'guest') {
             const prefGuest = this.props.guests.find(guest => guest.id === pref)
             return (
               <li key={uuidv4()} className={bool}>
                 <b>{this.buildFullName(prefGuest)}</b>
                 <NavLink
-                  className='button delete-pref'
+                  className='delete-preference'
                   to='/preferences-form'
                   onClick={() => this.handleDelete(type,bool, pref)}
                 >&times;</NavLink>
@@ -139,7 +152,7 @@ class PreferencesForm extends React.Component {
             <li key={uuidv4()} className={bool}>
               <b>{pref}</b>
               <NavLink
-                className='button delete-pref'
+                className='delete-preference'
                 to='/preferences-form'
                 onClick={() => this.handleDelete(type,bool, pref)}
               >&times;</NavLink>
@@ -152,28 +165,27 @@ class PreferencesForm extends React.Component {
 
   buildPreferencesArea = (bool) => {
     return (
-      <div className='pref-list'>
+      <div className='preference-list'>
         Guests
         <ul>
-          {this.renderPreferences('guests', bool)}
+          {this.renderPreferences('guest', bool)}
         </ul>
         Descriptions
         <ul>
-          {this.renderPreferences('descriptions', bool)}
+          {this.renderPreferences('description', bool)}
         </ul>
       </div>
     )
   }
 
   render() {
+    // console.log('HI')
     return (
-      <div id='pref-form' className='card'>
+      <div id='preference-form' className='card'>
         <NavLink id='exit' to='/'>&times;</NavLink>
         <form>
-          <p>
-            <b>ADD SEATING PREFERENCES</b>
-            <NavLink className='button form' to='/'>NEXT STEP</NavLink>
-          </p>
+          <b>ADD SEATING PREFERENCES</b>
+          <NavLink className='btn form top' to='/checklist-form'>NEXT STEP</NavLink>
 
           <p>
             <label>
@@ -191,8 +203,8 @@ class PreferencesForm extends React.Component {
             </label>...
           </p>
 
-          <div id='pref-area'>
-            <div className='pref-box'>
+          <div id='preference-area'>
+            <div className='preference-box'>
               <span className='Yes'><b>Should Be...</b></span><br/>
 
               <label>
@@ -236,7 +248,7 @@ class PreferencesForm extends React.Component {
 
               <NavLink
                 id='add'
-                className='button'
+                className='btn'
                 to='/preferences-form'
                 onClick={() => this.handleAdd('Yes')}
               >ADD</NavLink>
@@ -245,7 +257,7 @@ class PreferencesForm extends React.Component {
 
             </div>
 
-            <div className='pref-box'>
+            <div className='preference-box'>
             <span className='No'><b>Should Not Be...</b></span><br/>
 
               <label>
@@ -289,7 +301,7 @@ class PreferencesForm extends React.Component {
 
               <NavLink
                 id='add'
-                className='button'
+                className='btn'
                 to='/preferences-form'
                 onClick={() => this.handleAdd('No')}
               >ADD</NavLink><br/>
@@ -306,12 +318,13 @@ class PreferencesForm extends React.Component {
 
 const mapStateToProps = (state) => ({
   user: state.user,
+  descriptions: state.currentEvent.descriptions,
   guests: state.currentEvent.guests,
-  guest: state.selectedGuest,
+  selectedGuest: state.selectedGuest,
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  updatePreferences: (guest, type) => dispatch({ type: 'UPDATE_PREFERENCES', guest, type }),
+  updatePreferences: (guest, descriptions) => dispatch({ type: 'UPDATE_PREFERENCES', guest, descriptions }),
   selectGuest: (id) => dispatch({ type: 'SELECT_GUEST', id })
 })
 

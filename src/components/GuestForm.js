@@ -33,7 +33,7 @@ class GuestForm extends React.Component {
       return (<Redirect to='/preferences-form' />)
     }
     return (
-      <div id='form' className='card'>
+      <div id='guest-form' className='card'>
         <NavLink id='exit' to='/'>&times;</NavLink>
         <form>
           <p><b>ADD GUESTS</b> ({this.maxGuests()})</p>
@@ -66,10 +66,10 @@ class GuestForm extends React.Component {
               onChange={this.handleChange}
               value={this.state.last}
               maxLength='12'/>
-          </label>&nbsp;<i>(optional)</i><br/><br/>
-          <div id='button-area'>
-            <NavLink className='button form' to='/guest-form' onClick={this.handleSubmit} >ADD ANOTHER</NavLink>
-            <NavLink className='button form' to='/preferences-form'onClick={this.handleClick} >NEXT STEP</NavLink>
+          </label>&nbsp;<i>(optional)</i><br/>
+          <div id='btn-area'>
+            <NavLink className='btn form bottom' to='/guest-form' onClick={this.handleSubmit} >ADD ANOTHER</NavLink>
+            <NavLink className='btn form bottom' to='/preferences-form'onClick={this.handleClick} >NEXT STEP</NavLink>
           </div>
         </form>
       </div>

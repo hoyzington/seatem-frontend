@@ -10,6 +10,7 @@ import About from './components/About'
 import EventForm from './containers/EventForm'
 import GuestForm from './components/GuestForm'
 import PreferencesForm from './components/PreferencesForm'
+import ChecklistForm from './components/ChecklistForm'
 import AccountArea from './components/AccountArea'
 import NonEventArea from './components/NonEventArea'
 import EventArea from './components/EventArea'
@@ -32,6 +33,7 @@ class App extends React.Component {
           <Route exact path='/event-form' render={() => <EventForm event={event} addEvent={addEvent} />} />
           <Route exact path='/guest-form' render={() => <GuestForm event={event} addGuest={addGuest} />} />
           <Route exact path='/preferences-form' component={PreferencesForm} />
+          <Route exact path='/checklist-form' component={ChecklistForm} />
           <Route exact path='/account' component={AccountArea} />
           <EventArea data={this.props.state} />
           <NonEventArea guests={event.guests} table={event.table} />

@@ -9,6 +9,8 @@ function eventsReducer(state = {
       table: '',
       chairs: [],
       guests: [],
+      guestQty: '0',
+      descriptions: [],
     },
     selectedGuest: null,
   }, action) {
@@ -80,6 +82,7 @@ function eventsReducer(state = {
           action.guest,
           ...event.guests.slice(guestIdx + 1),
         ],
+        descriptions: action.descriptions,
       }
       return {
         ...state,
