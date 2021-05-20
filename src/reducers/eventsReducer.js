@@ -53,6 +53,7 @@ function eventsReducer(state = {
           descriptionsYes: [],
           descriptionsNo: [],
         },
+        traits: [],
         seated: false,
       }
       eventIdx = state.events.findIndex(event => event.id === state.currentEvent.id)
@@ -71,7 +72,7 @@ function eventsReducer(state = {
         currentEvent: updatedEvent,
       }
 
-    case 'UPDATE_PREFERENCES':
+    case 'UPDATE_GUEST':
       eventIdx = state.events.findIndex(event => event.id === state.currentEvent.id)
       event = state.events[eventIdx]
       guestIdx = event.guests.findIndex(guest => guest.id === action.guest.id)
@@ -82,7 +83,6 @@ function eventsReducer(state = {
           action.guest,
           ...event.guests.slice(guestIdx + 1),
         ],
-        descriptions: action.descriptions,
       }
       return {
         ...state,
@@ -95,7 +95,31 @@ function eventsReducer(state = {
         selectedGuest: action.guest,
       }
 
-    case 'SELECT_GUEST':
+      case 'UPDATE_DESCRIPTIONS':
+        eventIdx = state.events.findIndex(event => event.id === state.currentEvent.id)
+        event = state.events[eventIdx]
+        guestIdx = event.guests.findIndex(guest => guest.id === action.guest.id)
+        updatedEvent = {
+          ...event,
+          guests: [
+            ...event.guests.slice(0, guestIdx),
+            action.guest,
+            ...event.guests.slice(guestIdx + 1),
+          ],
+          descriptions: action.descriptions,
+        }
+        return {
+          ...state,
+          events: [
+            ...state.events.slice(0, eventIdx),
+            updatedEvent,
+            ...state.events.slice(eventIdx + 1),
+          ],
+          currentEvent: updatedEvent,
+          selectedGuest: action.guest,
+        }
+  
+      case 'SELECT_GUEST':
       currentEvent = state.currentEvent
       guest = currentEvent.guests.find(guest => guest.id === action.id) || currentEvent.chairs.find(chair => chair.id === action.id)
       return {

@@ -47,7 +47,7 @@ class PreferencesForm extends React.Component {
         )
       }
       return (
-        <option key={guest.id} value={guest.id} selected>
+        <option key={guest.id} value={guest.id} selected='true'>
           {this.buildFullName(guest)}
         </option>
       )
@@ -90,14 +90,16 @@ class PreferencesForm extends React.Component {
           [`${type}s${bool}`]: prefArray,
         }
       }
-      let descriptions = this.props.descriptions
       if (type === 'description') {
+        let descriptions = this.props.descriptions
         descriptions = [
           ...descriptions,
           newPref,
         ]
+        this.props.updateDescriptions(guest, descriptions)
+      } else {
+        this.props.updateGuest(guest)
       }
-      this.props.updatePreferences(guest, descriptions)
       this.setState({
         [`${type}${bool}`]: '',
       })
@@ -118,15 +120,17 @@ class PreferencesForm extends React.Component {
         ],
       }
     }
-    let descriptions = this.props.descriptions
     if (type === 'description') {
+      let descriptions = this.props.descriptions
       const descIdx = descriptions.findIndex(item => item === pref)
       descriptions = [
         ...descriptions.slice(0, descIdx),
         ...descriptions.slice(descIdx + 1),
       ]
+      this.props.updateDescriptions(guest, descriptions)
+    } else {
+      this.props.updateGuest(guest)
     }
-    this.props.updatePreferences(guest, descriptions)
   }
 
   renderPreferences = (type, bool) => {
@@ -179,7 +183,6 @@ class PreferencesForm extends React.Component {
   }
 
   render() {
-    // console.log('HI')
     return (
       <div id='preference-form' className='card'>
         <NavLink id='exit' to='/'>&times;</NavLink>
@@ -197,7 +200,7 @@ class PreferencesForm extends React.Component {
                 autoFocus
                 required
               >
-                <option value="" hidden>Choose A Guest</option>
+                <option key={uuidv4()} value="" hidden>Choose A Guest</option>
                 {this.createGuestOptions('guest')}
               </select>
             </label>...
@@ -223,7 +226,7 @@ class PreferencesForm extends React.Component {
                 onChange={this.handleChange} 
                 style={this.setInputDisplay('prefTypeYes', 'guest')}
               >
-                <option value="" hidden>Guests</option>
+                <option key={uuidv4()} value="" hidden>Guests</option>
                 {this.createGuestOptions('preference', 'Yes')}
               </select><br/>
 
@@ -276,7 +279,7 @@ class PreferencesForm extends React.Component {
                 onChange={this.handleChange} 
                 style={this.setInputDisplay('prefTypeNo', 'guest')}
               >
-                <option value="" hidden>Guests</option>
+                <option key={uuidv4()} value="" hidden>Guests</option>
                 {this.createGuestOptions('preference', 'No')}
               </select><br/>
 
@@ -324,7 +327,8 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  updatePreferences: (guest, descriptions) => dispatch({ type: 'UPDATE_PREFERENCES', guest, descriptions }),
+  updateGuest: (guest) => dispatch({ type: 'UPDATE_GUEST', guest }),
+  updateDescriptions: (guest, descriptions) => dispatch({ type: 'UPDATE_DESCRIPTIONS', guest, descriptions }),
   selectGuest: (id) => dispatch({ type: 'SELECT_GUEST', id })
 })
 

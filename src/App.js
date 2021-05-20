@@ -5,7 +5,6 @@ import {
 } from 'react-router-dom'
 import { connect } from 'react-redux'
 import NavBar from './components/NavBar'
-import Home from './components/Home'
 import About from './components/About'
 import EventForm from './containers/EventForm'
 import GuestForm from './components/GuestForm'

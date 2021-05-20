@@ -1,22 +1,49 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 import { connect } from 'react-redux'
+import { v4 as uuidv4 } from 'uuid'
 
 class PreferencesForm extends React.Component {
   state = {
     guestId: '',
-
+    traits: this.props.descriptions.reduce(
+      (traits, trait) => ({
+        ...traits,
+        [trait]: false
+      }),
+      {},
+    ),
   }
 
   componentDidMount() {
     const guest = this.props.selectedGuest
+    const guestTraits = guest.traits
     if (guest) {
-      this.setState({ guestId: guest.id })
+      if (guestTraits.length > 0){
+        this.setState({
+          guestId: guest.id,
+          traits: this.props.descriptions.reduce(
+            (traits, trait) => ({
+              ...traits,
+              [trait]: guestTraits.includes(trait)
+            }),
+            {},
+          ),
+        })
+      } else {
+        this.setState({ guestId: guest.id })
+      }
     }
   }
 
   handleChange = (e) => {
-    this.setState({ [e.target.name]: e.target.value })
+    const { name } = e.target
+    this.setState((prevState) => ({
+      traits: {
+        ...prevState.traits,
+        [name]: !prevState.traits[name],
+      }
+    }))
   }
 
   buildFullName = (guest) => {
@@ -38,7 +65,7 @@ class PreferencesForm extends React.Component {
         )
       }
       return (
-        <option key={guest.id} value={guest.id} selected>
+        <option key={guest.id} value={guest.id} selected='true'>
           {this.buildFullName(guest)}
         </option>
       )
@@ -53,22 +80,33 @@ class PreferencesForm extends React.Component {
   buildChecklist = () => {
     return (
       <div id='check-list'>
-        {this.props.descriptions.map((desc) => (
-          desc
+        {this.props.descriptions.map((trait) => (
+          <>
+            <label key={uuidv4()}>
+              <input
+                type='checkbox'
+                name={trait}
+                checked={this.state.traits[trait]}
+                onChange={this.handleChange}
+              />&nbsp;
+              {trait}
+            </label><br/>
+          </>
         ))}
+        {/* {console.log(this.state)} */}
       </div>
     )
   }
 
-  // handleSubmit = () => {
-  //   let guest = this.props.selectedGuest
-  //   const prefIdx = prefs.findIndex(item => item === '')
-  //   guest = {
-  //     ...guest,
-  //     checklist: {},
-  //   }
-  //   this.props.updatePreferences(guest)
-  // }
+  handleSubmit = () => {
+    let guest = this.props.selectedGuest
+    const traits = Object.keys(this.state.traits).filter(trait => this.state.traits[trait])
+    guest = {
+      ...guest,
+      traits: traits,
+    }
+    this.props.updateGuest(guest)
+  }
 
   render() {
     return (
@@ -103,7 +141,7 @@ class PreferencesForm extends React.Component {
           <NavLink
             className='btn form bottom'
             to='/checklist-form'
-            // onClick={this.handleSubmit()}
+            onClick={this.handleSubmit}
           >SUBMIT</NavLink>
         </div>
 
@@ -120,7 +158,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  updatePreferences: (guest, descriptions) => dispatch({ type: 'UPDATE_PREFERENCES', guest, descriptions }),
+  updateGuest: (guest) => dispatch({ type: 'UPDATE_GUEST', guest }),
   selectGuest: (id) => dispatch({ type: 'SELECT_GUEST', id })
 })
 
