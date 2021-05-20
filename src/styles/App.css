@@ -97,7 +97,7 @@ a:link, a:active, a:visited {
 #btn-area {
   display: flex;
   height: 35px;
-  margin: 25px 0px 8px 0px;
+  margin: 14px 0px 16px 0px;
   justify-content: center;
 }
 
@@ -173,8 +173,6 @@ footer, #logo-bar, #title-bar, #menu-bar {
 /* CARDS */
 
 .card {
-  top: 9vh;
-  left: 60px;
   border-radius: 20px;
   z-index: 1;
   background-color: rgba(116, 160, 212, 0.6);
@@ -185,10 +183,12 @@ footer, #logo-bar, #title-bar, #menu-bar {
 }
 
 #event-form {
+  margin-bottom: 15vh;
   padding: 5px 30px 23px 30px;
 }
 
 #guest-form {
+  margin-bottom: 20vh;
   padding: 5px 30px 25px 30px;
 }
 
@@ -199,7 +199,7 @@ footer, #logo-bar, #title-bar, #menu-bar {
 
 #checklist-form {
   width: 475px;
-  padding: 8px 30px 20px 30px;
+  padding: 8px 30px 00px 30px;
 }
 
 #preference-area {
@@ -228,13 +228,12 @@ footer, #logo-bar, #title-bar, #menu-bar {
 }
 
 #check-list {
-  min-height: 20px;
+  /* min-height: 20px; */
+  min-height: 370px;
   max-height: 370px;
 }
 
 #about {
-  top: 15vh;
-  left: 22vw;
   width: 50vw;
   padding: 1vh 3vw;
 }
@@ -242,10 +241,19 @@ footer, #logo-bar, #title-bar, #menu-bar {
 
 /* PAGE ZONES */
 
-#non-event-area-rnd, #non-event-area-rect, #event-area-rnd, #event-area-rect {
+#form-area, #non-event-area-rnd, #non-event-area-rect, #event-area-rnd, #event-area-rect {
+  position: absolute;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+#form-area {
+  top: 7.1vh;
+  left: 0px;
+  height: 88vh;
+  width: 100vw;
+  /* background-color: rgba(128, 128, 128, 0.4); */
 }
 
 #non-event-area-rnd, #non-event-area-rect {
@@ -322,7 +330,7 @@ footer, #logo-bar, #title-bar, #menu-bar {
 
   #seating-area-rnd, #seating-area-rect {
     position: absolute;
-    /* background-color: rgba(128, 128, 128, 0.5); */
+    background-color: rgba(128, 128, 128, 0.5);
   }
 
   #seating-area-rnd {

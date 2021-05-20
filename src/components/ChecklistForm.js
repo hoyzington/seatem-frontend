@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { v4 as uuidv4 } from 'uuid'
 
-class PreferencesForm extends React.Component {
+class ChecklistForm extends React.Component {
   state = {
     guestId: '',
     traits: this.props.descriptions.reduce(
@@ -17,8 +17,8 @@ class PreferencesForm extends React.Component {
 
   componentDidMount() {
     const guest = this.props.selectedGuest
-    const guestTraits = guest.traits
     if (guest) {
+      const guestTraits = guest.traits
       if (guestTraits.length > 0){
         this.setState({
           guestId: guest.id,
@@ -65,7 +65,7 @@ class PreferencesForm extends React.Component {
         )
       }
       return (
-        <option key={guest.id} value={guest.id} selected='true'>
+        <option key={guest.id} value={guest.id} selected={true}>
           {this.buildFullName(guest)}
         </option>
       )
@@ -93,7 +93,6 @@ class PreferencesForm extends React.Component {
             </label><br/>
           </>
         ))}
-        {/* {console.log(this.state)} */}
       </div>
     )
   }
@@ -162,4 +161,4 @@ const mapDispatchToProps = (dispatch) => ({
   selectGuest: (id) => dispatch({ type: 'SELECT_GUEST', id })
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(PreferencesForm)
+export default connect(mapStateToProps, mapDispatchToProps)(ChecklistForm)

@@ -1,5 +1,6 @@
 import React from 'react'
 import { NavLink, Redirect } from 'react-router-dom'
+import { connect } from 'react-redux'
 
 class EventForm extends React.Component {
   state = { id: '', name: '', table: 'rect', chairs: [], guests: [], guestQty: '0', descriptions: [] }
@@ -81,4 +82,13 @@ class EventForm extends React.Component {
   }
 }
 
-export default EventForm
+const mapStateToProps = (state) => ({
+  user: state.user,
+  event: state.currentEvent,
+})
+
+const mapDispatchToProps = dispatch => ({
+  addEvent: (event) => dispatch({ type: 'ADD_EVENT', event })
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(EventForm)

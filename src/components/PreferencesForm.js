@@ -47,7 +47,7 @@ class PreferencesForm extends React.Component {
         )
       }
       return (
-        <option key={guest.id} value={guest.id} selected='true'>
+        <option key={guest.id} value={guest.id} selected={true}>
           {this.buildFullName(guest)}
         </option>
       )

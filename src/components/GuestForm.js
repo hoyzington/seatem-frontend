@@ -1,5 +1,6 @@
 import React from 'react'
 import { NavLink, Redirect } from 'react-router-dom'
+import { connect } from 'react-redux'
 
 class GuestForm extends React.Component {
   state = { first: '', mid: '', last: '' }
@@ -77,4 +78,13 @@ class GuestForm extends React.Component {
   }
 }
 
-export default GuestForm
+const mapStateToProps = (state) => ({
+  user: state.user,
+  event: state.currentEvent,
+})
+
+const mapDispatchToProps = dispatch => ({
+  addGuest: (guest) => dispatch({ type: 'ADD_GUEST', guest })
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(GuestForm)
