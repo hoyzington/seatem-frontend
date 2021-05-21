@@ -10,11 +10,11 @@ body {
   position: fixed;
 }
 
-.Yes {
+.yes {
   color: rgb(0, 120, 10, .8);
 }
 
-.No {
+.no {
   color: rgb(130, 0, 30, .6);
 }
 
@@ -330,7 +330,7 @@ footer, #logo-bar, #title-bar, #menu-bar {
 
   #seating-area-rnd, #seating-area-rect {
     position: absolute;
-    background-color: rgba(128, 128, 128, 0.5);
+    /* background-color: rgba(128, 128, 128, 0.5); */
   }
 
   #seating-area-rnd {
