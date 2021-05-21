@@ -55,6 +55,7 @@ function eventsReducer(state = {
         },
         traits: [],
         seated: false,
+        happy: true,
       }
       eventIdx = state.events.findIndex(event => event.id === state.currentEvent.id)
       event = state.events[eventIdx]

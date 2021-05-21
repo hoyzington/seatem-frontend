@@ -390,10 +390,24 @@ footer, #logo-bar, #title-bar, #menu-bar {
   width: 58px;
   margin: 10px;
   border-radius: 33px;
+}
+
+.happy {
   background-color: rgb(142, 188, 142);
   box-shadow: .5px .5px 2.5px rgb(71, 94, 71);
 }
 
-#selected {
-  background-color: rgb(165, 215, 165);
+.sad {
+  background-color: rgb(200, 104, 104);
+  box-shadow: .5px .5px 2px rgb(100, 52, 52);
+}
+
+.selected-happy {
+  background-color: rgb(166, 212, 166);
+  box-shadow: .5px .5px 2.5px rgb(83, 106, 83);
+}
+
+.selected-sad {
+  background-color: rgb(230, 134, 134);
+  box-shadow: .5px .5px 2px rgb(115, 67, 67);
 }

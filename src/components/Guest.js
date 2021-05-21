@@ -12,12 +12,22 @@ class Guest extends React.Component {
     ]
   }
 
-  setId = () => {
+  setClassName = () => {
+    const guest = this.props.guest
     const selectedGuest = this.props.selectedGuest
-    if (selectedGuest && selectedGuest.id === this.props.guest.id) {
-      return 'selected'
+    if (selectedGuest && selectedGuest.id === guest.id) {
+      if (selectedGuest.happy) {
+        return 'guest selected-happy'
+      } else {
+        return 'guest selected-sad'
+      }
+    } else {
+      if (guest.happy) {
+        return 'guest happy'
+      } else {
+        return 'guest sad'
+      }
     }
-    return 'not-selected'
   }
 
   handleClick = () => {
@@ -30,7 +40,10 @@ class Guest extends React.Component {
     const initials = initialsArray.join(' ')
     return (
       <NavLink to={url}>
-        <div id={this.setId()} className='guest' onClick={this.handleClick}>
+        <div
+          className={this.setClassName()}
+          onClick={this.handleClick}
+        >
           {initials}
         </div>
       </NavLink>
