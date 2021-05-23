@@ -5,10 +5,10 @@ import { NavLink } from 'react-router-dom'
 class GuestInfo extends React.Component {
 
   buildFullName = () => {
-    const { firstName, midName, lastName } = this.props.guest
-    const f = firstName
-    const m = (midName.length > 0) ? ` ${midName}` : ''
-    const l = (lastName.length > 0) ? ` ${lastName}` : ''
+    const { firstName, midName, lastName } = this.props.guest,
+          f = firstName,
+          m = (midName.length > 0) ? ` ${midName}` : '',
+          l = (lastName.length > 0) ? ` ${lastName}` : ''
     return f + m + l
   }
 
@@ -21,7 +21,6 @@ class GuestInfo extends React.Component {
             {this.addUnseatButton()}
             <NavLink className='btn delete' to='/' onClick={this.handleDeleteClick}>Delete</NavLink>
           </div>
-
         </>
       )
     }
@@ -38,14 +37,14 @@ class GuestInfo extends React.Component {
   handleUnseatClick = () => {
     const { guest, unseatGuest, updateNeighbors } = this.props
     if (guest && guest.seated) {
-      unseatGuest(guest)
+      unseatGuest()
       updateNeighbors()
     }
   }
 
   handleDeleteClick = () => {
-    const { guest, deleteGuest, updateNeighbors } = this.props
-    deleteGuest(guest)
+    const { deleteGuest, updateNeighbors } = this.props
+    deleteGuest()
     updateNeighbors()
   }
 
@@ -61,14 +60,13 @@ class GuestInfo extends React.Component {
 
 const mapStateToProps = (state) => ({
   user: state.user,
-  events: state.events,
   event: state.currentEvent,
   guest: state.selectedGuest,
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  unseatGuest: (guest) => dispatch({ type: 'UNSEAT_GUEST', guest }),
-  deleteGuest: (guest) => dispatch({ type: 'DELETE_GUEST', guest }),
+  unseatGuest: () => dispatch({ type: 'UNSEAT_GUEST' }),
+  deleteGuest: () => dispatch({ type: 'DELETE_GUEST' }),
   updateNeighbors: () => dispatch({ type: 'UPDATE_NEIGHBORS' }),
 })
 

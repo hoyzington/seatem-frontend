@@ -12,17 +12,67 @@ class Guest extends React.Component {
     ]
   }
 
+  guestIsHappy = () => {
+    const thisGuest = this.props.guest
+    if (thisGuest.seated) {
+      const { guests } = this.props
+      const neighbors = guests.filter(guest => (
+        thisGuest.neighbors.includes(guest.id)
+      ))
+      const { guestsYes, guestsNo, descriptionsYes, descriptionsNo } = this.props.guest.preferences
+
+      const hasRightNeighbors =
+        guestsYes.length === 0 ||
+        guestsYes.every(guest => (
+          neighbors.includes(guest)
+        )
+      )
+
+      const hasNoWrongNeighbor =
+        guestsNo.length === 0 ||
+        !guestsNo.some(guest => (
+          neighbors.includes(guest)
+        )
+      )
+
+      const desiredDesc =
+        descriptionsYes.length === 0 ||
+        neighbors.length === 0 ||
+        descriptionsYes.every(desc => (
+          neighbors.every(neighbor => (
+            neighbor.traits &&
+            neighbor.traits.includes(desc)
+          ))
+        )
+      )
+
+      const noUndesiredDesc = 
+        descriptionsNo.length === 0 ||
+        neighbors.length === 0 ||
+        !descriptionsNo.some(desc => (
+          neighbors.some(neighbor => (
+            neighbor.traits &&
+            neighbor.traits.includes(desc)
+          ))
+        )
+      )
+
+      return hasRightNeighbors && hasNoWrongNeighbor && desiredDesc && noUndesiredDesc
+    }
+    return true
+  }
+
   setClassName = () => {
-    const guest = this.props.guest
-    const selectedGuest = this.props.selectedGuest
-    if (selectedGuest && selectedGuest.id === guest.id) {
-      if (selectedGuest.happy) {
+    const { guest, selectedGuest } = this.props
+    const guestIsHappy = this.guestIsHappy()
+    if (guest === selectedGuest) {
+      if (guestIsHappy) {
         return 'guest selected-happy'
       } else {
         return 'guest selected-sad'
       }
     } else {
-      if (guest.happy) {
+      if (guestIsHappy) {
         return 'guest happy'
       } else {
         return 'guest sad'
@@ -35,9 +85,9 @@ class Guest extends React.Component {
   }
 
   render() {
-    const initialsArray = this.makeInitialsArray()
-    const url = `/guests/${initialsArray.join('')}`
-    const initials = initialsArray.join(' ')
+    const initialsArray = this.makeInitialsArray(),
+          url = `/guests/${initialsArray.join('')}`,
+          initials = initialsArray.join(' ')
     return (
       <NavLink to={url}>
         <div
@@ -55,6 +105,7 @@ const mapStateToProps = (state) => ({
   user: state.user,
   events: state.events,
   event: state.currentEvent,
+  guests: state.currentEvent.guests,
   selectedGuest: state.selectedGuest,
 })
 

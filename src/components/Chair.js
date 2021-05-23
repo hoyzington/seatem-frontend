@@ -6,9 +6,9 @@ import Guest from './Guest'
 class Chair extends React.Component {
 
   guestInChair = () => {
-    const chairId = this.props.id
-    const event = this.props.event
-    const guestId = event.chairs[parseInt(chairId)]
+    const chairId = this.props.id,
+          event = this.props.event,
+          guestId = event.chairs[parseInt(chairId)]
     return event.guests.find(guest => guest.id === guestId)
   }
 
@@ -17,7 +17,7 @@ class Chair extends React.Component {
           emptyChair = !this.guestInChair(),
           chairId = this.props.id
     if (guest && emptyChair) {
-      this.props.seatGuest(chairId, guest)
+      this.props.seatGuest(chairId)
       this.props.updateNeighbors()
     }
   }
@@ -73,7 +73,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  seatGuest: (chairId, guest) => dispatch({ type: 'SEAT_GUEST', chairId, guest }),
+  seatGuest: (chairId) => dispatch({ type: 'SEAT_GUEST', chairId }),
   updateNeighbors: () => dispatch({ type: 'UPDATE_NEIGHBORS' }),
 })
 

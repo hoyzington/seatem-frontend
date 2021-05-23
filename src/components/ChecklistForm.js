@@ -36,16 +36,6 @@ class ChecklistForm extends React.Component {
     }
   }
 
-  handleChange = (e) => {
-    const { name } = e.target
-    this.setState((prevState) => ({
-      traits: {
-        ...prevState.traits,
-        [name]: !prevState.traits[name],
-      }
-    }))
-  }
-
   buildFullName = (guest) => {
     const { firstName, midName, lastName } = guest,
           f = firstName,
@@ -56,28 +46,42 @@ class ChecklistForm extends React.Component {
 
   createGuestOptions = () => {
     let guests = this.props.guests
-    return guests.map((guest) => {
-      if (guest.id !== this.state.guestId) {
-        return (
-          <option key={guest.id} value={guest.id}>
-            {this.buildFullName(guest)}
-          </option>
-        )
+    return guests.map((guest) => (
+      <option key={guest.id} value={guest.id}>
+        {this.buildFullName(guest)}
+      </option>
+  ))
+  }
+
+  handleCheckboxChange = (e) => {
+    const { name } = e.target
+    this.setState((prevState) => ({
+      traits: {
+        ...prevState.traits,
+        [name]: !prevState.traits[name],
       }
-      return (
-        <option key={guest.id} value={guest.id} selected={true}>
-          {this.buildFullName(guest)}
-        </option>
-      )
-    })
+    }))
   }
 
   handleGuestChange = (e) => {
-    this.handleChange(e)
     this.props.selectGuest(e.target.value)
+    const { guests, descriptions } = this.props
+    const selectedGuest = guests.find(guest => guest.id === e.target.value)
+    const traits = descriptions.reduce((total, trait) => ({
+        ...total,
+        [trait]: selectedGuest.traits.includes(trait),
+      }),
+      {},
+    )
+
+    this.setState({
+      [e.target.name]: e.target.value,
+      traits: traits,
+    })
   }
 
   buildChecklist = () => {
+    // console.log(this.state)
     return (
       <div id='check-list'>
         {this.props.descriptions.map((trait) => (
@@ -87,7 +91,7 @@ class ChecklistForm extends React.Component {
                 type='checkbox'
                 name={trait}
                 checked={this.state.traits[trait]}
-                onChange={this.handleChange}
+                onChange={this.handleCheckboxChange}
               />&nbsp;
               {trait}
             </label><br/>
