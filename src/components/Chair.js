@@ -18,7 +18,7 @@ class Chair extends React.Component {
           chairId = this.props.id
     if (guest && emptyChair) {
       this.props.seatGuest(chairId)
-      this.props.updateNeighbors()
+      this.props.updateNeighbors(guest)
     }
   }
 
@@ -40,7 +40,6 @@ class Chair extends React.Component {
           id={id}
           className='chair'
           to='/'
-          onClick={this.handleClick}
           style={{
             top: `${y}px`,
             left: `${x}px`
@@ -59,7 +58,6 @@ class Chair extends React.Component {
           top: `${y}px`,
           left: `${x}px`
         }}>
-        {this.fillChair()}
       </NavLink>
     )
   }
@@ -74,7 +72,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   seatGuest: (chairId) => dispatch({ type: 'SEAT_GUEST', chairId }),
-  updateNeighbors: () => dispatch({ type: 'UPDATE_NEIGHBORS' }),
+  updateNeighbors: (guest) => dispatch({ type: 'UPDATE_NEIGHBORS', guest }),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Chair)

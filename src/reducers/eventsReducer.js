@@ -1,5 +1,157 @@
 import { v4 as uuidv4 } from 'uuid'
 
+const updatePreviousNeighbor = (guestBefore, neighborId, guests) => {
+  const guest = guests.find(guest => guest.id === neighborId)
+  const updatedNeighbors = guest.neighbors.filter(nbrId => nbrId !== guestBefore.id)
+  return {
+    ...guest,
+    neighbors: updatedNeighbors,
+  }
+}
+
+const updatePreviousNeighbors = (guestBefore, guests) => {
+  const prevNeighborIds = guestBefore.neighbors.filter(guestId => guestId !== '')
+  if (prevNeighborIds.length > 0) {
+    return prevNeighborIds.map(id => updatePreviousNeighbor(guestBefore, id, guests))
+  }
+  return prevNeighborIds
+}
+
+const getNewNeighborIds = (chairs, guest) => {
+  const chairIdx = chairs.findIndex(chair => chair === guest.id)
+  let neighbors
+  const last = chairs.length - 1
+  switch (chairIdx) {
+    case 0:
+      neighbors = [
+        chairs[last],
+        chairs[1],
+      ]
+      break
+    case last:
+      neighbors = [
+        chairs[last - 1],
+        chairs[0],
+      ]
+      break
+    default:
+      neighbors = [
+        chairs[chairIdx - 1],
+        chairs[chairIdx + 1],
+      ]
+  }
+  return neighbors.filter(nbrId => nbrId !== '')
+}
+
+const updateNewNeighbor = (guests, neighborId, chairs) => {
+  const newNeighbor = guests.find(guest => guest.id === neighborId)
+  return {
+    ...newNeighbor,
+    neighbors: getNewNeighborIds(chairs, newNeighbor)
+  }
+}
+
+const updateNewNeighbors = (guests, neighborIds, chairs) => {
+  if (neighborIds.length > 0) {
+    return neighborIds.map(id => updateNewNeighbor(guests, id, chairs))
+  } else {
+    return []
+  }
+}
+
+// const makeInitials = (guest) => {
+//   return [
+//     guest.firstName[0],
+//     guest.midName[0],
+//     guest.lastName[0],
+//   ].join('')
+// }
+
+// const checkForIssues = (thisGuest, guests) => {
+//   console.log('hello')
+//   const { guestsYes, guestsNo, descriptionsYes, descriptionsNo } = thisGuest.preferences
+//   const { neighbors } = thisGuest
+//   const thisGuestInitials = makeInitials(thisGuest)
+
+//   const missingNeighbors = () => {
+//     if (guestsYes.length > 0) {
+//       let issues = []
+//       guestsYes.forEach((guestId) => {
+//         if (neighbors.length === 0 || !(neighbors.find(nbrId => nbrId === guestId))) {
+//           const missingNeighbor = guests.find(guest => guest.id === guestId)
+//           issues.push(`${makeInitials(missingNeighbor)} should sit next to ${thisGuestInitials}`)
+//         }
+//       })
+//       return issues
+//     } else {
+//       return []
+//     }
+//   }
+
+//   const wrongNeighbors = () => {
+//     if (guestsNo.length > 0 && neighbors.length > 0) {
+//       let issues = []
+//       guestsNo.forEach((guestId) => {
+//         if (neighbors.find(nbrId => nbrId === guestId)) {
+//           const wrongNeighbor = guests.find(guest => guest.id === guestId)
+//           issues.push(`${makeInitials(wrongNeighbor)} should not sit next to ${thisGuestInitials}`)
+//         }
+//       })
+//       return issues
+//     } else {
+//       return []
+//     }
+//   }
+
+//   const missingDescriptions = () => {
+//     if (descriptionsYes.length > 0 && neighbors.length > 0) {
+//       let issues = []
+//       neighbors.forEach((neighbor) => {
+//         descriptionsYes.forEach(desc => {
+//           if (!(neighbor.traits.includes(desc))) {
+//             issues.push(`${makeInitials(neighbor)} is not ${desc}`)
+//           }
+//         })
+//       })
+//       return issues
+//     } else {
+//       return []
+//     }
+//   }
+
+//   const wrongDescriptions = () => {
+//     if (descriptionsNo.length > 0 && neighbors.length > 0) {
+//       let issues = []
+//       neighbors.forEach((neighbor) => {
+//         descriptionsNo.forEach(desc => {
+//           if (neighbor.traits.includes(desc)) {
+//             issues.push(`${makeInitials(neighbor)} is ${desc}`)
+//           }
+//         })
+//       })
+//       return issues
+//     } else {
+//       return []
+//     }
+//   }
+
+//   const newIssues = [
+//     ...missingNeighbors(),
+//     ...wrongNeighbors(),
+//     ...missingDescriptions(),
+//     ...wrongDescriptions(),
+//   ]
+// console.log(newIssues)
+//   if (thisGuest.issues.length + newIssues.length > 0) {
+//     return {
+//       ...thisGuest,
+//       issues: newIssues,
+//     }
+//   } else {
+//     return thisGuest
+//   }
+// }
+
 const defaultState = {
   user: null,
   events: [
@@ -22,11 +174,11 @@ const defaultState = {
           neighbors: [],
           preferences: {
             guestsYes: [
-              // '7a574ed5-efad-479d-8ac1-9c7ae314a5ca',
-              // 'aa56777b-211d-412f-ace5-0056ec469e2d'
+              '7a574ed5-efad-479d-8ac1-9c7ae314a5ca',
+              'aa56777b-211d-412f-ace5-0056ec469e2d'
             ],
             guestsNo: [
-              // '4e8d1a3e-d48d-4b6a-b84a-9235fc8be083'
+              '4e8d1a3e-d48d-4b6a-b84a-9235fc8be083'
             ],
             descriptionsYes: [
               'A'
@@ -35,8 +187,9 @@ const defaultState = {
               '3'
             ]
           },
-          traits: [],
-          seated: false
+          traits: ['1', 'B', 'D'],
+          seated: false,
+          issues: [],
         },
         {
           id: '7a574ed5-efad-479d-8ac1-9c7ae314a5ca',
@@ -46,11 +199,11 @@ const defaultState = {
           neighbors: [],
           preferences: {
             guestsYes: [
-              // 'bbf2e30b-0e80-4214-9027-55a2c81e799a',
-              // '4e8d1a3e-d48d-4b6a-b84a-9235fc8be083'
+              'bbf2e30b-0e80-4214-9027-55a2c81e799a',
+              '4e8d1a3e-d48d-4b6a-b84a-9235fc8be083'
             ],
             guestsNo: [
-              // 'aa56777b-211d-412f-ace5-0056ec469e2d'
+              'aa56777b-211d-412f-ace5-0056ec469e2d'
             ],
             descriptionsYes: [
               'D'
@@ -59,8 +212,9 @@ const defaultState = {
               '2'
             ]
           },
-          traits: [],
-          seated: false
+          traits: ['4', 'A', 'C'],
+          seated: false,
+          issues: [],
         },
         {
           id: 'aa56777b-211d-412f-ace5-0056ec469e2d',
@@ -70,11 +224,11 @@ const defaultState = {
           neighbors: [],
           preferences: {
             guestsYes: [
-              // 'bbf2e30b-0e80-4214-9027-55a2c81e799a',
-              // '4e8d1a3e-d48d-4b6a-b84a-9235fc8be083'
+              'bbf2e30b-0e80-4214-9027-55a2c81e799a',
+              '4e8d1a3e-d48d-4b6a-b84a-9235fc8be083'
             ],
             guestsNo: [
-              // '7a574ed5-efad-479d-8ac1-9c7ae314a5ca'
+              '7a574ed5-efad-479d-8ac1-9c7ae314a5ca'
             ],
             descriptionsYes: [
               'B'
@@ -83,8 +237,9 @@ const defaultState = {
               '4'
             ]
           },
-          traits: [],
-          seated: false
+          traits: ['2', 'A', 'C'],
+          seated: false,
+          issues: [],
         },
         {
           id: '4e8d1a3e-d48d-4b6a-b84a-9235fc8be083',
@@ -94,11 +249,11 @@ const defaultState = {
           neighbors: [],
           preferences: {
             guestsYes: [
-              // '7a574ed5-efad-479d-8ac1-9c7ae314a5ca',
-              // 'aa56777b-211d-412f-ace5-0056ec469e2d'
+              '7a574ed5-efad-479d-8ac1-9c7ae314a5ca',
+              'aa56777b-211d-412f-ace5-0056ec469e2d'
             ],
             guestsNo: [
-              // 'bbf2e30b-0e80-4214-9027-55a2c81e799a'
+              'bbf2e30b-0e80-4214-9027-55a2c81e799a'
             ],
             descriptionsYes: [
               'C'
@@ -107,8 +262,9 @@ const defaultState = {
               '1'
             ]
           },
-          traits: [],
-          seated: false
+          traits: ['3', 'B', 'D'],
+          seated: false,
+          issues: [],
         }
       ],
       guestQty: '3',
@@ -143,11 +299,11 @@ const defaultState = {
         neighbors: [],
         preferences: {
           guestsYes: [
-            // '7a574ed5-efad-479d-8ac1-9c7ae314a5ca',
-            // 'aa56777b-211d-412f-ace5-0056ec469e2d'
+            '7a574ed5-efad-479d-8ac1-9c7ae314a5ca',
+            'aa56777b-211d-412f-ace5-0056ec469e2d'
           ],
           guestsNo: [
-            // '4e8d1a3e-d48d-4b6a-b84a-9235fc8be083'
+            '4e8d1a3e-d48d-4b6a-b84a-9235fc8be083'
           ],
           descriptionsYes: [
             'A'
@@ -156,8 +312,9 @@ const defaultState = {
             '3'
           ]
         },
-        traits: [],
-        seated: false
+        traits: ['1', 'B', 'D'],
+        seated: false,
+        issues: [],
       },
       {
         id: '7a574ed5-efad-479d-8ac1-9c7ae314a5ca',
@@ -167,11 +324,11 @@ const defaultState = {
         neighbors: [],
         preferences: {
           guestsYes: [
-            // 'bbf2e30b-0e80-4214-9027-55a2c81e799a',
-            // '4e8d1a3e-d48d-4b6a-b84a-9235fc8be083'
+            'bbf2e30b-0e80-4214-9027-55a2c81e799a',
+            '4e8d1a3e-d48d-4b6a-b84a-9235fc8be083'
           ],
           guestsNo: [
-            // 'aa56777b-211d-412f-ace5-0056ec469e2d'
+            'aa56777b-211d-412f-ace5-0056ec469e2d'
           ],
           descriptionsYes: [
             'D'
@@ -180,8 +337,9 @@ const defaultState = {
             '2'
           ]
         },
-        traits: [],
-        seated: false
+        traits: ['4', 'A', 'C'],
+        seated: false,
+        issues: [],
       },
       {
         id: 'aa56777b-211d-412f-ace5-0056ec469e2d',
@@ -191,11 +349,11 @@ const defaultState = {
         neighbors: [],
         preferences: {
           guestsYes: [
-            // 'bbf2e30b-0e80-4214-9027-55a2c81e799a',
-            // '4e8d1a3e-d48d-4b6a-b84a-9235fc8be083'
+            'bbf2e30b-0e80-4214-9027-55a2c81e799a',
+            '4e8d1a3e-d48d-4b6a-b84a-9235fc8be083'
           ],
           guestsNo: [
-            // '7a574ed5-efad-479d-8ac1-9c7ae314a5ca'
+            '7a574ed5-efad-479d-8ac1-9c7ae314a5ca'
           ],
           descriptionsYes: [
             'B'
@@ -204,8 +362,9 @@ const defaultState = {
             '4'
           ]
         },
-        traits: [],
-        seated: false
+        traits: ['2', 'A', 'C'],
+        seated: false,
+        issues: [],
       },
       {
         id: '4e8d1a3e-d48d-4b6a-b84a-9235fc8be083',
@@ -215,11 +374,11 @@ const defaultState = {
         neighbors: [],
         preferences: {
           guestsYes: [
-            // '7a574ed5-efad-479d-8ac1-9c7ae314a5ca',
-            // 'aa56777b-211d-412f-ace5-0056ec469e2d'
+            '7a574ed5-efad-479d-8ac1-9c7ae314a5ca',
+            'aa56777b-211d-412f-ace5-0056ec469e2d'
           ],
           guestsNo: [
-            // 'bbf2e30b-0e80-4214-9027-55a2c81e799a'
+            'bbf2e30b-0e80-4214-9027-55a2c81e799a'
           ],
           descriptionsYes: [
             'C'
@@ -228,8 +387,9 @@ const defaultState = {
             '1'
           ]
         },
-        traits: [],
-        seated: false
+        traits: ['3', 'B', 'D'],
+        seated: false,
+        issues: [],
       }
     ],
     guestQty: '3',
@@ -306,6 +466,7 @@ function eventsReducer(state = defaultState, action) {
         },
         traits: [],
         seated: false,
+        issues: [],
       }
       updatedEvent = {
         ...event,
@@ -502,43 +663,55 @@ function eventsReducer(state = defaultState, action) {
       eventIdx = state.events.findIndex(event => event.id === state.currentEvent.id)
       event = state.events[eventIdx]
       const chairs = event.chairs
-      const guests = event.guests.map((guest) => {
-        if (guest.seated) {
-          let newNeighbors
-          const chairIdx = chairs.findIndex(chair => chair === guest.id)
-          const last = chairs.length - 1
-          switch (chairIdx) {
-            case 0:
-              newNeighbors = [
-                chairs[last],
-                chairs[1],
-              ]
-              break
-            case last:
-              newNeighbors = [
-                chairs[last - 1],
-                chairs[0],
-              ]
-              break
-            default:
-              newNeighbors = [
-                chairs[chairIdx - 1],
-                chairs[chairIdx + 1],
-              ]
-          }
-          return { ...guest, neighbors: newNeighbors }
+      const guests = event.guests
+      const guestBefore = action.guest
+      let guestAfter = guests.find(guest => guest.id === guestBefore.id)
+      let affectedGuests
+
+      const previousNeighbors = updatePreviousNeighbors(guestBefore, guests)
+
+      if (guestAfter.seated) {
+        const newNeighborIds = getNewNeighborIds(chairs, guestAfter)
+        const newNeighbors = updateNewNeighbors(guests, newNeighborIds, chairs)
+        guestAfter = {
+          ...guestAfter,
+          neighbors: newNeighborIds,
         }
-        return guest
-      })
-      updatedEvent = { ...event, guests: guests }
-      return {
-        ...state,
-        events: [
-          ...state.events.slice(0, eventIdx),
-          updatedEvent,
-          ...state.events.slice(eventIdx + 1),
-        ],
-        currentEvent: updatedEvent,
+        affectedGuests = [
+          ...previousNeighbors,
+          guestAfter,
+          ...newNeighbors,
+        ]
+      } else {
+        affectedGuests = [...previousNeighbors]
+      }
+
+      if (affectedGuests.length > 0) {
+        // affectedGuests = affectedGuests.map(guest => checkForIssues(guest, guests))
+        const updatedGuests = affectedGuests.reduce((allGuests, updatedGuest) => {
+          guestIdx = guests.findIndex(guest => guest.id === updatedGuest.id)
+          return [
+            ...allGuests.slice(0, guestIdx),
+            updatedGuest,
+            ...allGuests.slice(guestIdx + 1),
+          ]
+        }, guests) 
+        
+        updatedEvent = {
+          ...event,
+          guests: updatedGuests,
+        }
+        return {
+          ...state,
+          events: [
+            ...state.events.slice(0, eventIdx),
+            updatedEvent,
+            ...state.events.slice(eventIdx + 1),
+          ],
+          currentEvent: updatedEvent,
+        }
+      } else {
+        return state
       }
 
     default:
