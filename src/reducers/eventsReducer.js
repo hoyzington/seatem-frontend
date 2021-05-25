@@ -277,7 +277,8 @@ const defaultState = {
         '3',
         '2',
         '4'
-      ]
+      ],
+      newlyAffectedGuests: []
     }
   ],
   currentEvent: {
@@ -402,7 +403,8 @@ const defaultState = {
       '3',
       '2',
       '4'
-    ]
+    ],
+    newlyAffectedGuests: []
   },
   selectedGuest: null
 }
@@ -418,6 +420,7 @@ const defaultState = {
 //       guests: [],
 //       guestQty: '0',
 //       descriptions: [],
+//       affectedGuests: [],
 //     },
 //     selectedGuest: null,
 //   }, action) {
@@ -696,23 +699,30 @@ function eventsReducer(state = defaultState, action) {
             ...allGuests.slice(guestIdx + 1),
           ]
         }, guests) 
-        
         updatedEvent = {
           ...event,
           guests: updatedGuests,
-        }
-        return {
-          ...state,
-          events: [
-            ...state.events.slice(0, eventIdx),
-            updatedEvent,
-            ...state.events.slice(eventIdx + 1),
-          ],
-          currentEvent: updatedEvent,
+          newlyAffectedGuests: affectedGuests,
         }
       } else {
-        return state
+        updatedEvent = {
+          ...event,
+          newlyAffectedGuests: [],
+        }
       }
+
+      return {
+        ...state,
+        events: [
+          ...state.events.slice(0, eventIdx),
+          updatedEvent,
+          ...state.events.slice(eventIdx + 1),
+        ],
+        currentEvent: updatedEvent,
+      }
+
+    case 'CHECK_FOR_ISSUES':
+      return state
 
     default:
       return state

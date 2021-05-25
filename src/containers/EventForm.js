@@ -3,7 +3,7 @@ import { NavLink, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 class EventForm extends React.Component {
-  state = { id: '', name: '', table: 'rect', chairs: [], guests: [], guestQty: '0', descriptions: [] }
+  state = { id: '', name: '', table: 'rect', chairs: [], guests: [], guestQty: '0', descriptions: [], newlyAffectedGuests: [] }
 
   handleChange = (e) => {
     this.setState({ [e.target.name]: e.target.value })

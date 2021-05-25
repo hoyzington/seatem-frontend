@@ -73,6 +73,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   seatGuest: (chairId) => dispatch({ type: 'SEAT_GUEST', chairId }),
   updateNeighbors: (guest) => dispatch({ type: 'UPDATE_NEIGHBORS', guest }),
+  checkForIssues: (guest) => dispatch({ type: 'UPDATE_NEIGHBORS', guest }),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Chair)
