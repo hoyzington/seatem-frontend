@@ -13,12 +13,13 @@ class Chair extends React.Component {
   }
 
   handleClick = () => {
-    const guest = this.props.guest,
-          emptyChair = !this.guestInChair(),
-          chairId = this.props.id
+    const { guest, seatGuest, updateNeighbors, checkForIssues } = this.props,
+          chairId = this.props.id,
+          emptyChair = !this.guestInChair()
     if (guest && emptyChair) {
-      this.props.seatGuest(chairId)
-      this.props.updateNeighbors(guest)
+      seatGuest(chairId)
+      updateNeighbors(guest)
+      checkForIssues()
     }
   }
 
@@ -65,7 +66,6 @@ class Chair extends React.Component {
 
 const mapStateToProps = (state) => ({
   user: state.user,
-  events: state.events,
   event: state.currentEvent,
   guest: state.selectedGuest,
 })
@@ -73,7 +73,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   seatGuest: (chairId) => dispatch({ type: 'SEAT_GUEST', chairId }),
   updateNeighbors: (guest) => dispatch({ type: 'UPDATE_NEIGHBORS', guest }),
-  checkForIssues: (guest) => dispatch({ type: 'UPDATE_NEIGHBORS', guest }),
+  checkForIssues: () => dispatch({ type: 'CHECK_FOR_ISSUES' }),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Chair)

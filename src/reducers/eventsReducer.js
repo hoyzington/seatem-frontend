@@ -59,98 +59,97 @@ const updateNewNeighbors = (guests, neighborIds, chairs) => {
   }
 }
 
-// const makeInitials = (guest) => {
-//   return [
-//     guest.firstName[0],
-//     guest.midName[0],
-//     guest.lastName[0],
-//   ].join('')
-// }
+const makeInitials = (guest) => {
+  return [
+    guest.firstName[0],
+    guest.midName[0],
+    guest.lastName[0],
+  ].join('')
+}
 
-// const checkForIssues = (thisGuest, guests) => {
-//   console.log('hello')
-//   const { guestsYes, guestsNo, descriptionsYes, descriptionsNo } = thisGuest.preferences
-//   const { neighbors } = thisGuest
-//   const thisGuestInitials = makeInitials(thisGuest)
+const checkForIssues = (thisGuest, guests) => {
+  const { guestsYes, guestsNo, descriptionsYes, descriptionsNo } = thisGuest.preferences
+  const { neighbors } = thisGuest
+  const thisGuestInitials = makeInitials(thisGuest)
 
-//   const missingNeighbors = () => {
-//     if (guestsYes.length > 0) {
-//       let issues = []
-//       guestsYes.forEach((guestId) => {
-//         if (neighbors.length === 0 || !(neighbors.find(nbrId => nbrId === guestId))) {
-//           const missingNeighbor = guests.find(guest => guest.id === guestId)
-//           issues.push(`${makeInitials(missingNeighbor)} should sit next to ${thisGuestInitials}`)
-//         }
-//       })
-//       return issues
-//     } else {
-//       return []
-//     }
-//   }
+  const missingNeighbors = () => {
+    if (guestsYes.length > 0) {
+      let issues = []
+      guestsYes.forEach((guestId) => {
+        if (neighbors.length === 0 || !(neighbors.find(nbrId => nbrId === guestId))) {
+          const missingNeighbor = guests.find(guest => guest.id === guestId)
+          issues.push(`${makeInitials(missingNeighbor)} should sit next to ${thisGuestInitials}`)
+        }
+      })
+      return issues
+    } else {
+      return []
+    }
+  }
 
-//   const wrongNeighbors = () => {
-//     if (guestsNo.length > 0 && neighbors.length > 0) {
-//       let issues = []
-//       guestsNo.forEach((guestId) => {
-//         if (neighbors.find(nbrId => nbrId === guestId)) {
-//           const wrongNeighbor = guests.find(guest => guest.id === guestId)
-//           issues.push(`${makeInitials(wrongNeighbor)} should not sit next to ${thisGuestInitials}`)
-//         }
-//       })
-//       return issues
-//     } else {
-//       return []
-//     }
-//   }
+  const wrongNeighbors = () => {
+    if (guestsNo.length > 0 && neighbors.length > 0) {
+      let issues = []
+      guestsNo.forEach((guestId) => {
+        if (neighbors.find(nbrId => nbrId === guestId)) {
+          const wrongNeighbor = guests.find(guest => guest.id === guestId)
+          issues.push(`${makeInitials(wrongNeighbor)} should not sit next to ${thisGuestInitials}`)
+        }
+      })
+      return issues
+    } else {
+      return []
+    }
+  }
 
-//   const missingDescriptions = () => {
-//     if (descriptionsYes.length > 0 && neighbors.length > 0) {
-//       let issues = []
-//       neighbors.forEach((neighbor) => {
-//         descriptionsYes.forEach(desc => {
-//           if (!(neighbor.traits.includes(desc))) {
-//             issues.push(`${makeInitials(neighbor)} is not ${desc}`)
-//           }
-//         })
-//       })
-//       return issues
-//     } else {
-//       return []
-//     }
-//   }
+  const missingDescriptions = () => {
+    if (descriptionsYes.length > 0 && neighbors.length > 0) {
+      let issues = []
+      neighbors.forEach((neighbor) => {
+        descriptionsYes.forEach(desc => {
+          if (!(neighbor.traits.includes(desc))) {
+            issues.push(`${makeInitials(neighbor)} is not ${desc}`)
+          }
+        })
+      })
+      return issues
+    } else {
+      return []
+    }
+  }
 
-//   const wrongDescriptions = () => {
-//     if (descriptionsNo.length > 0 && neighbors.length > 0) {
-//       let issues = []
-//       neighbors.forEach((neighbor) => {
-//         descriptionsNo.forEach(desc => {
-//           if (neighbor.traits.includes(desc)) {
-//             issues.push(`${makeInitials(neighbor)} is ${desc}`)
-//           }
-//         })
-//       })
-//       return issues
-//     } else {
-//       return []
-//     }
-//   }
+  const wrongDescriptions = () => {
+    if (descriptionsNo.length > 0 && neighbors.length > 0) {
+      let issues = []
+      neighbors.forEach((neighbor) => {
+        descriptionsNo.forEach(desc => {
+          if (neighbor.traits.includes(desc)) {
+            issues.push(`${makeInitials(neighbor)} is ${desc}`)
+          }
+        })
+      })
+      return issues
+    } else {
+      return []
+    }
+  }
 
-//   const newIssues = [
-//     ...missingNeighbors(),
-//     ...wrongNeighbors(),
-//     ...missingDescriptions(),
-//     ...wrongDescriptions(),
-//   ]
+  const newIssues = [
+    ...missingNeighbors(),
+    ...wrongNeighbors(),
+    ...missingDescriptions(),
+    ...wrongDescriptions(),
+  ]
 // console.log(newIssues)
-//   if (thisGuest.issues.length + newIssues.length > 0) {
-//     return {
-//       ...thisGuest,
-//       issues: newIssues,
-//     }
-//   } else {
-//     return thisGuest
-//   }
-// }
+  if (thisGuest.issues.length + newIssues.length > 0) {
+    return {
+      ...thisGuest,
+      issues: newIssues,
+    }
+  } else {
+    return thisGuest
+  }
+}
 
 const defaultState = {
   user: null,
@@ -427,7 +426,7 @@ const defaultState = {
 
 function eventsReducer(state = defaultState, action) {
 
-  let eventIdx, event, currentEvent, updatedEvent, guestIdx, guest, selectedGuest, chairIdx, chairId
+  let eventIdx, event, currentEvent, updatedEvent, guestIdx, guest, guests, selectedGuest, affectedGuests,chairIdx, chairId
 
   switch (action.type) {
     case 'ADD_EVENT':
@@ -665,11 +664,10 @@ function eventsReducer(state = defaultState, action) {
     case 'UPDATE_NEIGHBORS':
       eventIdx = state.events.findIndex(event => event.id === state.currentEvent.id)
       event = state.events[eventIdx]
+      guests = event.guests
       const chairs = event.chairs
-      const guests = event.guests
       const guestBefore = action.guest
       let guestAfter = guests.find(guest => guest.id === guestBefore.id)
-      let affectedGuests
 
       const previousNeighbors = updatePreviousNeighbors(guestBefore, guests)
 
@@ -690,7 +688,6 @@ function eventsReducer(state = defaultState, action) {
       }
 
       if (affectedGuests.length > 0) {
-        // affectedGuests = affectedGuests.map(guest => checkForIssues(guest, guests))
         const updatedGuests = affectedGuests.reduce((allGuests, updatedGuest) => {
           guestIdx = guests.findIndex(guest => guest.id === updatedGuest.id)
           return [
@@ -722,7 +719,41 @@ function eventsReducer(state = defaultState, action) {
       }
 
     case 'CHECK_FOR_ISSUES':
-      return state
+      eventIdx = state.events.findIndex(event => event.id === state.currentEvent.id)
+      event = state.events[eventIdx]
+      guests = event.guests
+      affectedGuests = event.newlyAffectedGuests
+      if (affectedGuests.length > 0) {
+        affectedGuests = affectedGuests.map(guest => checkForIssues(guest, guests))
+        const updatedGuests = affectedGuests.reduce((allGuests, updatedGuest) => {
+          guestIdx = guests.findIndex(guest => guest.id === updatedGuest.id)
+          return [
+            ...allGuests.slice(0, guestIdx),
+            updatedGuest,
+            ...allGuests.slice(guestIdx + 1),
+          ]
+        }, guests) 
+        updatedEvent = {
+          ...event,
+          guests: updatedGuests,
+          newlyAffectedGuests: [],
+        }
+      } else {
+        updatedEvent = {
+          ...event,
+          newlyAffectedGuests: [],
+        }
+      }
+
+      return {
+        ...state,
+        events: [
+          ...state.events.slice(0, eventIdx),
+          updatedEvent,
+          ...state.events.slice(eventIdx + 1),
+        ],
+        currentEvent: updatedEvent,
+      }
 
     default:
       return state

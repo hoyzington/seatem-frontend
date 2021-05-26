@@ -98,21 +98,23 @@ class GuestInfo extends React.Component {
   }
 
   handleUnseatClick = () => {
-    const { guest, unseatGuest, updateNeighbors } = this.props
+    const { guest, unseatGuest, updateNeighbors, checkForIssues } = this.props
     if (guest && guest.seated) {
       unseatGuest()
       updateNeighbors(guest)
+      checkForIssues()
     }
   }
 
   handleDeleteClick = () => {
-    const { guest, deleteGuest, updateNeighbors } = this.props
+    const { guest, deleteGuest, updateNeighbors, checkForIssues } = this.props
     deleteGuest()
     updateNeighbors(guest)
+    checkForIssues()
   }
 
   render() {
-    const event = this.props.event
+    const { event } = this.props
     return (
       <div id={'guest-info-' + event.table}>
         {this.showGuest()}
@@ -132,6 +134,7 @@ const mapDispatchToProps = (dispatch) => ({
   unseatGuest: () => dispatch({ type: 'UNSEAT_GUEST' }),
   deleteGuest: () => dispatch({ type: 'DELETE_GUEST' }),
   updateNeighbors: (guest) => dispatch({ type: 'UPDATE_NEIGHBORS', guest}),
+  checkForIssues: () => dispatch({ type: 'CHECK_FOR_ISSUES' }),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(GuestInfo)
