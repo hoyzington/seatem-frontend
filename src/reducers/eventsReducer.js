@@ -69,14 +69,14 @@ const makeInitials = (guest) => {
 
 const checkForIssues = (thisGuest, guests) => {
   const { guestsYes, guestsNo, descriptionsYes, descriptionsNo } = thisGuest.preferences
-  const { neighbors } = thisGuest
+  const neighbors = thisGuest.neighbors.map(nbrId => guests.find(guest => guest.id === nbrId))
   const thisGuestInitials = makeInitials(thisGuest)
 
   const missingNeighbors = () => {
     if (guestsYes.length > 0) {
       let issues = []
       guestsYes.forEach((guestId) => {
-        if (neighbors.length === 0 || !(neighbors.find(nbrId => nbrId === guestId))) {
+        if (neighbors.length === 0 || !(neighbors.find(nbr => nbr.id === guestId))) {
           const missingNeighbor = guests.find(guest => guest.id === guestId)
           issues.push(`${makeInitials(missingNeighbor)} should sit next to ${thisGuestInitials}`)
         }
@@ -91,8 +91,8 @@ const checkForIssues = (thisGuest, guests) => {
     if (guestsNo.length > 0 && neighbors.length > 0) {
       let issues = []
       guestsNo.forEach((guestId) => {
-        if (neighbors.find(nbrId => nbrId === guestId)) {
-          const wrongNeighbor = guests.find(guest => guest.id === guestId)
+        const wrongNeighbor = neighbors.find(nbr => nbr.id === guestId)
+        if (wrongNeighbor) {
           issues.push(`${makeInitials(wrongNeighbor)} should not sit next to ${thisGuestInitials}`)
         }
       })
@@ -603,6 +603,7 @@ function eventsReducer(state = defaultState, action) {
         ...selectedGuest,
         neighbors: [],
         seated: false,
+        issues: [],
       }
       updatedEvent = {
         ...event,
