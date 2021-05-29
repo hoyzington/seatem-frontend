@@ -11,9 +11,7 @@ class GuestInfo extends React.Component {
       return (
         <>
           <h4>{this.buildFullName(guest)}</h4>
-          <ul id='guest-info-list'>
-            {this.createInfoList()}
-          </ul>
+          {this.createInfoList()}
           <div id='btn-area'>
             {this.addUnseatButton()}
             <NavLink className='btn delete' to='/' onClick={this.handleDeleteClick}>Delete</NavLink>
@@ -78,14 +76,14 @@ class GuestInfo extends React.Component {
     const list7 = [...list3, ...list4, ...list5, ...list6]
 
     return (
-      <>
+      <div id='guest-info-list'>
         <p>Issues</p>
-        {list1}
+        <ul>{list1}</ul>
         <p>Traits</p>
-        {list2}
+        <ul>{list2}</ul>
         <p>Preferences</p>
-        {list7}<br/>
-      </>
+        <ul>{list7}</ul>
+      </div>
     )
   }
 
