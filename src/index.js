@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { createStore, applyMiddleware, compose, combineReducers } from 'redux'
-import eventsReducer from './reducers/eventsReducer'
+import events from './reducers/events'
 import thunk from 'redux-thunk'
 import { Provider } from 'react-redux'
 // import './styles/index.css'
@@ -9,7 +9,7 @@ import App from './App'
 // import reportWebVitals from './reportWebVitals'
 
 const reducers = combineReducers({
-  eventsReducer,
+  events,
 })
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 const store = createStore(reducers, composeEnhancers(applyMiddleware(thunk)))
