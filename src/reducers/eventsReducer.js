@@ -408,6 +408,8 @@ const defaultState = {
   selectedGuest: null
 }
 
+function eventsReducer(state = defaultState, action) {
+
 // function eventsReducer(state = {
 //     user: null,
 //     events: [],
@@ -423,8 +425,6 @@ const defaultState = {
 //     },
 //     selectedGuest: null,
 //   }, action) {
-
-function eventsReducer(state = defaultState, action) {
 
   let eventIdx, event, currentEvent, updatedEvent, guestIdx, guest, guests, selectedGuest, affectedGuests,chairIdx, chairId
 
@@ -530,7 +530,7 @@ function eventsReducer(state = defaultState, action) {
           currentEvent: updatedEvent,
           selectedGuest: action.guest,
         }
-  
+
       case 'SELECT_GUEST':
       currentEvent = state.currentEvent
       guest = currentEvent.guests.find(guest => guest.id === action.id) || currentEvent.chairs.find(chair => chair.id === action.id)
