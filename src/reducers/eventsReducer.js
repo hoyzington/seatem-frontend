@@ -151,280 +151,279 @@ const checkForIssues = (thisGuest, guests) => {
   }
 }
 
-const defaultState = {
-  user: null,
-  events: [
-    {
-      id: '6e7c0c06-b7be-4b56-a127-c63bf88daac1',
-      name: 'event',
-      table: 'rect',
-      chairs: [
-        '',
-        '',
-        '',
-        ''
-      ],
-      guests: [
-        {
-          id: 'bbf2e30b-0e80-4214-9027-55a2c81e799a',
-          firstName: 'Scott',
-          midName: '',
-          lastName: 'Hoisington',
-          neighbors: [],
-          preferences: {
-            guestsYes: [
-              '7a574ed5-efad-479d-8ac1-9c7ae314a5ca',
-              'aa56777b-211d-412f-ace5-0056ec469e2d'
-            ],
-            guestsNo: [
-              '4e8d1a3e-d48d-4b6a-b84a-9235fc8be083'
-            ],
-            descriptionsYes: [
-              'A'
-            ],
-            descriptionsNo: [
-              '3'
-            ]
-          },
-          traits: ['1', 'B', 'D'],
-          seated: false,
-          issues: [],
-        },
-        {
-          id: '7a574ed5-efad-479d-8ac1-9c7ae314a5ca',
-          firstName: 'Ruthie',
-          midName: '',
-          lastName: 'Hoisington',
-          neighbors: [],
-          preferences: {
-            guestsYes: [
-              'bbf2e30b-0e80-4214-9027-55a2c81e799a',
-              '4e8d1a3e-d48d-4b6a-b84a-9235fc8be083'
-            ],
-            guestsNo: [
-              'aa56777b-211d-412f-ace5-0056ec469e2d'
-            ],
-            descriptionsYes: [
-              'D'
-            ],
-            descriptionsNo: [
-              '2'
-            ]
-          },
-          traits: ['4', 'A', 'C'],
-          seated: false,
-          issues: [],
-        },
-        {
-          id: 'aa56777b-211d-412f-ace5-0056ec469e2d',
-          firstName: 'Linz',
-          midName: '',
-          lastName: 'Hoisington',
-          neighbors: [],
-          preferences: {
-            guestsYes: [
-              'bbf2e30b-0e80-4214-9027-55a2c81e799a',
-              '4e8d1a3e-d48d-4b6a-b84a-9235fc8be083'
-            ],
-            guestsNo: [
-              '7a574ed5-efad-479d-8ac1-9c7ae314a5ca'
-            ],
-            descriptionsYes: [
-              'B'
-            ],
-            descriptionsNo: [
-              '4'
-            ]
-          },
-          traits: ['2', 'A', 'C'],
-          seated: false,
-          issues: [],
-        },
-        {
-          id: '4e8d1a3e-d48d-4b6a-b84a-9235fc8be083',
-          firstName: 'June',
-          midName: '',
-          lastName: 'Hoisington',
-          neighbors: [],
-          preferences: {
-            guestsYes: [
-              '7a574ed5-efad-479d-8ac1-9c7ae314a5ca',
-              'aa56777b-211d-412f-ace5-0056ec469e2d'
-            ],
-            guestsNo: [
-              'bbf2e30b-0e80-4214-9027-55a2c81e799a'
-            ],
-            descriptionsYes: [
-              'C'
-            ],
-            descriptionsNo: [
-              '1'
-            ]
-          },
-          traits: ['3', 'B', 'D'],
-          seated: false,
-          issues: [],
-        }
-      ],
-      guestQty: '3',
-      descriptions: [
-        'A',
-        'B',
-        'D',
-        'C',
-        '1',
-        '3',
-        '2',
-        '4'
-      ],
-      newlyAffectedGuests: []
-    }
-  ],
+// const defaultState = {
+//   user: null,
+//   events: [
+//     {
+//       id: '6e7c0c06-b7be-4b56-a127-c63bf88daac1',
+//       name: 'event',
+//       table: 'rect',
+//       chairs: [
+//         '',
+//         '',
+//         '',
+//         ''
+//       ],
+//       guests: [
+//         {
+//           id: 'bbf2e30b-0e80-4214-9027-55a2c81e799a',
+//           firstName: 'Scott',
+//           midName: '',
+//           lastName: 'Hoisington',
+//           neighbors: [],
+//           preferences: {
+//             guestsYes: [
+//               '7a574ed5-efad-479d-8ac1-9c7ae314a5ca',
+//               'aa56777b-211d-412f-ace5-0056ec469e2d'
+//             ],
+//             guestsNo: [
+//               '4e8d1a3e-d48d-4b6a-b84a-9235fc8be083'
+//             ],
+//             descriptionsYes: [
+//               'A'
+//             ],
+//             descriptionsNo: [
+//               '3'
+//             ]
+//           },
+//           traits: ['1', 'B', 'D'],
+//           seated: false,
+//           issues: [],
+//         },
+//         {
+//           id: '7a574ed5-efad-479d-8ac1-9c7ae314a5ca',
+//           firstName: 'Ruthie',
+//           midName: '',
+//           lastName: 'Hoisington',
+//           neighbors: [],
+//           preferences: {
+//             guestsYes: [
+//               'bbf2e30b-0e80-4214-9027-55a2c81e799a',
+//               '4e8d1a3e-d48d-4b6a-b84a-9235fc8be083'
+//             ],
+//             guestsNo: [
+//               'aa56777b-211d-412f-ace5-0056ec469e2d'
+//             ],
+//             descriptionsYes: [
+//               'D'
+//             ],
+//             descriptionsNo: [
+//               '2'
+//             ]
+//           },
+//           traits: ['4', 'A', 'C'],
+//           seated: false,
+//           issues: [],
+//         },
+//         {
+//           id: 'aa56777b-211d-412f-ace5-0056ec469e2d',
+//           firstName: 'Linz',
+//           midName: '',
+//           lastName: 'Hoisington',
+//           neighbors: [],
+//           preferences: {
+//             guestsYes: [
+//               'bbf2e30b-0e80-4214-9027-55a2c81e799a',
+//               '4e8d1a3e-d48d-4b6a-b84a-9235fc8be083'
+//             ],
+//             guestsNo: [
+//               '7a574ed5-efad-479d-8ac1-9c7ae314a5ca'
+//             ],
+//             descriptionsYes: [
+//               'B'
+//             ],
+//             descriptionsNo: [
+//               '4'
+//             ]
+//           },
+//           traits: ['2', 'A', 'C'],
+//           seated: false,
+//           issues: [],
+//         },
+//         {
+//           id: '4e8d1a3e-d48d-4b6a-b84a-9235fc8be083',
+//           firstName: 'June',
+//           midName: '',
+//           lastName: 'Hoisington',
+//           neighbors: [],
+//           preferences: {
+//             guestsYes: [
+//               '7a574ed5-efad-479d-8ac1-9c7ae314a5ca',
+//               'aa56777b-211d-412f-ace5-0056ec469e2d'
+//             ],
+//             guestsNo: [
+//               'bbf2e30b-0e80-4214-9027-55a2c81e799a'
+//             ],
+//             descriptionsYes: [
+//               'C'
+//             ],
+//             descriptionsNo: [
+//               '1'
+//             ]
+//           },
+//           traits: ['3', 'B', 'D'],
+//           seated: false,
+//           issues: [],
+//         }
+//       ],
+//       guestQty: '3',
+//       descriptions: [
+//         'A',
+//         'B',
+//         'D',
+//         'C',
+//         '1',
+//         '3',
+//         '2',
+//         '4'
+//       ],
+//       newlyAffectedGuests: []
+//     }
+//   ],
+//   currentEvent: {
+//     id: '6e7c0c06-b7be-4b56-a127-c63bf88daac1',
+//     name: 'event',
+//     table: 'rect',
+//     chairs: [
+//       '',
+//       '',
+//       '',
+//       ''
+//     ],
+//     guests: [
+//       {
+//         id: 'bbf2e30b-0e80-4214-9027-55a2c81e799a',
+//         firstName: 'Scott',
+//         midName: '',
+//         lastName: 'Hoisington',
+//         neighbors: [],
+//         preferences: {
+//           guestsYes: [
+//             '7a574ed5-efad-479d-8ac1-9c7ae314a5ca',
+//             'aa56777b-211d-412f-ace5-0056ec469e2d'
+//           ],
+//           guestsNo: [
+//             '4e8d1a3e-d48d-4b6a-b84a-9235fc8be083'
+//           ],
+//           descriptionsYes: [
+//             'A'
+//           ],
+//           descriptionsNo: [
+//             '3'
+//           ]
+//         },
+//         traits: ['1', 'B', 'D'],
+//         seated: false,
+//         issues: [],
+//       },
+//       {
+//         id: '7a574ed5-efad-479d-8ac1-9c7ae314a5ca',
+//         firstName: 'Ruthie',
+//         midName: '',
+//         lastName: 'Hoisington',
+//         neighbors: [],
+//         preferences: {
+//           guestsYes: [
+//             'bbf2e30b-0e80-4214-9027-55a2c81e799a',
+//             '4e8d1a3e-d48d-4b6a-b84a-9235fc8be083'
+//           ],
+//           guestsNo: [
+//             'aa56777b-211d-412f-ace5-0056ec469e2d'
+//           ],
+//           descriptionsYes: [
+//             'D'
+//           ],
+//           descriptionsNo: [
+//             '2'
+//           ]
+//         },
+//         traits: ['4', 'A', 'C'],
+//         seated: false,
+//         issues: [],
+//       },
+//       {
+//         id: 'aa56777b-211d-412f-ace5-0056ec469e2d',
+//         firstName: 'Linz',
+//         midName: '',
+//         lastName: 'Hoisington',
+//         neighbors: [],
+//         preferences: {
+//           guestsYes: [
+//             'bbf2e30b-0e80-4214-9027-55a2c81e799a',
+//             '4e8d1a3e-d48d-4b6a-b84a-9235fc8be083'
+//           ],
+//           guestsNo: [
+//             '7a574ed5-efad-479d-8ac1-9c7ae314a5ca'
+//           ],
+//           descriptionsYes: [
+//             'B'
+//           ],
+//           descriptionsNo: [
+//             '4'
+//           ]
+//         },
+//         traits: ['2', 'A', 'C'],
+//         seated: false,
+//         issues: [],
+//       },
+//       {
+//         id: '4e8d1a3e-d48d-4b6a-b84a-9235fc8be083',
+//         firstName: 'June',
+//         midName: '',
+//         lastName: 'Hoisington',
+//         neighbors: [],
+//         preferences: {
+//           guestsYes: [
+//             '7a574ed5-efad-479d-8ac1-9c7ae314a5ca',
+//             'aa56777b-211d-412f-ace5-0056ec469e2d'
+//           ],
+//           guestsNo: [
+//             'bbf2e30b-0e80-4214-9027-55a2c81e799a'
+//           ],
+//           descriptionsYes: [
+//             'C'
+//           ],
+//           descriptionsNo: [
+//             '1'
+//           ]
+//         },
+//         traits: ['3', 'B', 'D'],
+//         seated: false,
+//         issues: [],
+//       }
+//     ],
+//     guestQty: '3',
+//     descriptions: [
+//       'A',
+//       'B',
+//       'D',
+//       'C',
+//       '1',
+//       '3',
+//       '2',
+//       '4'
+//     ],
+//     newlyAffectedGuests: []
+//   },
+//   selectedGuest: null
+// }
+
+// const eventsReducer = (state = defaultState, action) => {
+
+const eventsReducer = (state = {
+  events: [],
   currentEvent: {
-    id: '6e7c0c06-b7be-4b56-a127-c63bf88daac1',
-    name: 'event',
-    table: 'rect',
-    chairs: [
-      '',
-      '',
-      '',
-      ''
-    ],
-    guests: [
-      {
-        id: 'bbf2e30b-0e80-4214-9027-55a2c81e799a',
-        firstName: 'Scott',
-        midName: '',
-        lastName: 'Hoisington',
-        neighbors: [],
-        preferences: {
-          guestsYes: [
-            '7a574ed5-efad-479d-8ac1-9c7ae314a5ca',
-            'aa56777b-211d-412f-ace5-0056ec469e2d'
-          ],
-          guestsNo: [
-            '4e8d1a3e-d48d-4b6a-b84a-9235fc8be083'
-          ],
-          descriptionsYes: [
-            'A'
-          ],
-          descriptionsNo: [
-            '3'
-          ]
-        },
-        traits: ['1', 'B', 'D'],
-        seated: false,
-        issues: [],
-      },
-      {
-        id: '7a574ed5-efad-479d-8ac1-9c7ae314a5ca',
-        firstName: 'Ruthie',
-        midName: '',
-        lastName: 'Hoisington',
-        neighbors: [],
-        preferences: {
-          guestsYes: [
-            'bbf2e30b-0e80-4214-9027-55a2c81e799a',
-            '4e8d1a3e-d48d-4b6a-b84a-9235fc8be083'
-          ],
-          guestsNo: [
-            'aa56777b-211d-412f-ace5-0056ec469e2d'
-          ],
-          descriptionsYes: [
-            'D'
-          ],
-          descriptionsNo: [
-            '2'
-          ]
-        },
-        traits: ['4', 'A', 'C'],
-        seated: false,
-        issues: [],
-      },
-      {
-        id: 'aa56777b-211d-412f-ace5-0056ec469e2d',
-        firstName: 'Linz',
-        midName: '',
-        lastName: 'Hoisington',
-        neighbors: [],
-        preferences: {
-          guestsYes: [
-            'bbf2e30b-0e80-4214-9027-55a2c81e799a',
-            '4e8d1a3e-d48d-4b6a-b84a-9235fc8be083'
-          ],
-          guestsNo: [
-            '7a574ed5-efad-479d-8ac1-9c7ae314a5ca'
-          ],
-          descriptionsYes: [
-            'B'
-          ],
-          descriptionsNo: [
-            '4'
-          ]
-        },
-        traits: ['2', 'A', 'C'],
-        seated: false,
-        issues: [],
-      },
-      {
-        id: '4e8d1a3e-d48d-4b6a-b84a-9235fc8be083',
-        firstName: 'June',
-        midName: '',
-        lastName: 'Hoisington',
-        neighbors: [],
-        preferences: {
-          guestsYes: [
-            '7a574ed5-efad-479d-8ac1-9c7ae314a5ca',
-            'aa56777b-211d-412f-ace5-0056ec469e2d'
-          ],
-          guestsNo: [
-            'bbf2e30b-0e80-4214-9027-55a2c81e799a'
-          ],
-          descriptionsYes: [
-            'C'
-          ],
-          descriptionsNo: [
-            '1'
-          ]
-        },
-        traits: ['3', 'B', 'D'],
-        seated: false,
-        issues: [],
-      }
-    ],
-    guestQty: '3',
-    descriptions: [
-      'A',
-      'B',
-      'D',
-      'C',
-      '1',
-      '3',
-      '2',
-      '4'
-    ],
-    newlyAffectedGuests: []
+    id: '',
+    name: '',
+    table: '',
+    chairs: [],
+    guests: [],
+    guestQty: '0',
+    descriptions: [],
+    affectedGuests: [],
   },
-  selectedGuest: null
-}
-
-function eventsReducer(state = defaultState, action) {
-
-// function eventsReducer(state = {
-//     user: null,
-//     events: [],
-//     currentEvent: {
-//       id: '',
-//       name: '',
-//       table: '',
-//       chairs: [],
-//       guests: [],
-//       guestQty: '0',
-//       descriptions: [],
-//       affectedGuests: [],
-//     },
-//     selectedGuest: null,
-//   }, action) {
+  selectedGuest: null,
+}, action) => {
 
   let eventIdx, event, currentEvent, updatedEvent, guestIdx, guest, guests, selectedGuest, affectedGuests,chairIdx, chairId
 
