@@ -1,17 +1,11 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
-import { logout } from '../actions/sessions'
-import { connect } from 'react-redux'
 
 class AccountArea extends React.Component {
 
   // handleChange = (e) => {
   //   this.setState({ [e.target.name]: e.target.value })
   // }
-
-  handleLogout = () => {
-    this.props.logout()
-  }
 
   render() {
     return (
@@ -21,7 +15,7 @@ class AccountArea extends React.Component {
           <p><b>Account</b></p>
 
           <div id='btn-area'>
-            <NavLink className='btn form bottom' to='/' onClick={this.handleLogout} >LOG OUT</NavLink>
+            <NavLink className='btn form bottom' to='/' onClick={this.props.handleLogout} >LOG OUT</NavLink>
           </div>
         </form>
       </div>
@@ -29,9 +23,4 @@ class AccountArea extends React.Component {
   }
 }
 
-// const mapStateToProps = (state) => ({
-//     email: state.AccountArea.email,
-//     password: state.AccountArea.password,
-//   })
-
-export default connect(null, { logout })(AccountArea)
+export default AccountArea

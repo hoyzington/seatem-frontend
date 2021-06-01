@@ -1,34 +1,11 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
-import { login, signup } from '../actions/sessions'
-import { connect } from 'react-redux'
 
-class LoginForm extends React.Component {
+class LoginSignupForm extends React.Component {
   state = { loginEmail: '', loginPassword: '', username: '', signupEmail: '', signupPassword: '' }
 
   handleChange = (e) => {
     this.setState({ [e.target.name]: e.target.value })
-  }
-
-  handleLogin = () => {
-    const credentials = {user: {
-      email: this.state.loginEmail,
-      password: this.state.loginPassword,
-    }}
-    this.props.login(credentials)
-    // this.setState({ first: '', mid: '', last: '' })
-    // document.getElementById('first-name').focus()
-  }
-
-  handleSignup = () => {
-    const credentials = {user: {
-      username: this.state.username,
-      email: this.state.signupEmail,
-      password: this.state.signupPassword,
-    }}
-    this.props.signup(credentials)
-    // this.setState({ first: '', mid: '', last: '' })
-    // document.getElementById('first-name').focus()
   }
 
   render() {
@@ -60,7 +37,7 @@ class LoginForm extends React.Component {
             />
           </label><br/>
           <div id='btn-area'>
-            <NavLink className='btn form bottom' to='/' onClick={this.handleLogin} >LOG IN</NavLink>
+            <NavLink className='btn form bottom' to='/' onClick={this.props.handleLogin} >LOG IN</NavLink>
           </div>
         </form>
         <form>
@@ -98,7 +75,7 @@ class LoginForm extends React.Component {
             />
           </label><br/>
           <div id='btn-area'>
-            <NavLink className='btn form bottom' to='/' onClick={this.handleSignup} >SIGN UP</NavLink>
+            <NavLink className='btn form bottom' to='/' onClick={this.props.handleSignup} >SIGN UP</NavLink>
           </div>
         </form>
       </div>
@@ -106,9 +83,4 @@ class LoginForm extends React.Component {
   }
 }
 
-// const mapStateToProps = (state) => ({
-//     email: state.loginForm.email,
-//     password: state.loginForm.password,
-//   })
-
-export default connect(null, { login, signup })(LoginForm)
+export default LoginSignupForm
