@@ -1,10 +1,37 @@
 import React from 'react'
-import AboutOrFormArea from './AboutOrFormArea'
+import { NavLink } from 'react-router-dom'
+import { logout } from '../actions/sessions'
+import { connect } from 'react-redux'
 
-const content = <form >Account Area</form>
+class AccountArea extends React.Component {
 
-const AccountArea = () => (
-  <AboutOrFormArea id='about-form' class='card' content={content} />
-)
+  // handleChange = (e) => {
+  //   this.setState({ [e.target.name]: e.target.value })
+  // }
 
-export default AccountArea
+  handleLogout = () => {
+    this.props.logout()
+  }
+
+  render() {
+    return (
+      <div id='account' className='card'>
+        <NavLink id='exit' to='/'>&times;</NavLink>
+        <form>
+          <p><b>Account</b></p>
+
+          <div id='btn-area'>
+            <NavLink className='btn form bottom' to='/' onClick={this.handleLogout} >LOG OUT</NavLink>
+          </div>
+        </form>
+      </div>
+    )
+  }
+}
+
+// const mapStateToProps = (state) => ({
+//     email: state.AccountArea.email,
+//     password: state.AccountArea.password,
+//   })
+
+export default connect(null, { logout })(AccountArea)

@@ -7,11 +7,17 @@ export const setCurrentUser = (user) => {
   }
 }
 
+export const clearCurrentUser = () => {
+  return {
+    type: 'CLEAR_CURRENT_USER',
+  }
+}
+
 
 // Asynchronous Action Creators
 
 export const signup = (credentials) => {
-  return dispatch => {
+  return (dispatch) => {
     return fetch('http://localhost:3000/api/v1/signup', {
       credentials: 'include',
       method: 'POST',
@@ -34,7 +40,7 @@ export const signup = (credentials) => {
 }
 
 export const login = (credentials) => {
-  return dispatch => {
+  return (dispatch) => {
     return fetch('http://localhost:3000/api/v1/login', {
       credentials: 'include',
       method: 'POST',
@@ -57,7 +63,7 @@ export const login = (credentials) => {
 }
 
 export const getCurrentUser = () => {
-  return dispatch => {
+  return (dispatch) => {
     return fetch('http://localhost:3000/api/v1/get_current_user', {
       credentials: 'include',
       method: 'GET',
@@ -72,6 +78,29 @@ export const getCurrentUser = () => {
           console.log(user.error)
         } else {
           dispatch(setCurrentUser(user))
+        }
+      })
+      .catch(console.log)
+  }
+}
+
+export const logout = () => {
+  return (dispatch) => {
+    dispatch(clearCurrentUser())
+    return fetch('http://localhost:3000/api/v1/logout', {
+      credentials: 'include',
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+    })
+      .then(res => res.json())
+      .then(user => {
+        if (user.error) {
+          alert(user.error)
+        } else {
+          alert(user.notice)
         }
       })
       .catch(console.log)
