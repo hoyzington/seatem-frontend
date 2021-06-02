@@ -83,8 +83,8 @@ class EventForm extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  user: state.user,
-  event: state.currentEvent,
+  // user: state.user,
+  event: state.events.currentEvent,
 })
 
 const mapDispatchToProps = dispatch => ({

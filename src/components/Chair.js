@@ -65,9 +65,9 @@ class Chair extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  user: state.user,
-  event: state.currentEvent,
-  guest: state.selectedGuest,
+  // user: state.user,
+  event: state.events.currentEvent,
+  guest: state.events.selectedGuest,
 })
 
 const mapDispatchToProps = (dispatch) => ({

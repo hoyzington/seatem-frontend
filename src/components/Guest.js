@@ -52,11 +52,11 @@ class Guest extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  user: state.user,
-  events: state.events,
-  event: state.currentEvent,
-  guests: state.currentEvent.guests,
-  selectedGuest: state.selectedGuest,
+  // user: state.user,
+  events: state.events.events,
+  event: state.events.currentEvent,
+  guests: state.events.currentEvent.guests,
+  selectedGuest: state.events.selectedGuest,
 })
 
 const mapDispatchToProps = dispatch => ({

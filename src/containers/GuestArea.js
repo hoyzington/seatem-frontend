@@ -19,10 +19,10 @@ class GuestArea extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  user: state.user,
-  events: state.events,
-  event: state.currentEvent,
-  guest: state.selectedGuest,
+  // user: state.user,
+  events: state.events.events,
+  event: state.events.currentEvent,
+  guest: state.events.selectedGuest,
 })
 
 export default connect(mapStateToProps)(GuestArea)

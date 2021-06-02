@@ -154,10 +154,10 @@ class ChecklistForm extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  user: state.user,
-  descriptions: state.currentEvent.descriptions,
-  guests: state.currentEvent.guests,
-  selectedGuest: state.selectedGuest,
+  // user: state.user,
+  descriptions: state.events.currentEvent.descriptions,
+  guests: state.events.currentEvent.guests,
+  selectedGuest: state.events.selectedGuest,
 })
 
 const mapDispatchToProps = (dispatch) => ({
