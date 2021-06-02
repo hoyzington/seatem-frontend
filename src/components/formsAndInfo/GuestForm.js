@@ -30,7 +30,7 @@ class GuestForm extends React.Component {
 
   render() {
     const event = this.props.event
-    if (event.guests.length === event.chairs.length) {
+    if (event.guests.length.toString() === event.guestQty) {
       return (<Redirect to='/preferences-form' />)
     }
     return (
