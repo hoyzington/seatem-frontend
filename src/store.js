@@ -1,10 +1,10 @@
 import { createStore, applyMiddleware, compose, combineReducers } from 'redux'
-import eventsReducer from './reducers/eventsReducer'
+import events from './reducers/events'
 import currentUser from './reducers/currentUser'
 import thunk from 'redux-thunk'
 
 const reducers = combineReducers({
-  eventsReducer,
+  events,
   currentUser,
 })
 
