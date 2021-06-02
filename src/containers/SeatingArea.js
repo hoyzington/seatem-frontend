@@ -1,6 +1,6 @@
 import React from 'react'
-import Chair from '../components/Chair'
-import Table from '../components/Table'
+import Chair from '../components/things/Chair'
+import Table from '../components/things/Table'
 
 class SeatingArea extends React.Component {
 

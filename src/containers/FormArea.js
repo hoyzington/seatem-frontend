@@ -1,10 +1,10 @@
 import React from 'react'
 import { Route, Redirect } from 'react-router-dom'
-import About from '../components/About'
-import EventForm from './EventForm'
-import GuestForm from '../components/GuestForm'
-import PreferencesForm from '../components/PreferencesForm'
-import ChecklistForm from '../components/ChecklistForm'
+import About from '../components/formsAndInfo/About'
+import EventForm from '../components/formsAndInfo/EventForm'
+import GuestForm from '../components/formsAndInfo/GuestForm'
+import PreferencesForm from '../components/formsAndInfo/PreferencesForm'
+import ChecklistForm from '../components/formsAndInfo/ChecklistForm'
 import AccountContainer from './AccountContainer'
 
 const retryLoginOrSignup = (response) => {

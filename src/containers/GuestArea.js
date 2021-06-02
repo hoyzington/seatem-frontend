@@ -1,5 +1,5 @@
 import React from 'react'
-import Guest from '../components/Guest'
+import Guest from '../components/things/Guest'
 import { connect } from 'react-redux'
 
 class GuestArea extends React.Component {

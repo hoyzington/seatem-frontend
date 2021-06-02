@@ -1,6 +1,6 @@
 import React from 'react'
-import GuestArea from '../containers/GuestArea'
-import GuestInfo from './GuestInfo'
+import GuestArea from './GuestArea'
+import GuestInfo from '../components/formsAndInfo/GuestInfo'
 
 const NonEventArea = ({ table }) => (
   <div id={'non-event-area-' + table}>

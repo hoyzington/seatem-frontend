@@ -1,5 +1,5 @@
 import React from 'react'
-import SeatingArea from '../containers/SeatingArea'
+import SeatingArea from './SeatingArea'
 
 const EventArea = ({ data }) => (
   <div id={'event-area-' + data.currentEvent.table}>

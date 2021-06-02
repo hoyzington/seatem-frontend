@@ -1,9 +1,9 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
-import { signup, login, logout, clearCurrentUser } from '../actions/sessions'
 import { connect } from 'react-redux'
-import LoginSignupForm from '../components/LoginSignupForm'
-import AccountArea from '../components/AccountArea'
+import { signup, login, logout, clearCurrentUser } from '../actions/sessions'
+import LoginSignupForm from '../components/formsAndInfo/LoginSignupForm'
+import AccountInfo from '../components/formsAndInfo/AccountInfo'
 
 class AccountContainer extends React.Component {
 
@@ -20,7 +20,7 @@ class AccountContainer extends React.Component {
         )
       }
       return (
-        <AccountArea
+        <AccountInfo
           user={user}
           handleLogout={this.logout}
         />
