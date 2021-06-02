@@ -30,10 +30,10 @@ class EventForm extends React.Component {
     return (
       <div id='event-form' className='card'>
         <NavLink id='exit' to='/'>&times;</NavLink>
-        <p><b>ADD AN EVENT</b></p>
         <form>
+          <p><b>ADD AN EVENT</b></p>
           <label>
-            Event Name&nbsp;
+            Event Name&nbsp;&nbsp;
             <input
               type="text"
               name='name'
@@ -64,7 +64,7 @@ class EventForm extends React.Component {
             <br/>
           </label>
           <label>
-            Number of Guests&nbsp;
+            Number of Guests&nbsp;&nbsp;
             <input
               type='number'
               name='guestQty'
@@ -73,10 +73,10 @@ class EventForm extends React.Component {
               max={this.state.table === 'rnd' ? '12' : '26'}
               required/>&nbsp;
           </label><br/>
+          <div id='btn-area'>
+            <NavLink className='btn form bottom' to='/guest-form' onClick={this.handleSubmit} >NEXT STEP</NavLink>
+          </div>
         </form>
-        <div id='btn-area'>
-          <NavLink className='btn form bottom' to='/guest-form' onClick={this.handleSubmit} >NEXT STEP</NavLink>
-        </div>
       </div>
     )
   }

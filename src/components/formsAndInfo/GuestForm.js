@@ -39,7 +39,7 @@ class GuestForm extends React.Component {
         <form>
           <p><b>ADD GUESTS</b> ({this.maxGuests()})</p>
           <label>
-            First Name&nbsp;
+            First Name&nbsp;&nbsp;
             <input
               id='first-name'
               type="text"
@@ -49,25 +49,25 @@ class GuestForm extends React.Component {
               maxLength='12'
               autoFocus
               required/>
-          </label>&nbsp;<i>(required)</i><br/>
+          </label>&nbsp;&nbsp;<i>(required)</i><br/>
           <label>
-            Middle Name&nbsp;
+            Middle Name&nbsp;&nbsp;
             <input
               type="text"
               name='mid'
               onChange={this.handleChange}
               value={this.state.mid}
               maxLength='12'/>
-          </label>&nbsp;<i>(optional)</i><br/>
+          </label>&nbsp;&nbsp;<i>(optional)</i><br/>
           <label>
-            Last Name&nbsp;
+            Last Name&nbsp;&nbsp;
             <input
               type="text"
               name='last'
               onChange={this.handleChange}
               value={this.state.last}
               maxLength='12'/>
-          </label>&nbsp;<i>(optional)</i><br/>
+          </label>&nbsp;&nbsp;<i>(optional)</i><br/>
           <div id='btn-area'>
             <NavLink className='btn form bottom' to='/guest-form' onClick={this.handleSubmit} >ADD ANOTHER</NavLink>
             <NavLink className='btn form bottom' to='/preferences-form'onClick={this.handleClick} >NEXT STEP</NavLink>

@@ -76,7 +76,8 @@ class AccountContainer extends React.Component {
           <span onClick={this.clearError}>&times;</span>
         </NavLink>
         <div>
-          <p><b>ACCOUNT</b></p>
+          <h3>ACCOUNT</h3>
+          {/* <p><b>ACCOUNT</b></p> */}
           {this.showContent()}
         </div>
       </div>

@@ -248,8 +248,7 @@ class PreferencesForm extends React.Component {
               /><br/>
 
               <NavLink
-                id='add'
-                className='btn'
+                className='btn add'
                 to='/preferences-form'
                 onClick={this.handleAdd}
               >ADD</NavLink>
@@ -302,8 +301,7 @@ class PreferencesForm extends React.Component {
               /><br/>
 
               <NavLink
-                id='add'
-                className='btn'
+                className='btn add'
                 to='/preferences-form'
                 onClick={this.handleAdd}
               >ADD</NavLink><br/>

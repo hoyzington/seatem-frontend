@@ -42,6 +42,7 @@ class LoginSignupForm extends React.Component {
             <NavLink className='btn form bottom' to='/' onClick={() => handleLogin(this.state)} >LOG IN</NavLink>
           </div>
         </form>
+        <hr/>
         <form>
           <p><b>SIGN UP</b></p>
           <label>

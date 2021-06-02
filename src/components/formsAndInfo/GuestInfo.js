@@ -12,7 +12,7 @@ class GuestInfo extends React.Component {
         <>
           <h4>{this.buildFullName(guest)}</h4>
           {this.createInfoList()}
-          <div id='btn-area'>
+          <div id='guest-info-btn-area'>
             {this.addUnseatButton()}
             <NavLink className='btn delete' to='/' onClick={this.handleDeleteClick}>Delete</NavLink>
           </div>
