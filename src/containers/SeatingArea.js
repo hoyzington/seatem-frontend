@@ -1,4 +1,6 @@
 import React from 'react'
+import { NavLink } from 'react-router-dom'
+import { connect } from 'react-redux'
 import Chair from '../components/things/Chair'
 import Table from '../components/things/Table'
 
@@ -220,6 +222,19 @@ class SeatingArea extends React.Component {
     return this.rectangleTableChairs(qty)
   }
 
+  createSaveButton = () => {
+    const event = this.props.event.id !== ''
+    if (event && this.props.user) {
+      return (
+        <NavLink id='save' className='btn' to='/preferences-form' onClick={this.handleClick} >SAVE EVENT</NavLink>
+      )
+    }
+  }
+
+  handleClick = () => {
+    this.props.saveEvent()
+  }
+
   render() {
     const type = this.props.tableType,
           qty = this.props.chairQty,
@@ -233,9 +248,19 @@ class SeatingArea extends React.Component {
       <div id={areaId} style={areaWidth}>
         <Table id={tId} sizeA={tSizeA} sizeB={tSizeB} style={tStyle}/>
         {this.buildChairs(type, qty)}
+        {this.createSaveButton()}
       </div>
     )
   }
 }
 
-export default SeatingArea
+const mapStateToProps = (state) => ({
+  user: state.currentUser,
+  event: state.events.currentEvent,
+})
+
+const mapDispatchToProps = (dispatch) => ({
+  saveEvent: () => dispatch({ type: 'SAVE_EVENT' })
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(SeatingArea)
