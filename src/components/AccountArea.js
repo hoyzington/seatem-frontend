@@ -9,16 +9,11 @@ class AccountArea extends React.Component {
 
   render() {
     return (
-      <div id='account' className='card'>
-        <NavLink id='exit' to='/'>&times;</NavLink>
-        <form>
-          <p><b>Account</b></p>
+
 
           <div id='btn-area'>
             <NavLink className='btn form bottom' to='/' onClick={this.props.handleLogout} >LOG OUT</NavLink>
           </div>
-        </form>
-      </div>
     )
   }
 }

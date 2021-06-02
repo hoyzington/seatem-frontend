@@ -29,7 +29,7 @@ h4 {
   color: rgb(0, 120, 10, .8);
 }
 
-.no {
+.no, #error {
   color: rgb(130, 0, 30, .6);
 }
 

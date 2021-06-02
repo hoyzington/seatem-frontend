@@ -9,9 +9,11 @@ class LoginSignupForm extends React.Component {
   }
 
   render() {
+    const { handleLogin, handleSignup, error } = this.props
+    // console.log(error)
     return (
-      <div id='login-form' className='card'>
-        <NavLink id='exit' to='/'>&times;</NavLink>
+      <>
+        <div id='error'>{error}</div>
         <form>
           <p><b>LOG IN</b></p>
           <label>
@@ -37,7 +39,7 @@ class LoginSignupForm extends React.Component {
             />
           </label><br/>
           <div id='btn-area'>
-            <NavLink className='btn form bottom' to='/' onClick={this.props.handleLogin} >LOG IN</NavLink>
+            <NavLink className='btn form bottom' to='/' onClick={() => handleLogin(this.state)} >LOG IN</NavLink>
           </div>
         </form>
         <form>
@@ -75,10 +77,10 @@ class LoginSignupForm extends React.Component {
             />
           </label><br/>
           <div id='btn-area'>
-            <NavLink className='btn form bottom' to='/' onClick={this.props.handleSignup} >SIGN UP</NavLink>
+            <NavLink className='btn form bottom' to='/' onClick={() => handleSignup(this.state)} >SIGN UP</NavLink>
           </div>
         </form>
-      </div>
+      </>
     )
   }
 }

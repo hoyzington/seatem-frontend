@@ -1,30 +1,64 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
-import { signup, login, logout } from '../actions/sessions'
+import { signup, login, logout, clearCurrentUser } from '../actions/sessions'
 import { connect } from 'react-redux'
 import LoginSignupForm from '../components/LoginSignupForm'
+import AccountArea from '../components/AccountArea'
 
 class AccountContainer extends React.Component {
 
-  // handleChange = (e) => {
-  //   this.setState({ [e.target.name]: e.target.value })
-  // }
+  showContent = () => {
+    const user = this.props.currentUser
+    if (user) {
+      if (user.error) {
+        return (
+          <LoginSignupForm
+            error={user.error}
+            handleSignup={this.signup}
+            handleLogin={this.login}
+          />
+        )
+      }
+      return (
+        <AccountArea
+          user={user}
+          handleLogout={this.logout}
+        />
+      )
+    }
+    return (
+      <LoginSignupForm
+        error=''
+        handleSignup={this.signup}
+        handleLogin={this.login}
+      />
+    )
+  }
 
-  signup = () => {
+  clearError = () => {
+    const { currentUser, clearCurrentUser } = this.props
+    if (currentUser && currentUser.error) {
+      clearCurrentUser()
+    }
+  }
+
+  signup = (componentState) => {
+    const { username, signupEmail, signupPassword } = componentState
     const credentials = {user: {
-      username: this.state.username,
-      email: this.state.signupEmail,
-      password: this.state.signupPassword,
+      username: username,
+      email: signupEmail,
+      password: signupPassword,
     }}
     this.props.signup(credentials)
     // this.setState({ first: '', mid: '', last: '' })
     // document.getElementById('first-name').focus()
   }
 
-  login = () => {
+  login = (componentState) => {
+    const { loginEmail, loginPassword } = componentState
     const credentials = {user: {
-      email: this.state.loginEmail,
-      password: this.state.loginPassword,
+      email: loginEmail,
+      password: loginPassword,
     }}
     this.props.login(credentials)
     // this.setState({ first: '', mid: '', last: '' })
@@ -38,17 +72,12 @@ class AccountContainer extends React.Component {
   render() {
     return (
       <div id='account' className='card'>
-        <NavLink id='exit' to='/'>&times;</NavLink>
+        <NavLink id='exit' to='/'>
+          <span onClick={this.clearError}>&times;</span>
+        </NavLink>
         <div>
-          <p><b>Account</b></p>
-          <LoginSignupForm
-            handleSignup={this.signup}
-            handleLogin={this.login}
-          />
-          <AccountArea
-            user={this.props.currentUser}
-            handleLogout={this.logout}
-          />
+          <p><b>ACCOUNT</b></p>
+          {this.showContent()}
         </div>
       </div>
     )
@@ -56,7 +85,7 @@ class AccountContainer extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-    currentUser: state.sessions,
+    currentUser: state.currentUser,
   })
 
-export default connect(mapStateToProps, { signup, login, logout })(AccountContainer)
+export default connect(mapStateToProps, { signup, login, logout, clearCurrentUser })(AccountContainer)
