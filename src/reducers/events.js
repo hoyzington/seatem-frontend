@@ -410,8 +410,8 @@ const checkForIssues = (thisGuest, guests) => {
 
 // const eventsReducer = (state = defaultState, action) => {
 
-const eventsReducer = (state = {
-  events: [],
+const events = (state = {
+  savedEvents: [],
   currentEvent: {
     id: '',
     name: '',
@@ -432,27 +432,27 @@ const eventsReducer = (state = {
       let newEvent = { ...action.event, id: uuidv4() }
       return {
         ...state,
-        events: [
-          ...state.events,
+        savedEvents: [
+          ...state.savedEvents,
           newEvent,
         ],
         currentEvent: newEvent,
       }
 
     case 'REMOVE_EVENT':
-      eventIdx = state.events.findIndex(event => event.id === action.id)
+      eventIdx = state.savedEvents.findIndex(event => event.id === action.id)
       // ADDRESS currentEvent !!
       return {
         ...state,
-        events: [
-          ...state.events.slice(0, eventIdx),
-          ...state.events.slice(eventIdx + 1),
+        savedEvents: [
+          ...state.savedEvents.slice(0, eventIdx),
+          ...state.savedEvents.slice(eventIdx + 1),
         ],
       }
 
     case 'ADD_GUEST':
-      eventIdx = state.events.findIndex(event => event.id === state.currentEvent.id)
-      event = state.events[eventIdx]
+      eventIdx = state.savedEvents.findIndex(event => event.id === state.currentEvent.id)
+      event = state.savedEvents[eventIdx]
       let newGuest = {
         id: uuidv4(),
         firstName: action.guest.first,
@@ -475,17 +475,17 @@ const eventsReducer = (state = {
       }
       return {
         ...state,
-        events: [
-          ...state.events.slice(0, eventIdx),
+        savedEvents: [
+          ...state.savedEvents.slice(0, eventIdx),
           updatedEvent,
-          ...state.events.slice(eventIdx + 1),
+          ...state.savedEvents.slice(eventIdx + 1),
         ],
         currentEvent: updatedEvent,
       }
 
     case 'UPDATE_GUEST':
-      eventIdx = state.events.findIndex(event => event.id === state.currentEvent.id)
-      event = state.events[eventIdx]
+      eventIdx = state.savedEvents.findIndex(event => event.id === state.currentEvent.id)
+      event = state.savedEvents[eventIdx]
       guestIdx = event.guests.findIndex(guest => guest.id === action.guest.id)
       updatedEvent = {
         ...event,
@@ -497,18 +497,18 @@ const eventsReducer = (state = {
       }
       return {
         ...state,
-        events: [
-          ...state.events.slice(0, eventIdx),
+        savedEvents: [
+          ...state.savedEvents.slice(0, eventIdx),
           updatedEvent,
-          ...state.events.slice(eventIdx + 1),
+          ...state.savedEvents.slice(eventIdx + 1),
         ],
         currentEvent: updatedEvent,
         selectedGuest: action.guest,
       }
 
       case 'UPDATE_DESCRIPTIONS':
-        eventIdx = state.events.findIndex(event => event.id === state.currentEvent.id)
-        event = state.events[eventIdx]
+        eventIdx = state.savedEvents.findIndex(event => event.id === state.currentEvent.id)
+        event = state.savedEvents[eventIdx]
         guestIdx = event.guests.findIndex(guest => guest.id === action.guest.id)
         updatedEvent = {
           ...event,
@@ -521,10 +521,10 @@ const eventsReducer = (state = {
         }
         return {
           ...state,
-          events: [
-            ...state.events.slice(0, eventIdx),
+          savedEvents: [
+            ...state.savedEvents.slice(0, eventIdx),
             updatedEvent,
-            ...state.events.slice(eventIdx + 1),
+            ...state.savedEvents.slice(eventIdx + 1),
           ],
           currentEvent: updatedEvent,
           selectedGuest: action.guest,
@@ -539,8 +539,8 @@ const eventsReducer = (state = {
       }
 
     case 'SEAT_GUEST':
-      eventIdx = state.events.findIndex(event => event.id === state.currentEvent.id)
-      event = state.events[eventIdx]
+      eventIdx = state.savedEvents.findIndex(event => event.id === state.currentEvent.id)
+      event = state.savedEvents[eventIdx]
       selectedGuest = state.selectedGuest
       chairId = parseInt(action.chairId)
       if (selectedGuest.seated) {
@@ -583,18 +583,18 @@ const eventsReducer = (state = {
       }
       return {
         ...state,
-        events: [
-          ...state.events.slice(0, eventIdx),
+        savedEvents: [
+          ...state.savedEvents.slice(0, eventIdx),
           updatedEvent,
-          ...state.events.slice(eventIdx + 1),
+          ...state.savedEvents.slice(eventIdx + 1),
         ],
         currentEvent: updatedEvent,
         selectedGuest: null,
       }
 
     case 'UNSEAT_GUEST':
-      eventIdx = state.events.findIndex(event => event.id === state.currentEvent.id)
-      event = state.events[eventIdx]
+      eventIdx = state.savedEvents.findIndex(event => event.id === state.currentEvent.id)
+      event = state.savedEvents[eventIdx]
       selectedGuest = state.selectedGuest
       guestIdx = event.guests.findIndex(guest => guest.id === selectedGuest.id)
       chairIdx = event.chairs.findIndex(chair => chair === selectedGuest.id)
@@ -619,18 +619,18 @@ const eventsReducer = (state = {
       }
       return {
         ...state,
-        events: [
-          ...state.events.slice(0, eventIdx),
+        savedEvents: [
+          ...state.savedEvents.slice(0, eventIdx),
           updatedEvent,
-          ...state.events.slice(eventIdx + 1),
+          ...state.savedEvents.slice(eventIdx + 1),
         ],
         currentEvent: updatedEvent,
         selectedGuest: null,
       }
 
     case 'DELETE_GUEST':
-      eventIdx = state.events.findIndex(event => event.id === state.currentEvent.id)
-      event = state.events[eventIdx]
+      eventIdx = state.savedEvents.findIndex(event => event.id === state.currentEvent.id)
+      event = state.savedEvents[eventIdx]
       guestIdx = event.guests.findIndex(guest => guest.id === action.guest.id)
       updatedEvent = {
         ...event,
@@ -652,18 +652,18 @@ const eventsReducer = (state = {
       }
       return {
         ...state,
-        events: [
-          ...state.events.slice(0, eventIdx),
+        savedEvents: [
+          ...state.savedEvents.slice(0, eventIdx),
           updatedEvent,
-          ...state.events.slice(eventIdx + 1),
+          ...state.savedEvents.slice(eventIdx + 1),
         ],
         currentEvent: updatedEvent,
         selectedGuest: null,
       }
 
     case 'UPDATE_NEIGHBORS':
-      eventIdx = state.events.findIndex(event => event.id === state.currentEvent.id)
-      event = state.events[eventIdx]
+      eventIdx = state.savedEvents.findIndex(event => event.id === state.currentEvent.id)
+      event = state.savedEvents[eventIdx]
       guests = event.guests
       const chairs = event.chairs
       const guestBefore = action.guest
@@ -710,17 +710,17 @@ const eventsReducer = (state = {
 
       return {
         ...state,
-        events: [
-          ...state.events.slice(0, eventIdx),
+        savedEvents: [
+          ...state.savedEvents.slice(0, eventIdx),
           updatedEvent,
-          ...state.events.slice(eventIdx + 1),
+          ...state.savedEvents.slice(eventIdx + 1),
         ],
         currentEvent: updatedEvent,
       }
 
     case 'CHECK_FOR_ISSUES':
-      eventIdx = state.events.findIndex(event => event.id === state.currentEvent.id)
-      event = state.events[eventIdx]
+      eventIdx = state.savedEvents.findIndex(event => event.id === state.currentEvent.id)
+      event = state.savedEvents[eventIdx]
       guests = event.guests
       affectedGuests = event.newlyAffectedGuests
       if (affectedGuests.length > 0) {
@@ -747,10 +747,10 @@ const eventsReducer = (state = {
 
       return {
         ...state,
-        events: [
-          ...state.events.slice(0, eventIdx),
+        savedEvents: [
+          ...state.savedEvents.slice(0, eventIdx),
           updatedEvent,
-          ...state.events.slice(eventIdx + 1),
+          ...state.savedEvents.slice(eventIdx + 1),
         ],
         currentEvent: updatedEvent,
       }
@@ -760,4 +760,4 @@ const eventsReducer = (state = {
   }
 }
 
-export default eventsReducer
+export default events
