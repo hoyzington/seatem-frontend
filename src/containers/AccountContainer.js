@@ -8,7 +8,7 @@ import AccountInfo from '../components/formsAndInfo/AccountInfo'
 class AccountContainer extends React.Component {
 
   showContent = () => {
-    const user = this.props.currentUser
+    const { user, events } = this.props
     if (user) {
       if (user.error) {
         return (
@@ -22,6 +22,7 @@ class AccountContainer extends React.Component {
       return (
         <AccountInfo
           user={user}
+          events={events}
           handleLogout={this.logout}
         />
       )
@@ -86,7 +87,8 @@ class AccountContainer extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-    currentUser: state.currentUser,
+    user: state.currentUser,
+    events: state.events.savedEvents,
   })
 
 export default connect(mapStateToProps, { signup, login, logout, clearCurrentUser })(AccountContainer)
