@@ -1,9 +1,10 @@
 import React from 'react'
 import { NavLink, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
+import { createEvent } from '../../actions/events'
 
 class EventForm extends React.Component {
-  state = { id: '', name: '', table: 'rect', chairs: [], guests: [], guestQty: '0', descriptions: [], newlyAffectedGuests: [] }
+  state = { name: '', table: 'rect', chairs: [], guests: '', guestQty: '0', descriptions: '', newlyAffectedGuests: '' }
 
   handleChange = (e) => {
     this.setState({ [e.target.name]: e.target.value })
@@ -13,14 +14,20 @@ class EventForm extends React.Component {
     let submittedState = this.state
     let qty = parseInt(this.state.guestQty)
     if (qty < 5) {
-      submittedState.chairs = ['', '', '', '']
+      submittedState.chairs = [null, null, null, null]
     } else {
       if (qty %2 !== 0) qty += 1
       for (let i = qty; i > 0; i--) {
-        submittedState.chairs.push('')
+        submittedState.chairs.push(null)
       }
     }
-    this.props.addEvent(submittedState)
+    const chairString = submittedState.chairs.join(',')
+    const eventObj = {event: {
+      ...this.state,
+      chairs: chairString,
+      user_id: this.props.user.id,
+    }}
+    this.props.createEvent(eventObj)
   }
 
   render() {
@@ -83,12 +90,8 @@ class EventForm extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  // user: state.user,
+  user: state.currentUser.data,
   event: state.events.currentEvent,
 })
 
-const mapDispatchToProps = dispatch => ({
-  addEvent: (event) => dispatch({ type: 'ADD_EVENT', event })
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(EventForm)
+export default connect(mapStateToProps, { createEvent })(EventForm)
