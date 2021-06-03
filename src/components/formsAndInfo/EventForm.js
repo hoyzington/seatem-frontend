@@ -1,7 +1,7 @@
 import React from 'react'
 import { NavLink, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { createEvent } from '../../actions/events'
+import { addEvent } from '../../actions/events'
 
 class EventForm extends React.Component {
   state = { name: '', table: 'rect', chairs: [], guests: '', guestQty: '0', descriptions: '', newlyAffectedGuests: '' }
@@ -22,12 +22,12 @@ class EventForm extends React.Component {
       }
     }
     const chairString = submittedState.chairs.join(',')
-    const eventObj = {event: {
+    const event = {event: {
       ...this.state,
       chairs: chairString,
       user_id: this.props.user.id,
     }}
-    this.props.createEvent(eventObj)
+    this.props.addEvent(event)
   }
 
   render() {
@@ -94,4 +94,4 @@ const mapStateToProps = (state) => ({
   event: state.events.currentEvent,
 })
 
-export default connect(mapStateToProps, { createEvent })(EventForm)
+export default connect(mapStateToProps, { addEvent })(EventForm)
