@@ -17,17 +17,27 @@ class App extends React.Component {
     this.props.getCurrentUser()
   }
 
+  renderCurrentEvent = () => {
+    const { event } = this.props
+    if (event) {
+      return (
+        <>
+          <NonEventArea table={event.table} />
+          <EventArea event={event} />
+        </>
+      )
+    }
+  }
+
   render() {
-    const event = this.props.state.events.currentEvent
-    const response = this.props.state.currentUser
+    const { user, event } = this.props
     return (
       <Router>
         <>
-          <NavBar title={event.name} />
+          <NavBar event={event} />
           <Route exact path='/' />
-          <FormArea response={response} />
-          <NonEventArea guests={event.guests} table={event.table} />
-          <EventArea data={this.props.state.events} />
+          <FormArea user={user} event={event} />
+          {this.renderCurrentEvent()}
           <Footer />
         </>
       </Router>
@@ -35,6 +45,9 @@ class App extends React.Component {
   }
 }
 
-const mapStateToProps = (state) => ({ state })
+const mapStateToProps = (state) => ({
+  user: state.currentUser,
+  event: state.events.currentEvent
+})
 
 export default connect(mapStateToProps, { getCurrentUser })(App)

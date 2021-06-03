@@ -1,11 +1,11 @@
 import React from 'react'
 import SeatingArea from './SeatingArea'
 
-const EventArea = ({ data }) => (
-  <div id={'event-area-' + data.currentEvent.table}>
+const EventArea = ({ table, chairs }) => (
+  <div id={`event-area-${table}`}>
     <SeatingArea
-      tableType={data.currentEvent.table}
-      chairQty={data.currentEvent.chairs.length}
+      tableType={table}
+      chairQty={chairs.length}
     />
   </div>
 )
