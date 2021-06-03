@@ -223,8 +223,7 @@ class SeatingArea extends React.Component {
   }
 
   createSaveButton = () => {
-    const event = this.props.event.id !== ''
-    if (event && this.props.user) {
+    if (this.props.user && this.props.event) {
       return (
         <NavLink id='save' className='btn' to='/preferences-form' onClick={this.handleClick} >SAVE EVENT</NavLink>
       )

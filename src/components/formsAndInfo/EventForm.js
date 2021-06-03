@@ -31,7 +31,7 @@ class EventForm extends React.Component {
   }
 
   render() {
-    if (this.props.event.name !== '') {
+    if (this.props.event) {
       return (<Redirect to='/guest-form' />)
     }
     return (
