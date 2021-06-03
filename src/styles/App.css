@@ -29,14 +29,6 @@ h4 {
   margin: 0px;
 }
 
-.yes {
-  color: rgb(0, 120, 10, .8);
-}
-
-.no, #error {
-  color: rgb(130, 0, 30, .6);
-}
-
 ul {
   margin: 0px 0px 10px 0px;
 }
@@ -93,12 +85,24 @@ select {
   color: #666;
 }
 
+.yes {
+  color: rgb(0, 120, 10, .8);
+}
+
+.no, #error {
+  color: rgb(130, 0, 30, .6);
+}
+
 /* BUTTONS & LINKS */
 
-a:link, a:active, a:visited, a:focus {
-  text-decoration: none;
+a:link, a:visited, a:active, a:focus {
+  text-decoration-line: none;
   color: black;
   outline-style: none;
+}
+
+a.event {
+  color: rgb(28, 84, 156);
 }
 
 #exit {
@@ -231,6 +235,11 @@ a:link, a:active, a:visited, a:focus {
   padding: 20px 30px 15px 30px;
 }
 
+#events {
+  margin-bottom: 8vh;
+  padding: 18px 30px 25px 30px;
+}
+
 #btn-area {
   display: flex;
   height: 35px;
@@ -255,7 +264,7 @@ a:link, a:active, a:visited, a:focus {
   padding: 10px 15px 0px 15px;
 }
 
-.preference-list, #check-list, #guest-info-list {
+.preference-list, #check-list, #guest-info-list, #event-list {
   border-top: 2px solid rgba(127, 127, 127, 0.30);
   border-bottom: 2px solid rgba(127, 127, 127, 0.30);
   overflow-y: auto;
@@ -273,6 +282,17 @@ a:link, a:active, a:visited, a:focus {
   max-height: 370px;
   padding: 5px 0px;
   margin: 10px 0px 0px 0px;
+}
+
+#event-list {
+  min-height: 250px;
+  max-height: 370px;
+  padding: 5px 0px;
+}
+
+#event-list ul li {
+  position: relative;
+  left: -39px;
 }
 
       /* PAGE ZONES */
