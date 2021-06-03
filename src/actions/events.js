@@ -7,7 +7,12 @@ export const setSavedEvents = (events) => {
   }
 }
 
-
+export const showEvent = (event) => {
+  return {
+    type: 'SHOW_EVENT',
+    event,
+  }
+}
 
 // Asynchronous Action Creators
 

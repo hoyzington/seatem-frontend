@@ -408,20 +408,22 @@ const checkForIssues = (thisGuest, guests) => {
 //   selectedGuest: null
 // }
 
+// {
+//   id: '',
+//   name: '',
+//   table: '',
+//   chairs: [],
+//   guests: [],
+//   guestQty: '0',
+//   descriptions: [],
+//   affectedGuests: [],
+// }
+
 // const eventsReducer = (state = defaultState, action) => {
 
 const events = (state = {
   savedEvents: [],
-  currentEvent: {
-    id: '',
-    name: '',
-    table: '',
-    chairs: [],
-    guests: [],
-    guestQty: '0',
-    descriptions: [],
-    affectedGuests: [],
-  },
+  currentEvent: null,
   selectedGuest: null,
 }, action) => {
 
@@ -443,6 +445,12 @@ const events = (state = {
       return {
         ...state,
         savedEvents: action.events,
+      }
+
+    case 'SHOW_EVENT':
+      return {
+        ...state,
+        currentEvent: action.event,
       }
 
     // case 'REMOVE_EVENT':
