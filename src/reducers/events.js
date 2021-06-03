@@ -428,27 +428,33 @@ const events = (state = {
   let eventIdx, event, currentEvent, updatedEvent, guestIdx, guest, guests, selectedGuest, affectedGuests,chairIdx, chairId
 
   switch (action.type) {
-    case 'ADD_EVENT':
-      let newEvent = { ...action.event, id: uuidv4() }
+    // case 'ADD_EVENT':
+    //   let newEvent = { ...action.event, id: uuidv4() }
+    //   return {
+    //     ...state,
+    //     savedEvents: [
+    //       ...state.savedEvents,
+    //       newEvent,
+    //     ],
+    //     currentEvent: newEvent,
+    //   }
+
+    case 'SET_SAVED_EVENTS':
       return {
         ...state,
-        savedEvents: [
-          ...state.savedEvents,
-          newEvent,
-        ],
-        currentEvent: newEvent,
+        savedEvents: action.events,
       }
 
-    case 'REMOVE_EVENT':
-      eventIdx = state.savedEvents.findIndex(event => event.id === action.id)
-      // ADDRESS currentEvent !!
-      return {
-        ...state,
-        savedEvents: [
-          ...state.savedEvents.slice(0, eventIdx),
-          ...state.savedEvents.slice(eventIdx + 1),
-        ],
-      }
+    // case 'REMOVE_EVENT':
+    //   eventIdx = state.savedEvents.findIndex(event => event.id === action.id)
+    //   // ADDRESS currentEvent !!
+    //   return {
+    //     ...state,
+    //     savedEvents: [
+    //       ...state.savedEvents.slice(0, eventIdx),
+    //       ...state.savedEvents.slice(eventIdx + 1),
+    //     ],
+    //   }
 
     case 'ADD_GUEST':
       eventIdx = state.savedEvents.findIndex(event => event.id === state.currentEvent.id)

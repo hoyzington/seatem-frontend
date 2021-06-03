@@ -1,3 +1,5 @@
+import { setSavedEvents } from './events'
+
 // Synchronous Action Creators
 
 export const setCurrentUser = (user) => {
@@ -28,8 +30,8 @@ export const signup = (credentials) => {
       body: JSON.stringify(credentials),
     })
       .then(res => res.json())
-      .then(user => {
-        dispatch(setCurrentUser(user))
+      .then(json => {
+        dispatch(setCurrentUser(json.user))
       })
       .catch(console.log)
   }
@@ -47,8 +49,11 @@ export const login = (credentials) => {
       body: JSON.stringify(credentials),
     })
       .then(res => res.json())
-      .then(user => {
-        dispatch(setCurrentUser(user))
+      .then(json => {
+        dispatch(setCurrentUser(json.user))
+        if (json.events.length > 0) {
+          dispatch(setSavedEvents(json.events))
+        }
       })
       .catch(console.log)
   }
@@ -65,11 +70,14 @@ export const getCurrentUser = () => {
       },
     })
       .then(res => res.json())
-      .then(user => {
-        if (user.error) {
-          console.log(user.error)
+      .then(json => {
+        if (json.error) {
+          console.log(json.error)
         } else {
-          dispatch(setCurrentUser(user))
+          dispatch(setCurrentUser(json.user))
+          if (json.events.length > 0) {
+            dispatch(setSavedEvents(json.events))
+          }
         }
       })
       .catch(console.log)
