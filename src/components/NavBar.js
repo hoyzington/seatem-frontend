@@ -1,7 +1,7 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 
-const NavBar = ({ title }) => (
+const NavBar = ({ event }) => (
   <header>
     <nav>
       <span id='logo-bar'>
@@ -9,11 +9,11 @@ const NavBar = ({ title }) => (
         <NavLink className='navbar' to='/about'>About</NavLink>
       </span>
       <span id='title-bar'>
-        <span><i>{title}</i></span>
+        <span><i>{event ? event.name : ''}</i></span>
       </span>
       <span id='menu-bar'>
         <NavLink className='navbar' to='/event-form'>Event</NavLink>
-        {/* <NavLink className='navbar' to='/guests'>Guests</NavLink> */}
+        <NavLink className='navbar' to='/events'>Events</NavLink>
         <NavLink className='navbar' to='/account'>Account</NavLink>
       </span>
     </nav>
