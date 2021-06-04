@@ -4,15 +4,15 @@ import { connect } from 'react-redux'
 
 class GuestArea extends React.Component {
 
-  renderGuests = (event) => {
-    const guests = event.guests.filter(guest => guest.seated === false)
+  renderGuests = () => {
+    const guests = this.props.event.guests.filter(guest => guest.seated === false)
     return guests.map(guest => (<Guest key={guest.id} guest={guest} />))
   }
 
   render() {
     return (
       <div id={`guest-area-${this.props.event.table}`}>
-        {this.renderGuests(this.props.event)}
+        {this.renderGuests()}
       </div>
     )
   }
