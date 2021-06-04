@@ -31,7 +31,11 @@ export const signup = (credentials) => {
     })
       .then(res => res.json())
       .then(json => {
-        dispatch(setCurrentUser(json.user))
+        if (json.errors) {
+          dispatch(setCurrentUser(json))
+        } else {
+          dispatch(setCurrentUser(json.user))
+        }
       })
       .catch(console.log)
   }
@@ -50,9 +54,13 @@ export const login = (credentials) => {
     })
       .then(res => res.json())
       .then(json => {
-        dispatch(setCurrentUser(json.user))
-        if (json.events.length > 0) {
-          dispatch(setSavedEvents(json.events))
+        if (json.error) {
+          dispatch(setCurrentUser(json))
+        } else {
+          dispatch(setCurrentUser(json.user))
+          if (json.events.length > 0) {
+            dispatch(setSavedEvents(json.events))
+          }
         }
       })
       .catch(console.log)
