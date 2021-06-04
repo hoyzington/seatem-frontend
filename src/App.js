@@ -34,7 +34,7 @@ class App extends React.Component {
     return (
       <Router>
         <>
-          <NavBar event={event} />
+          <NavBar user={user} event={event} />
           <Route exact path='/' />
           <FormArea user={user} event={event} />
           {this.renderCurrentEvent()}
