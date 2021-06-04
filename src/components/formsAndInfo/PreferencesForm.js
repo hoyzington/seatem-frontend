@@ -143,7 +143,7 @@ class PreferencesForm extends React.Component {
                 <b>{this.buildFullName(prefGuest)}</b>
                 <NavLink
                   className='delete-preference'
-                  to='/preferences-form'
+                  to='/add-preferences'
                   onClick={() => this.handleDelete(type, bool, pref)}
                 >&times;</NavLink>
               </li>
@@ -154,7 +154,7 @@ class PreferencesForm extends React.Component {
               <b>{pref}</b>
               <NavLink
                 className='delete-preference'
-                to='/preferences-form'
+                to='/add-preferences'
                 onClick={() => this.handleDelete(type, bool, pref)}
               >&times;</NavLink>
             </li>
@@ -185,7 +185,7 @@ class PreferencesForm extends React.Component {
         <NavLink id='exit' to='/'>&times;</NavLink>
         <form>
           <b>ADD SEATING PREFERENCES</b>
-          <NavLink className='btn form top' to='/checklist-form'>NEXT STEP</NavLink>
+          <NavLink className='btn form top' to='/checklist'>NEXT STEP</NavLink>
 
           <p>
             <label>
@@ -249,7 +249,7 @@ class PreferencesForm extends React.Component {
 
               <NavLink
                 className='btn add'
-                to='/preferences-form'
+                to='/add-preferences'
                 onClick={this.handleAdd}
               >ADD</NavLink>
 
@@ -302,7 +302,7 @@ class PreferencesForm extends React.Component {
 
               <NavLink
                 className='btn add'
-                to='/preferences-form'
+                to='/add-preferences'
                 onClick={this.handleAdd}
               >ADD</NavLink><br/>
 

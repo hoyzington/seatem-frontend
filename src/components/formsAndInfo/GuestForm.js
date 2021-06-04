@@ -31,7 +31,7 @@ class GuestForm extends React.Component {
   render() {
     const event = this.props.event
     if (event.guests.length.toString() === event.guestQty) {
-      return (<Redirect to='/preferences-form' />)
+      return (<Redirect to='/add-preferences' />)
     }
     return (
       <div id='guest-form' className='card'>
@@ -70,7 +70,7 @@ class GuestForm extends React.Component {
           </label>&nbsp;&nbsp;<i>(optional)</i><br/>
           <div id='btn-area'>
             <NavLink className='btn form bottom' to='/guest-form' onClick={this.handleSubmit} >ADD ANOTHER</NavLink>
-            <NavLink className='btn form bottom' to='/preferences-form'onClick={this.handleClick} >NEXT STEP</NavLink>
+            <NavLink className='btn form bottom' to='/add-preferences' onClick={this.handleClick} >NEXT STEP</NavLink>
           </div>
         </form>
       </div>

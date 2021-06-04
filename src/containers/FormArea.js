@@ -5,17 +5,18 @@ import EventForm from '../components/formsAndInfo/EventForm'
 import GuestForm from '../components/formsAndInfo/GuestForm'
 import PreferencesForm from '../components/formsAndInfo/PreferencesForm'
 import ChecklistForm from '../components/formsAndInfo/ChecklistForm'
-import AccountContainer from './AccountContainer'
+import LoginSignupForm from '../components/formsAndInfo/LoginSignupForm'
 import EventsList from '../components/formsAndInfo/EventsList'
+import EventMenu from '../components/formsAndInfo/EventMenu'
 
 const renderFormOrInfo = (user, event) => {
   if (user) {
-    if (user.error) {
-      return (<Redirect to='/account' />)
+    if (user.error || user.errors) {
+      return (<Redirect to='/login-signup' />)
     } else if (!event) {
       return (<Redirect to='/events' />)
     }
-  } else if (!event) {
+  } else {
     return (<Redirect to='/about' />)
   }
 }
@@ -23,13 +24,15 @@ const renderFormOrInfo = (user, event) => {
 const FormArea = (props) => (
   <div id='form-area'>
     {renderFormOrInfo(props.user, props.event)}
-    <Route exact path='/about' component={About} />
-    <Route exact path='/event-form' component={EventForm} />
-    <Route exact path='/guest-form' component={GuestForm} />
-    <Route exact path='/preferences-form' component={PreferencesForm} />
-    <Route exact path='/checklist-form' component={ChecklistForm} />
-    <Route exact path='/account' component={AccountContainer} />
+    <Route exact path='/about' render={() => (<About user={props.user} />)} />
+    <Route exact path='/login-signup' component={LoginSignupForm} />
+    <Route exact path='/new-event' component={EventForm} />
+    <Route exact path='/update-event' component={EventForm} />
+    <Route exact path='/add-guests' component={GuestForm} />
+    <Route exact path='/add-preferences' component={PreferencesForm} />
+    <Route exact path='/checklist' component={ChecklistForm} />
     <Route exact path='/events' component={EventsList} />
+    <Route exact path='/edit-event' render={() => (<EventMenu event={props.event} />)} />
   </div>
 )
 
