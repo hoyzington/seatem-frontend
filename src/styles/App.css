@@ -39,6 +39,11 @@ li {
   left: -22px;
 }
 
+div.error li {
+  list-style-type: disc;
+  position: unset;
+}
+
 i {
   font-size: large;
   font-weight: lighter;
@@ -89,8 +94,12 @@ select {
   color: rgb(0, 120, 10, .8);
 }
 
-.no, #error {
+.no, .error {
   color: rgb(130, 0, 30, .6);
+}
+
+.error div {
+  margin: 0px 0px;
 }
 
 /* BUTTONS & LINKS */
@@ -103,6 +112,7 @@ a:link, a:visited, a:active, a:focus {
 
 a.event {
   color: rgb(28, 84, 156);
+  font-weight: bold;
 }
 
 #exit {
@@ -121,16 +131,41 @@ a.event {
   font-size: medium;
 }
 
-.form {
-  padding: 1px 15px 0px 15px;
+.form, .add, .back {
   background-color: rgb(240, 240, 240);
   box-shadow: .5px .5px 2.5px rgb(120, 120, 120);
 }
 
+.form {
+  padding: 1px 15px 0px 15px;
+}
+
+.add, .back {
+  position: relative;
+  padding: 6px 12px;
+}
+
+.add {
+  top: -115px;
+  left: 305px;
+}
+
+.back {
+  top: -5px;
+  left: 140px;
+}
+
+.form:focus, .add:focus {
+  border: 3px solid rgba(127, 127, 127, 0.35);
+}
+
 .form:focus {
   padding: 1px 12px 0px 12px;
-  border: 3px solid rgba(127, 127, 127, 0.35);
   line-height: 1.7em;
+}
+
+.add:focus {
+  padding: 3px 9px;
 }
 
 .delete, .unseat {
@@ -170,21 +205,6 @@ a.event {
   margin: 0px 15px;
 }
 
-.add {
-  position: relative;
-  top: -115px;
-  left: 305px;
-  padding: 6px 12px;
-  background-color: rgb(240, 240, 240);
-  box-shadow: .5px .5px 2.5px rgb(120, 120, 120);
-}
-
-.add:focus {
-  padding: 3px 9px;
-  border: 3px solid rgba(127, 127, 127, 0.35);
-  /* line-height: 1.7em; */
-}
-
 .delete-preference {
   position: relative;
   top: 1px;
@@ -206,12 +226,29 @@ a.event {
 
 #about {
   width: 50vw;
-  padding: 1vh 3vw;
+  padding: 25px 30px 30px 30px;
 }
 
-#account {
-  margin-bottom: 8vh;
-  padding: 18px 30px 25px 30px;
+#login-signup {
+  display: flex;
+  flex-wrap: wrap;
+  /* display: grid;
+  grid-auto-flow: row;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  grid-gap: 10px; */
+  width: 627px;
+  /* margin-bottom: 8vh; */
+  padding: 18px 10px 25px 10px;
+}
+
+.block {
+  width: 262px;
+  padding: 0px 25px;
+}
+
+.left {
+  border-right: 3px solid rgba(127, 127, 127, 0.35);
 }
 
 #event-form {
@@ -237,6 +274,11 @@ a.event {
 
 #events {
   margin-bottom: 8vh;
+  padding: 18px 30px 25px 30px;
+}
+
+#event-menu {
+  margin-bottom: 20vh;
   padding: 18px 30px 25px 30px;
 }
 
@@ -516,30 +558,30 @@ footer, #logo-bar, #title-bar, #menu-bar {
 
 #logo-bar {
   left: 0px;
-  width: 24vw;
+  width: 28vw;
   padding-left: 3vw;
 }
 
 #title-bar {
-  left: 27vw;
-  width: 47vw;
+  left: 31vw;
+  width: 41vw;
   font-family: cursive;
   justify-content: center;
 }
 
 #title-bar i {
-  font-size: 1.7em;
+  font-size: 25px;
 }
 
 #menu-bar {
   right: 0px;
-  width: 24vw;
+  width: 26vw;
   padding-right: 2vw;
   justify-content: flex-end;
 }
 
 #logo {
-  margin: 0px 25px 0px 0px;
+  margin: 0vh 1.75vw 0vh 0vw;
   font-family: cursive;
   word-spacing: -4px;
 }
@@ -549,6 +591,6 @@ footer, #logo-bar, #title-bar, #menu-bar {
 }
 
 .navbar {
-  margin: 0vw 2vw;
+  margin: 0vw 1.25vw;
   font-weight: 500;
 }
