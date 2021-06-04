@@ -427,7 +427,7 @@ const events = (state = {
   selectedGuest: null,
 }, action) => {
 
-  let eventIdx, event, currentEvent, updatedEvent, guestIdx, guest, guests, selectedGuest, affectedGuests,chairIdx, chairId
+  let eventIdx, event, currentEvent, updatedEvent, guestIdx, guest, guests, selectedGuest, affectedGuests, chairs, chairIdx, chairId
 
   switch (action.type) {
     // case 'ADD_EVENT':
@@ -448,9 +448,17 @@ const events = (state = {
       }
 
     case 'SHOW_EVENT':
+      const unJson = (string) => (string === '' ? [] : string.split(','))
+      event = {
+        ...action.event,
+        chairs: unJson(action.event.chairs),
+        guests: unJson(action.event.guests),
+        newlyAffectedGuests: unJson(action.event.newlyAffectedGuests),
+        descriptions: unJson(action.event.descriptions),
+      }
       return {
         ...state,
-        currentEvent: action.event,
+        currentEvent: event,
       }
 
     // case 'REMOVE_EVENT':
@@ -679,7 +687,7 @@ const events = (state = {
       eventIdx = state.savedEvents.findIndex(event => event.id === state.currentEvent.id)
       event = state.savedEvents[eventIdx]
       guests = event.guests
-      const chairs = event.chairs
+      chairs = event.chairs
       const guestBefore = action.guest
       let guestAfter = guests.find(guest => guest.id === guestBefore.id)
 
