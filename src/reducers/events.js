@@ -408,16 +408,7 @@ const checkForIssues = (thisGuest, guests) => {
 //   selectedGuest: null
 // }
 
-// {
-//   id: '',
-//   name: '',
-//   table: '',
-//   chairs: [],
-//   guests: [],
-//   guestQty: '0',
-//   descriptions: [],
-//   affectedGuests: [],
-// }
+
 
 // const eventsReducer = (state = defaultState, action) => {
 
@@ -429,32 +420,36 @@ const events = (state = {
 
   let eventIdx, event, currentEvent, updatedEvent, guestIdx, guest, guests, selectedGuest, affectedGuests, chairs, chairIdx, chairId
 
+  const unJson = (string) => (string === '' ? [] : string.split(','))
+
   switch (action.type) {
-    // case 'ADD_EVENT':
-    //   let newEvent = { ...action.event, id: uuidv4() }
-    //   return {
-    //     ...state,
-    //     savedEvents: [
-    //       ...state.savedEvents,
-    //       newEvent,
-    //     ],
-    //     currentEvent: newEvent,
-    //   }
-
-    case 'SET_SAVED_EVENTS':
-      return {
-        ...state,
-        savedEvents: action.events,
-      }
-
-    case 'SHOW_EVENT':
-      const unJson = (string) => (string === '' ? [] : string.split(','))
+    case 'ADD_EVENT':
       event = {
         ...action.event,
         chairs: unJson(action.event.chairs),
         guests: unJson(action.event.guests),
         newlyAffectedGuests: unJson(action.event.newlyAffectedGuests),
         descriptions: unJson(action.event.descriptions),
+      }
+      return {
+        ...state,
+        savedEvents: [
+          ...state.savedEvents,
+          event,
+        ],
+        currentEvent: event,
+      }
+
+    case 'SHOW_EVENT':
+      event = action.event
+      if (typeof event.guests === 'string') {
+        event = {
+          ...action.event,
+          chairs: unJson(action.event.chairs),
+          guests: unJson(action.event.guests),
+          newlyAffectedGuests: unJson(action.event.newlyAffectedGuests),
+          descriptions: unJson(action.event.descriptions),
+        }
       }
       return {
         ...state,
@@ -472,7 +467,29 @@ const events = (state = {
     //     ],
     //   }
 
-    case 'ADD_GUEST':
+    case 'CLEAR_CURRENT_EVENT':
+      event = {
+        id: '',
+        name: '',
+        table: '',
+        chairs: [],
+        guests: [],
+        guestQty: '0',
+        descriptions: [],
+        affectedGuests: [],
+      }
+      return {
+        ...state,
+        currentEvent: event,
+      }
+
+    case 'SET_SAVED_EVENTS':
+      return {
+        ...state,
+        savedEvents: action.events,
+      }
+  
+      case 'ADD_GUEST':
       eventIdx = state.savedEvents.findIndex(event => event.id === state.currentEvent.id)
       event = state.savedEvents[eventIdx]
       let newGuest = {

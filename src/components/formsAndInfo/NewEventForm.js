@@ -1,10 +1,14 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { addEvent } from '../../actions/events'
+import { clearCurrentEvent, createEvent } from '../../actions/events'
 
 class NewEventForm extends React.Component {
   state = { name: '', table: 'rect', chairs: [], guests: '', guestQty: '0', descriptions: '', newlyAffectedGuests: '' }
+
+  componentDidMount() {
+    this.props.clearCurrentEvent()
+  }
 
   handleChange = (e) => {
     this.setState({ [e.target.name]: e.target.value })
@@ -27,7 +31,7 @@ class NewEventForm extends React.Component {
       chairs: chairString,
       user_id: this.props.user.id,
     }}
-    this.props.addEvent(event)
+    this.props.createEvent(event)
   }
 
   render() {
@@ -91,4 +95,4 @@ const mapStateToProps = (state) => ({
   event: state.events.currentEvent,
 })
 
-export default connect(mapStateToProps, { addEvent })(NewEventForm)
+export default connect(mapStateToProps, { clearCurrentEvent, createEvent })(NewEventForm)

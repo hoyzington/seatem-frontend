@@ -1,9 +1,9 @@
 // Synchronous Action Creators
 
-export const setSavedEvents = (events) => {
+export const addEvent = (event) => {
   return {
-    type: 'SET_SAVED_EVENTS',
-    events,
+    type: 'ADD_EVENT',
+    event,
   }
 }
 
@@ -14,9 +14,22 @@ export const showEvent = (event) => {
   }
 }
 
+export const setSavedEvents = (events) => {
+  return {
+    type: 'SET_SAVED_EVENTS',
+    events,
+  }
+}
+
+export const clearCurrentEvent = () => {
+  return {
+    type: 'CLEAR_CURRENT_EVENT',
+  }
+}
+
 // Asynchronous Action Creators
 
-export const addEvent = (event) => {
+export const createEvent = (event) => {
   return (dispatch) => {
     return fetch('http://localhost:3000/api/v1/events', {
       method: 'POST',
@@ -27,8 +40,8 @@ export const addEvent = (event) => {
       body: JSON.stringify(event),
     })
       .then(res => res.json())
-      .then(events => {
-        dispatch(setSavedEvents(events))
+      .then(event => {
+        dispatch(addEvent(event))
       })
       .catch(console.log)
   }
