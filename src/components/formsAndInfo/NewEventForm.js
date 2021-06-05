@@ -3,7 +3,7 @@ import { NavLink, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { addEvent } from '../../actions/events'
 
-class EventForm extends React.Component {
+class NewEventForm extends React.Component {
   state = { name: '', table: 'rect', chairs: [], guests: '', guestQty: '0', descriptions: '', newlyAffectedGuests: '' }
 
   handleChange = (e) => {
@@ -94,4 +94,4 @@ const mapStateToProps = (state) => ({
   event: state.events.currentEvent,
 })
 
-export default connect(mapStateToProps, { addEvent })(EventForm)
+export default connect(mapStateToProps, { addEvent })(NewEventForm)
