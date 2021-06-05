@@ -1,5 +1,5 @@
 import React from 'react'
-import { NavLink, Redirect } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { addEvent } from '../../actions/events'
 
@@ -31,9 +31,6 @@ class NewEventForm extends React.Component {
   }
 
   render() {
-    if (this.props.event) {
-      return (<Redirect to='/add-guests' />)
-    }
     return (
       <div id='event-form' className='card'>
         <NavLink id='exit' to='/'>&times;</NavLink>
