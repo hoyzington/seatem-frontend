@@ -282,6 +282,12 @@ a.event {
   padding: 18px 30px 25px 30px;
 }
 
+#account {
+  min-width: 110px;
+  margin-bottom: 25vh;
+  padding: 18px 30px 25px 30px;
+}
+
 #btn-area {
   display: flex;
   height: 35px;
