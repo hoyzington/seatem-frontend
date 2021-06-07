@@ -82,7 +82,7 @@ class NewEventForm extends React.Component {
               required/>&nbsp;
           </label><br/>
           <div id='btn-area'>
-            <NavLink className='btn form bottom' to='/guest-form' onClick={this.handleSubmit} >NEXT STEP</NavLink>
+            <NavLink className='btn form bottom' to='/add-guests' onClick={this.handleSubmit} >NEXT STEP</NavLink>
           </div>
         </form>
       </div>
