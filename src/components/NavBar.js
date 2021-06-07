@@ -19,10 +19,18 @@ class NavBar extends React.Component {
     if (this.props.user && this.props.user.username) {
       return (
         <>
-          <NavLink className='navbar' to='/event-menu'>This Event</NavLink>
+          {this.renderEventLink()}
           <NavLink className='navbar' to='/events'>My Events</NavLink>
           <NavLink className='navbar' to='/new-event'>New Event</NavLink>
         </>
+      )
+    }
+  }
+
+  renderEventLink = () => {
+    if (this.props.currentEvent) {
+      return (
+        <NavLink className='navbar' to='/event-menu'>This Event</NavLink>
       )
     }
   }
@@ -51,6 +59,7 @@ class NavBar extends React.Component {
 const mapStateToProps = (state) => ({
   user: state.currentUser,
   events: state.events.savedEvents,
+  currentEvent: state.currentEvent,
 })
 
 export default connect(mapStateToProps)(NavBar)
