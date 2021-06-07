@@ -1,7 +1,6 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { logout } from '../actions/sessions'
 
 class NavBar extends React.Component {
 
@@ -9,7 +8,7 @@ class NavBar extends React.Component {
     if (this.props.user && this.props.user.username) {
       return (
         <>
-          <NavLink className='navbar' to='/' onClick={this.props.logout}>Log Out</NavLink>
+          <NavLink className='navbar' to='/account' >Account</NavLink>
           <NavLink className='navbar' to='/about'>About</NavLink>
         </>
       )
@@ -20,7 +19,7 @@ class NavBar extends React.Component {
     if (this.props.user && this.props.user.username) {
       return (
         <>
-          <NavLink className='navbar' to='/edit-event'>This Event</NavLink>
+          <NavLink className='navbar' to='/event-menu'>This Event</NavLink>
           <NavLink className='navbar' to='/events'>My Events</NavLink>
           <NavLink className='navbar' to='/new-event'>New Event</NavLink>
         </>
@@ -54,4 +53,4 @@ const mapStateToProps = (state) => ({
   events: state.events.savedEvents,
 })
 
-export default connect(mapStateToProps, { logout })(NavBar)
+export default connect(mapStateToProps)(NavBar)
