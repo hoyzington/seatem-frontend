@@ -1,7 +1,7 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { logout } from '../../actions/sessions'
+import { logout } from '../../actions/currentUser'
 
 class Account extends React.Component {
   render() {

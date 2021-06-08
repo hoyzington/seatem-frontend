@@ -4,7 +4,7 @@ import {
   Route
 } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { getCurrentUser } from './actions/sessions'
+import { getCurrentUser } from './actions/currentUser'
 import NavBar from './components/NavBar'
 import FormArea from './containers/FormArea'
 import NonEventArea from './containers/NonEventArea'
