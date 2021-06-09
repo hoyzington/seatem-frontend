@@ -10,7 +10,7 @@ class Account extends React.Component {
         <NavLink id='exit' to='/' >&times;</NavLink>
         <p><b>ACCOUNT</b></p>
         <div>
-          <NavLink to='/update-event' >My Profile</NavLink>
+          <NavLink to='/my-profile' >My Profile</NavLink>
         </div>
         <div>
           <NavLink to='/' onClick={this.props.logout} >Log Out</NavLink>

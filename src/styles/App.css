@@ -58,7 +58,7 @@ input:focus, select:focus {
   outline-style: none;
 }
 
-input[type=text], input[type=number], select {
+input[type=text], input[type=password], input[type=number], select {
   position: relative;
   bottom: 1px;
   background-color: rgb(240, 240, 240);
@@ -68,7 +68,7 @@ input[type=text], input[type=number], select {
   font-family: inherit;
 }
 
-input[type=text] {
+input[type=text], input[type=password] {
   width: 145px;
   padding: 2px 10px 3px 10px;
 }
@@ -103,6 +103,10 @@ select {
 }
 
 /* BUTTONS & LINKS */
+
+button {
+  cursor: pointer;
+}
 
 a:link, a:visited, a:active, a:focus {
   text-decoration-line: none;
@@ -284,6 +288,12 @@ a.event {
 
 #account {
   min-width: 110px;
+  margin-bottom: 25vh;
+  padding: 18px 30px 25px 30px;
+}
+
+#my-profile {
+  width: 270px;
   margin-bottom: 25vh;
   padding: 18px 30px 25px 30px;
 }
