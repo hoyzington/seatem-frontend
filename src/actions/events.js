@@ -14,6 +14,13 @@ export const showEvent = (event) => {
   }
 }
 
+export const updateEvent = (event) => {
+  return {
+    type: 'UPDATE_EVENT',
+    event,
+  }
+}
+
 export const setSavedEvents = (events) => {
   return {
     type: 'SET_SAVED_EVENTS',
@@ -29,9 +36,11 @@ export const clearCurrentEvent = () => {
 
 // Asynchronous Action Creators
 
+const baseUrl = 'http://localhost:3000/api/v1/events'
+
 export const createEvent = (event) => {
   return (dispatch) => {
-    return fetch('http://localhost:3000/api/v1/events', {
+    return fetch(baseUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -47,20 +56,21 @@ export const createEvent = (event) => {
   }
 }
 
-// export const updateEvent = (event) => {
-//   return (dispatch) => {
-//     return fetch('http://localhost:3000/api/v1/events/ID', {
-//       method: 'PATCH',
-//       headers: {
-//         'Content-Type': 'application/json',
-//         'Accept': 'application/json',
-//       },
-//       body: JSON.stringify(event),
-//     })
-//       .then(res => res.json())
-//       .then(user => {
-//         dispatch(setCurrentUser(user))
-//       })
-//       .catch(console.log)
-//   }
-// }
+export const editEvent = (event) => {
+  return (dispatch) => {
+    return fetch(baseUrl + event.id, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+      body: JSON.stringify(event),
+    })
+      .then(res => res.json())
+      .then(event => {
+        alert(event.notice)
+
+      })
+      .catch(console.log)
+  }
+}
