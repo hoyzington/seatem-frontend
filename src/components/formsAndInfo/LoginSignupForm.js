@@ -11,14 +11,14 @@ class LoginSignupForm extends React.Component {
     this.setState({ [e.target.name]: e.target.value })
   }
 
-  showError = () => {
+  showLoginError = () => {
     const { user } = this.props
     if (user && user.error) {
       return (<p>{user.error}</p>)
     }
   }
 
-  showErrors = () => {
+  showSignupErrors = () => {
     const { user } = this.props
     if (user && user.errors) {
       return (
@@ -61,7 +61,7 @@ class LoginSignupForm extends React.Component {
         <div className='block left'>
           <p><b>LOG IN</b></p>
           <div className='error'>
-            {this.showError()}
+            {this.showLoginError()}
           </div>
         </div>
         <div className='block'>
@@ -72,7 +72,7 @@ class LoginSignupForm extends React.Component {
             onClick={this.clearErrors}
           >BACK</NavLink></p>
           <div className='error'>
-            {this.showErrors()}
+            {this.showSignupErrors()}
           </div>
         </div>
         <form className='block left'>
