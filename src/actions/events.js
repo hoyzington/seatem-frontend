@@ -1,3 +1,5 @@
+import { logErrors } from './errors'
+
 // Synchronous Action Creators
 
 export const addEvent = (event) => {
@@ -50,7 +52,11 @@ export const createEvent = (event) => {
     })
       .then(res => res.json())
       .then(event => {
-        dispatch(addEvent(event))
+        if (event.errors) {
+          dispatch(logErrors(event.errors))
+        } else {
+          dispatch(addEvent(event))
+        }
       })
       .catch(console.log)
   }
@@ -68,8 +74,11 @@ export const editEvent = (event) => {
     })
       .then(res => res.json())
       .then(event => {
-        alert(event.notice)
-
+        if (event.errors) {
+          dispatch(logErrors(event.errors))
+        } else {
+          alert(event.notice)
+        }
       })
       .catch(console.log)
   }

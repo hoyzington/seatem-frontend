@@ -1,4 +1,5 @@
 import { setSavedEvents } from './events'
+import { logErrors } from './errors'
 
 // Synchronous Action Creators
 
@@ -34,7 +35,7 @@ export const signup = (credentials) => {
       .then(res => res.json())
       .then(json => {
         if (json.errors) {
-          dispatch(setCurrentUser(json))
+          dispatch(logErrors(json.errors))
         } else {
           dispatch(setCurrentUser(json.user))
         }
@@ -56,8 +57,8 @@ export const login = (credentials) => {
     })
       .then(res => res.json())
       .then(json => {
-        if (json.error) {
-          dispatch(setCurrentUser(json))
+        if (json.errors) {
+          dispatch(logErrors(json.errors))
         } else {
           dispatch(setCurrentUser(json.user))
           if (json.events.length > 0) {
@@ -81,8 +82,8 @@ export const getCurrentUser = () => {
     })
       .then(res => res.json())
       .then(json => {
-        if (json.error) {
-          console.log(json.error)
+        if (json.errors) {
+          dispatch(logErrors(json.errors))
         } else {
           dispatch(setCurrentUser(json.user))
           if (json.events.length > 0) {
@@ -128,9 +129,9 @@ export const logout = () => {
 //       },
 //     })
 //       .then(res => res.json())
-//       .then(user => {
-//         if (user.error) {
-//           alert(user.error)
+      // .then(user => {
+      //   if (json.errors) {
+      //     dispatch(logErrors(json.errors))
 //         } else {
 //           alert(user.notice)
 //         }
@@ -151,9 +152,9 @@ export const logout = () => {
 //       },
 //     })
 //       .then(res => res.json())
-//       .then(user => {
-//         if (user.error) {
-//           alert(user.error)
+      // .then(user => {
+        // if (json.errors) {
+          // dispatch(logErrors(json.errors))
 //         } else {
 //           alert(user.notice)
 //         }
