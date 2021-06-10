@@ -1,5 +1,5 @@
 import { setSavedEvents } from './events'
-import { logErrors } from './errors'
+import { logErrors, clearErrors } from './errors'
 
 // Synchronous Action Creators
 
@@ -34,6 +34,7 @@ export const signup = (credentials) => {
     })
       .then(res => res.json())
       .then(json => {
+        dispatch(clearErrors())
         if (json.errors) {
           dispatch(logErrors(json.errors))
         } else {
@@ -57,6 +58,7 @@ export const login = (credentials) => {
     })
       .then(res => res.json())
       .then(json => {
+        dispatch(clearErrors())
         if (json.errors) {
           dispatch(logErrors(json.errors))
         } else {
@@ -82,8 +84,8 @@ export const getCurrentUser = () => {
     })
       .then(res => res.json())
       .then(json => {
-        if (json.errors) {
-          dispatch(logErrors(json.errors))
+        if (json.error) {
+          console.log(json.error)
         } else {
           dispatch(setCurrentUser(json.user))
           if (json.events.length > 0) {
@@ -98,6 +100,7 @@ export const getCurrentUser = () => {
 export const logout = () => {
   return (dispatch) => {
     dispatch(clearCurrentUser())
+    dispatch(clearErrors())
     return fetch(`${baseUrl}/logout`, {
       credentials: 'include',
       method: 'DELETE',
@@ -120,6 +123,7 @@ export const logout = () => {
 
 // export const editUser = (userId) => {
 //   return (dispatch) => {
+  // dispatch(clearErrors())
 //     return fetch(`${baseUrl}/users/${userId}`, {
 //       credentials: 'include',
 //       method: 'PATCH',
