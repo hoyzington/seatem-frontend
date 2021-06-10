@@ -30,13 +30,13 @@ class App extends React.Component {
   }
 
   render() {
-    const { user, event } = this.props
+    const { user, event, errors } = this.props
     return (
       <Router>
         <>
           <NavBar user={user} event={event} />
           <Route exact path='/' />
-          <FormArea user={user} event={event} />
+          <FormArea user={user} event={event} errors={errors} />
           {this.renderCurrentEvent()}
           <Footer />
         </>
@@ -47,7 +47,8 @@ class App extends React.Component {
 
 const mapStateToProps = (state) => ({
   user: state.currentUser,
-  event: state.events.currentEvent
+  event: state.events.currentEvent,
+  errors: state.errors,
 })
 
 export default connect(mapStateToProps, { getCurrentUser })(App)
