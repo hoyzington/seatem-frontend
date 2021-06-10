@@ -1,4 +1,4 @@
-import { setSavedEvents } from './events'
+import { setSavedEvents, clearEvents } from './events'
 import { logErrors, clearErrors } from './errors'
 
 // Synchronous Action Creators
@@ -99,8 +99,9 @@ export const getCurrentUser = () => {
 
 export const logout = () => {
   return (dispatch) => {
-    dispatch(clearCurrentUser())
     dispatch(clearErrors())
+    dispatch(clearEvents())
+    dispatch(clearCurrentUser())
     return fetch(`${baseUrl}/logout`, {
       credentials: 'include',
       method: 'DELETE',

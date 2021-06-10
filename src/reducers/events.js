@@ -151,6 +151,8 @@ const checkForIssues = (thisGuest, guests) => {
   }
 }
 
+
+
 const events = (state = {
   savedEvents: [],
   currentEvent: null,
@@ -227,8 +229,8 @@ const events = (state = {
         ...state,
         savedEvents: action.events,
       }
-  
-      case 'ADD_GUEST':
+
+    case 'ADD_GUEST':
       eventIdx = state.savedEvents.findIndex(event => event.id === state.currentEvent.id)
       event = state.savedEvents[eventIdx]
       let newGuest = {
@@ -529,6 +531,13 @@ const events = (state = {
           ...state.savedEvents.slice(eventIdx + 1),
         ],
         currentEvent: updatedEvent,
+      }
+
+    case 'CLEAR_EVENTS':
+      return {
+        savedEvents: [],
+        currentEvent: null,
+        selectedGuest: null,
       }
 
     default:

@@ -36,6 +36,12 @@ export const clearCurrentEvent = () => {
   }
 }
 
+export const clearEvents = () => {
+  return {
+    type: 'CLEAR_EVENTS',
+  }
+}
+
 // Asynchronous Action Creators
 
 const baseUrl = 'http://localhost:3000/api/v1/events'
