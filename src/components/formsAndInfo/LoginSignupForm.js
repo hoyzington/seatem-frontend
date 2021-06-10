@@ -1,7 +1,9 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { signup, login, clearCurrentUser } from '../../actions/currentUser'
+import { signup, login } from '../../actions/currentUser'
+import { clearErrors } from '../../actions/errors'
+import { v4 as uuidv4 } from 'uuid'
 
 class LoginSignupForm extends React.Component {
 
@@ -12,28 +14,38 @@ class LoginSignupForm extends React.Component {
   }
 
   showLoginError = () => {
-    const { user } = this.props
-    if (user && user.error) {
-      return (<p>{user.error}</p>)
+    const { errors } = this.props
+    if (errors && errors.type === 'login') {
+      return (<p>{errors.content}</p>)
     }
   }
 
   showSignupErrors = () => {
-    const { user } = this.props
-    if (user && user.errors) {
+    const { errors } = this.props
+    if (errors && errors.type === 'signup') {
       return (
         <p>
-          {user.errors.map(error => (<li>{error}</li>))}
+          {errors.content.map(error => (
+            <li key={uuidv4()}>{error}</li>
+          ))}
         </p>
       )
     }
   }
 
   clearErrors = () => {
-    const { user, clearCurrentUser } = this.props
-    if (user && (user.error || user.errors)) {
-      clearCurrentUser()
+    if (this.props.errors) {
+      this.props.clearErrors()
     }
+  }
+
+  login = (componentState) => {
+    const { loginEmail, loginPassword } = componentState
+    const credentials = {user: {
+      email: loginEmail,
+      password: loginPassword,
+    }}
+    this.props.login(credentials)
   }
 
   signup = (componentState) => {
@@ -44,15 +56,6 @@ class LoginSignupForm extends React.Component {
       password: signupPassword,
     }}
     this.props.signup(credentials)
-  }
-
-  login = (componentState) => {
-    const { loginEmail, loginPassword } = componentState
-    const credentials = {user: {
-      email: loginEmail,
-      password: loginPassword,
-    }}
-    this.props.login(credentials)
   }
 
   render() {
@@ -145,8 +148,8 @@ class LoginSignupForm extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-    user: state.currentUser,
     events: state.events.savedEvents,
+    errors: state.errors,
   })
 
-export default connect(mapStateToProps, { signup, login, clearCurrentUser })(LoginSignupForm)
+export default connect(mapStateToProps, { signup, login, clearErrors })(LoginSignupForm)
