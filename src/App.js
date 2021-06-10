@@ -13,9 +13,6 @@ import Footer from './components/Footer'
 import './styles/App.css'
 
 class App extends React.Component {
-  componentDidMount() {
-    this.props.getCurrentUser()
-  }
 
   renderCurrentEvent = () => {
     const { event } = this.props
@@ -31,17 +28,22 @@ class App extends React.Component {
 
   render() {
     const { user, event, errors } = this.props
-    return (
-      <Router>
-        <>
-          <NavBar user={user} event={event} />
-          <Route exact path='/' />
-          <FormArea user={user} event={event} errors={errors} />
-          {this.renderCurrentEvent()}
-          <Footer />
-        </>
-      </Router>
-    )
+    if (!user) {
+      this.props.getCurrentUser()
+      return null
+    } else {
+      return (
+        <Router>
+          <>
+            <NavBar user={user} event={event} />
+            <Route exact path='/' />
+            <FormArea user={user} event={event} errors={errors} />
+            {this.renderCurrentEvent()}
+            <Footer />
+          </>
+        </Router>
+      )
+    }
   }
 }
 
