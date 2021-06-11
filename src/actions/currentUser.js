@@ -99,9 +99,9 @@ export const getCurrentUser = () => {
 
 export const logout = () => {
   return (dispatch) => {
-    dispatch(clearErrors())
-    dispatch(clearEvents())
     dispatch(clearCurrentUser())
+    dispatch(clearEvents())
+    dispatch(clearErrors())
     return fetch(`${baseUrl}/logout`, {
       credentials: 'include',
       method: 'DELETE',
