@@ -14,11 +14,20 @@ class EventsList extends React.Component {
     return (<i>You have no saved events</i>)
   }
 
+  renderTitle = () => {
+    const { user } = this.props
+    if (user) {
+      return (
+        <h3>{user.username}'s Events</h3>
+      )
+    }
+  }
+
   render() {
     return (
       <div id='events' className='card'>
         <NavLink id='exit' to='/'>&times;</NavLink>
-        <h3>{this.props.user.username}'s Events</h3>
+        {this.renderTitle()}
         <div id='event-list'>
           <ul>{this.showEvents()}</ul>
         </div>
