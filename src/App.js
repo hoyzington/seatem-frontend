@@ -4,7 +4,6 @@ import {
   Route
 } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { getCurrentUser } from './actions/currentUser'
 import NavBar from './components/NavBar'
 import FormArea from './containers/FormArea'
 import NonEventArea from './containers/NonEventArea'
@@ -28,22 +27,17 @@ class App extends React.Component {
 
   render() {
     const { user, event, errors } = this.props
-    if (!user) {
-      this.props.getCurrentUser()
-      return null
-    } else {
-      return (
-        <Router>
-          <>
-            <NavBar user={user} event={event} />
-            <Route exact path='/' />
-            <FormArea user={user} event={event} errors={errors} />
-            {this.renderCurrentEvent()}
-            <Footer />
-          </>
-        </Router>
-      )
-    }
+    return (
+      <Router>
+        <>
+          <NavBar user={user} event={event} />
+          <Route exact path='/' />
+          <FormArea user={user} event={event} errors={errors} />
+          {this.renderCurrentEvent()}
+          <Footer />
+        </>
+      </Router>
+    )
   }
 }
 
@@ -53,4 +47,4 @@ const mapStateToProps = (state) => ({
   errors: state.errors,
 })
 
-export default connect(mapStateToProps, { getCurrentUser })(App)
+export default connect(mapStateToProps)(App)
