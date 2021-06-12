@@ -94,7 +94,7 @@ select {
   color: rgb(0, 120, 10, .8);
 }
 
-.no, .error {
+.no, .error, #delete-account {
   color: rgb(130, 0, 30, .6);
 }
 
@@ -102,7 +102,11 @@ select {
   margin: 0px 0px;
 }
 
-      /* BUTTONS & LINKS */
+#delete-account {
+  font-size: .75em;
+}
+
+/* BUTTONS & LINKS */
 
 button {
   cursor: pointer;
