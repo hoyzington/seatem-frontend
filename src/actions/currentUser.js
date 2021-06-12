@@ -122,28 +122,29 @@ export const logout = () => {
   }
 }
 
-// export const editUser = (userId) => {
-//   return (dispatch) => {
-  // dispatch(clearErrors())
-//     return fetch(`${baseUrl}/users/${userId}`, {
-//       credentials: 'include',
-//       method: 'PATCH',
-//       headers: {
-//         'Content-Type': 'application/json',
-//         'Accept': 'application/json',
-//       },
-//     })
-//       .then(res => res.json())
-      // .then(user => {
-      //   if (json.errors) {
-      //     dispatch(logErrors(json.errors))
-//         } else {
-//           alert(user.notice)
-//         }
-//       })
-//       .catch(console.log)
-//   }
-// }
+export const editUser = (user) => {
+  return (dispatch) => {
+    return fetch(`${baseUrl}/users/${user.id}`, {
+      credentials: 'include',
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+      body: JSON.stringify(user),
+    })
+      .then(res => res.json())
+      .then(json => {
+        dispatch(clearErrors())
+        if (json.errors) {
+          dispatch(logErrors(json.errors))
+        } else {
+          dispatch(setCurrentUser(json.user))
+        }
+      })
+      .catch(console.log)
+  }
+}
 
 // export const deleteUser = (userId) => {
 //   return (dispatch) => {
