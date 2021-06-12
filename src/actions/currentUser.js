@@ -146,25 +146,28 @@ export const editUser = (user) => {
   }
 }
 
-// export const deleteUser = (userId) => {
-//   return (dispatch) => {
-//     dispatch(clearCurrentUser())
-//     return fetch(`${baseUrl}/users/${userId}`, {
-//       credentials: 'include',
-//       method: 'DELETE',
-//       headers: {
-//         'Content-Type': 'application/json',
-//         'Accept': 'application/json',
-//       },
-//     })
-//       .then(res => res.json())
-      // .then(user => {
-        // if (json.errors) {
-          // dispatch(logErrors(json.errors))
-//         } else {
-//           alert(user.notice)
-//         }
-//       })
-//       .catch(console.log)
-//   }
-// }
+export const deleteUser = (userId) => {
+  return (dispatch) => {
+    dispatch(clearCurrentUser())
+    return fetch(`${baseUrl}/users/${userId}`, {
+      credentials: 'include',
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+    })
+      .then(res => res.json())
+      .then(json => {
+        if (json.errors) {
+          dispatch(logErrors(json.errors))
+        } else {
+          dispatch(clearCurrentUser())
+          dispatch(clearEvents())
+          dispatch(clearErrors())
+          alert(json.notice)
+        }
+      })
+      .catch(console.log)
+  }
+}
