@@ -1,7 +1,7 @@
 import React from 'react'
 import { Route, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { getCurrentUser, logout } from '../actions/currentUser'
+import { getCurrentUser, logout, deleteUser } from '../actions/currentUser'
 import About from '../components/formsAndInfo/About'
 import LoginSignupForm from '../components/formsAndInfo/LoginSignupForm'
 import Account from '../components/formsAndInfo/Account'
@@ -24,7 +24,7 @@ class FormArea extends React.Component {
     }
   }
 
-  renderFormOrInfo = (showStartCard) => {
+  renderFormOrInfo = () => {
     const { user, event, errors } = this.props
     if (errors) {
       if (this.state.startCard) {
@@ -57,13 +57,13 @@ class FormArea extends React.Component {
   }
 
   render() {
-    const { user, event } = this.props
+    const { user, event, logout, deleteUser } = this.props
     return (
       <div id='form-area'>
         <Route exact path='/about' render={() => (<About user={user} />)} />
         <Route exact path='/login-signup' component={LoginSignupForm} />
         <Route exact path='/account' render={() => (<Account logout={logout} />)} />
-        <Route exact path='/my-profile' render={() => (<MyProfile user={user} />)} />
+        <Route exact path='/my-profile' render={() => (<MyProfile user={user} deleteUser={deleteUser} />)} />
         <Route exact path='/edit-profile' component={EditProfile} />
         <Route exact path='/new-event' component={NewEventForm} />
         {/* <Route exact path='/edit-event' component={EventForm} /> */}
@@ -84,4 +84,4 @@ const mapStateToProps = (state) => ({
   errors: state.errors,
 })
 
-export default connect(mapStateToProps, { getCurrentUser })(FormArea)
+export default connect(mapStateToProps, { getCurrentUser, logout, deleteUser })(FormArea)
