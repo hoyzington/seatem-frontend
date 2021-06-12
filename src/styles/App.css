@@ -102,7 +102,7 @@ select {
   margin: 0px 0px;
 }
 
-/* BUTTONS & LINKS */
+      /* BUTTONS & LINKS */
 
 button {
   cursor: pointer;
@@ -236,13 +236,7 @@ a.event {
 #login-signup {
   display: flex;
   flex-wrap: wrap;
-  /* display: grid;
-  grid-auto-flow: row;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
-  grid-gap: 10px; */
   width: 627px;
-  /* margin-bottom: 8vh; */
   padding: 18px 10px 25px 10px;
 }
 
@@ -295,7 +289,12 @@ a.event {
 #my-profile {
   width: 270px;
   margin-bottom: 25vh;
-  padding: 18px 30px 25px 30px;
+  padding: 20px 30px 25px 30px;
+}
+
+#my-profile-italic {
+  margin: 20px 0px 22px 0px;
+  line-height: 1.75em;
 }
 
 #btn-area {
