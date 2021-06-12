@@ -2,7 +2,7 @@ import React from 'react'
 import { NavLink } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { editUser } from '../../actions/currentUser'
-import { clearErrors } from '../../actions/errors'
+import CloseXClearErrors from './CloseXClearErrors'
 import { v4 as uuidv4 } from 'uuid'
 
 class EditProfile extends React.Component {
@@ -45,16 +45,10 @@ class EditProfile extends React.Component {
     }
   }
 
-  clearErrors = () => {
-    if (this.props.errors) {
-      this.props.clearErrors()
-    }
-  }
-
   render() {
     return (
       <div id='my-profile' className='card'>
-        <NavLink id='exit' to='/' onClick={this.clearErrors} >&times;</NavLink>
+        <CloseXClearErrors />
         <form>
           <p><b>EDIT PROFILE</b></p>
           <div className='error'>
@@ -105,4 +99,4 @@ const mapStateToProps = (state) => ({
   errors: state.errors,
 })
 
-export default connect(mapStateToProps, { editUser, clearErrors })(EditProfile)
+export default connect(mapStateToProps, { editUser })(EditProfile)
