@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { editUser } from '../../actions/currentUser'
 import CloseXClearErrors from './CloseXClearErrors'
-import { v4 as uuidv4 } from 'uuid'
+import ErrorsDisplay from './ErrorsDisplay'
 
 class EditProfile extends React.Component {
 
@@ -32,28 +32,13 @@ class EditProfile extends React.Component {
     this.props.editUser(updatedUser)
   }
 
-  showErrors = () => {
-    const { errors } = this.props
-    if (errors) {
-      return (
-        <p>
-          {errors.content.map(error => (
-            <li key={uuidv4()}>{error}</li>
-          ))}
-        </p>
-      )
-    }
-  }
-
   render() {
     return (
       <div id='my-profile' className='card'>
         <CloseXClearErrors />
         <form>
           <p><b>EDIT PROFILE</b></p>
-          <div className='error'>
-            {this.showErrors()}
-          </div>
+          <ErrorsDisplay />
           <label>
             Username: &nbsp;
             <input
