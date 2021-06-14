@@ -1,13 +1,13 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { clearCurrentEvent, createEvent } from '../../actions/events'
+import { resetCurrentEvent, createEvent } from '../../actions/events'
 
 class NewEventForm extends React.Component {
   state = { name: '', table: 'rect', chairs: [], guests: '', guestQty: '0', descriptions: '', newlyAffectedGuests: '' }
 
   componentDidMount() {
-    this.props.clearCurrentEvent()
+    this.props.resetCurrentEvent()
   }
 
   handleChange = (e) => {
@@ -95,4 +95,4 @@ const mapStateToProps = (state) => ({
   event: state.events.currentEvent,
 })
 
-export default connect(mapStateToProps, { clearCurrentEvent, createEvent })(NewEventForm)
+export default connect(mapStateToProps, { resetCurrentEvent, createEvent })(NewEventForm)
