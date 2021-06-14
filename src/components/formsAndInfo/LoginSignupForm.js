@@ -68,12 +68,15 @@ class LoginSignupForm extends React.Component {
           </div>
         </div>
         <div className='block'>
-          <p><b>SIGN UP</b>
-          <NavLink
-            className='btn back'
-            to='/about'
-            onClick={this.clearErrors}
-          >BACK</NavLink></p>
+          <NavLink id='exit' to='/' onClick={this.clearErrors}>&times;</NavLink>
+          <p>
+            <b>SIGN UP</b>
+            {/* <NavLink
+              className='btn back'
+              to='/about'
+              onClick={this.clearErrors}
+            >BACK</NavLink> */}
+          </p>
           <div className='error'>
             {this.showSignupErrors()}
           </div>
