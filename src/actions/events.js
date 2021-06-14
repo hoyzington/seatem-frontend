@@ -30,9 +30,9 @@ export const setSavedEvents = (events) => {
   }
 }
 
-export const clearCurrentEvent = () => {
+export const resetCurrentEvent = () => {
   return {
-    type: 'CLEAR_CURRENT_EVENT',
+    type: 'RESET_CURRENT_EVENT',
   }
 }
 
