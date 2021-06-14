@@ -38,7 +38,7 @@ export const signup = (credentials) => {
         if (json.errors) {
           dispatch(logErrors(json.errors))
         } else {
-          dispatch(setCurrentUser(json.user))
+          dispatch(setCurrentUser(json))
         }
       })
       .catch(console.log)
@@ -58,11 +58,17 @@ export const login = (credentials) => {
     })
       .then(res => res.json())
       .then(json => {
+        // console.log(json)
         dispatch(clearErrors())
         if (json.errors) {
           dispatch(logErrors(json.errors))
         } else {
-          dispatch(setCurrentUser(json.user))
+          const user = {
+            id: json.id,
+            username: json.username,
+            email: json.email,
+          }
+          dispatch(setCurrentUser(user))
           if (json.events.length > 0) {
             dispatch(setSavedEvents(json.events))
           }
@@ -80,14 +86,19 @@ export const getCurrentUser = () => {
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
-      },
+      }
     })
       .then(res => res.json())
       .then(json => {
         if (json.error) {
           console.log(json.error)
         } else {
-          dispatch(setCurrentUser(json.user))
+          const user = {
+            id: json.id,
+            username: json.username,
+            email: json.email,
+          }
+          dispatch(setCurrentUser(user))
           if (json.events.length > 0) {
             dispatch(setSavedEvents(json.events))
           }
@@ -135,11 +146,13 @@ export const editUser = (user) => {
     })
       .then(res => res.json())
       .then(json => {
+        console.log(json)
         dispatch(clearErrors())
         if (json.errors) {
           dispatch(logErrors(json.errors))
         } else {
-          dispatch(setCurrentUser(json.user))
+          dispatch(setCurrentUser(json))
+          alert('Your profile has been updated')
         }
       })
       .catch(console.log)
