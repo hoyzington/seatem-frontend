@@ -16,20 +16,33 @@ import EventMenu from '../components/formsAndInfo/EventMenu'
 
 class FormArea extends React.Component {
 
-  state = { startCard: true }
-
   componentDidMount() {
     if (!this.props.user) {
       this.props.getCurrentUser()
     }
   }
 
-  renderFormOrInfo = () => {
-    const { user, event, errors } = this.props
-    if (errors) {
-      if (this.state.startCard) {
-        this.setState({ startCard: false })
+  startingContent = () => {
+    const { user, event } = this.props
+    if (user) {
+      if (!event) {
+        return (<EventsList />)
       }
+    } else {
+      return (<About user={user} zStyle={this.zStyle()}/>)
+    }
+  }
+
+  zStyle = () => {
+    if (this.props.user) {
+      return ({ zIndex: '1' })
+    }
+    return
+  }
+
+  handleErrors = () => {
+    const { errors } = this.props
+    if (errors) {
       switch (errors.type) {
         case 'login':
         case 'signup':
@@ -47,20 +60,15 @@ class FormArea extends React.Component {
         default:
           break;
       }
-    } else if (!event && this.state.startCard) {
-      if (user) {
-        return (<Redirect to='/events' />)
-      } else {
-        return (<Redirect to='/about' />)
-      }
     }
   }
-
+    
   render() {
     const { user, event, logout, deleteUser } = this.props
     return (
       <div id='form-area'>
-        <Route exact path='/about' render={() => (<About user={user} />)} />
+        {this.startingContent()}
+        <Route exact path='/about' render={() => (<About user={user} zStyle={this.zStyle()} />)} />
         <Route exact path='/login-signup' component={LoginSignupForm} />
         <Route exact path='/account' render={() => (<Account logout={logout} />)} />
         <Route exact path='/my-profile' render={() => (<MyProfile user={user} deleteUser={deleteUser} />)} />
@@ -70,9 +78,9 @@ class FormArea extends React.Component {
         <Route exact path='/add-guests' component={GuestForm} />
         <Route exact path='/add-preferences' component={PreferencesForm} />
         <Route exact path='/checklist' component={ChecklistForm} />
-        <Route exact path='/events' component={EventsList} />
+        <Route exact path='/events' render={() => (<EventsList style={this.zStyle} />)} />
         <Route exact path='/event-menu' render={() => (<EventMenu event={event} />)} />
-        {this.renderFormOrInfo()}
+        {this.handleErrors()}
       </div>
     )
   }

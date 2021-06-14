@@ -222,14 +222,17 @@ a.event {
 
       /* CARDS */
 
-.card {
+.card, .card-2 {
   border-radius: 20px;
-  z-index: 1;
   background-color: rgba(116, 160, 212, 0.6);
   box-shadow: 2px 2px 8px rgb(58, 80, 106);
   backdrop-filter: blur(6px);
   font-size: larger;
   line-height: 2em;
+}
+
+.card {
+  z-index: 1;
 }
 
 #about {

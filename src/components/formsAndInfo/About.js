@@ -15,9 +15,8 @@ const renderButton = (user) => {
 }
 
 const About = (props) => {
-
   return (
-    <div id='about' className='card'>
+    <div id='about' className='card-2' style={props.zStyle}>
       {renderExit(props.user)}
       <p>Welcome to Seat'em, your go-to event seating arrangement helper!
       </p>

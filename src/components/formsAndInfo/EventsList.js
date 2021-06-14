@@ -5,6 +5,13 @@ import { showEvent } from '../../actions/events'
 
 class EventsList extends React.Component {
 
+  renderExit = () => {
+    const { user, event } = this.props
+    if (user && event) {
+      return (<NavLink id='exit' to='/'>&times;</NavLink>)
+    }
+  }
+  
   showEvents = () => {
     if (this.props.events.length > 0) {
       return this.props.events.map((event) => (
@@ -25,8 +32,8 @@ class EventsList extends React.Component {
 
   render() {
     return (
-      <div id='events' className='card'>
-        <NavLink id='exit' to='/'>&times;</NavLink>
+      <div id='events' className='card' style={this.props.zStyle}>
+        {this.renderExit()}
         {this.renderTitle()}
         <div id='event-list'>
           <ul>{this.showEvents()}</ul>
@@ -42,6 +49,7 @@ class EventsList extends React.Component {
 const mapStateToProps = (state) => ({
   user: state.currentUser,
   events: state.events.savedEvents,
+  event: state.events.currentEvent,
 })
 
 export default connect(mapStateToProps, { showEvent })(EventsList)
