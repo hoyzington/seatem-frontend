@@ -55,8 +55,10 @@ class GuestForm extends React.Component {
   }
 
   render() {
-    const event = this.props.event
-    if (event.id !== '' && event.guests.length.toString() === event.guestQty) {
+    const { event, errors } = this.props
+    if (errors && errors.type === 'newEvent') {
+      return (<Redirect to='/new-event' />)
+    } else if (event.id !== '' && event.guests.length.toString() === event.guestQty) {
       return (<Redirect to='/add-preferences' />)
     }
     return (
@@ -105,7 +107,7 @@ class GuestForm extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  // user: state.user,
+  errors: state.errors,
   event: state.events.currentEvent,
 })
 
