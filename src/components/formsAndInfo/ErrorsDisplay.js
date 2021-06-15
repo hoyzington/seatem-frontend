@@ -9,9 +9,12 @@ class ErrorsDisplay extends React.Component {
       return (
         <div className='error'>
           <p>
-            {errors.content.map(error => (
-              <li key={uuidv4()}>{error}</li>
-            ))}
+            {errors.content.map(error => {
+              const presentableError = error.replace('Guestqty', 'Number of guests')
+              return (
+                <li key={uuidv4()}>{presentableError}</li>
+              )
+            })}
           </p>
         </div>
       )
