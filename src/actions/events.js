@@ -1,4 +1,4 @@
-import { logErrors } from './errors'
+import { logErrors, clearErrors } from './errors'
 
 // Synchronous Action Creators
 
@@ -44,11 +44,12 @@ export const clearEvents = () => {
 
 // Asynchronous Action Creators
 
-const baseUrl = 'http://localhost:3000/api/v1/events'
+const baseUrl = 'http://localhost:3000/api/v1/users'
 
-export const createEvent = (event) => {
+export const createEvent = (event, userId) => {
   return (dispatch) => {
-    return fetch(baseUrl, {
+    dispatch(clearErrors())
+    return fetch(`${baseUrl}/${userId}/events`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -61,7 +62,8 @@ export const createEvent = (event) => {
         if (event.errors) {
           dispatch(logErrors(event.errors))
         } else {
-          dispatch(addEvent(event))
+          console.log(event)
+          // dispatch(addEvent(event))
         }
       })
       .catch(console.log)
