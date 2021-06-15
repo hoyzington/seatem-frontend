@@ -44,12 +44,12 @@ export const clearEvents = () => {
 
 // Asynchronous Action Creators
 
-const baseUrl = 'http://localhost:3000/api/v1/users'
+const baseUrl = 'http://localhost:3000/api/v1'
 
 export const createEvent = (event, userId) => {
   return (dispatch) => {
     dispatch(clearErrors())
-    return fetch(`${baseUrl}/${userId}/events`, {
+    return fetch(`${baseUrl}/users/${userId}/events`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -62,8 +62,7 @@ export const createEvent = (event, userId) => {
         if (event.errors) {
           dispatch(logErrors(event.errors))
         } else {
-          console.log(event)
-          // dispatch(addEvent(event))
+          dispatch(addEvent(event))
         }
       })
       .catch(console.log)
@@ -72,7 +71,7 @@ export const createEvent = (event, userId) => {
 
 export const editEvent = (event) => {
   return (dispatch) => {
-    return fetch(baseUrl + event.id, {
+    return fetch(`${baseUrl}/events/${event.id}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
