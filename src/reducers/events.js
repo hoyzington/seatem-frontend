@@ -151,7 +151,7 @@ const checkForIssues = (thisGuest, guests) => {
   }
 }
 
-
+// -----------------------------------------------
 
 const events = (state = {
   savedEvents: [],
@@ -161,16 +161,41 @@ const events = (state = {
 
   let eventIdx, event, currentEvent, updatedEvent, guestIdx, guest, guests, selectedGuest, affectedGuests, chairs, chairIdx, chairId
 
-  const unJson = (string) => (string === '' ? [] : string.split(','))
+  const unJson = (string) => {
+    if (string && string !== '') {
+      return string.split(',')
+    }
+    return []
+  }
 
   switch (action.type) {
+
+    case 'SET_SAVED_EVENTS':
+      return {
+        ...state,
+        savedEvents: action.events,
+      }
+
+    case 'RESET_CURRENT_EVENT':
+      event = {
+        id: '',
+        name: '',
+        table: '',
+        chairs: [],
+        guests: [],
+        guestQty: '0',
+        descriptions: [],
+        affectedGuests: [],
+      }
+      return {
+        ...state,
+        currentEvent: event,
+      }
+
     case 'ADD_EVENT':
       event = {
         ...action.event,
         chairs: unJson(action.event.chairs),
-        guests: unJson(action.event.guests),
-        newlyAffectedGuests: unJson(action.event.newlyAffectedGuests),
-        descriptions: unJson(action.event.descriptions),
       }
       return {
         ...state,
@@ -183,11 +208,11 @@ const events = (state = {
 
     case 'SHOW_EVENT':
       event = action.event
-      if (typeof event.guests === 'string') {
+      if (typeof event.chairs === 'string') {
         event = {
           ...action.event,
           chairs: unJson(action.event.chairs),
-          guests: unJson(action.event.guests),
+          // guests: unJson(action.event.guests),
           newlyAffectedGuests: unJson(action.event.newlyAffectedGuests),
           descriptions: unJson(action.event.descriptions),
         }
@@ -207,28 +232,6 @@ const events = (state = {
     //       ...state.savedEvents.slice(eventIdx + 1),
     //     ],
     //   }
-
-    case 'CLEAR_CURRENT_EVENT':
-      event = {
-        id: '',
-        name: '',
-        table: '',
-        chairs: [],
-        guests: [],
-        guestQty: '0',
-        descriptions: [],
-        affectedGuests: [],
-      }
-      return {
-        ...state,
-        currentEvent: event,
-      }
-
-    case 'SET_SAVED_EVENTS':
-      return {
-        ...state,
-        savedEvents: action.events,
-      }
 
     case 'ADD_GUEST':
       eventIdx = state.savedEvents.findIndex(event => event.id === state.currentEvent.id)
