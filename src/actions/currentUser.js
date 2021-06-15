@@ -58,7 +58,6 @@ export const login = (credentials) => {
     })
       .then(res => res.json())
       .then(json => {
-        // console.log(json)
         dispatch(clearErrors())
         if (json.errors) {
           dispatch(logErrors(json.errors))
@@ -146,7 +145,6 @@ export const editUser = (user) => {
     })
       .then(res => res.json())
       .then(json => {
-        console.log(json)
         dispatch(clearErrors())
         if (json.errors) {
           dispatch(logErrors(json.errors))
