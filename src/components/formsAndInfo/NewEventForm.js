@@ -19,8 +19,23 @@ class NewEventForm extends React.Component {
 
   handleSubmit = () => {
     const { user, createEvent } = this.props
-    const event = { event: this.state }
+    const event = {
+      event: {
+        ...this.state,
+        chairs: this.createChairString(),
+      }
+    }
     createEvent(event, user.id)
+  }
+
+  createChairString = () => {
+    let qty = parseInt(this.state.guestQty)
+    let chairs = []
+    if (qty %2 !== 0) qty += 1
+    for (let i = qty; i > 0; i--) {
+      chairs.push(null)
+    }
+    return chairs.join(',')
   }
 
   render() {
