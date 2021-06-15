@@ -2,9 +2,12 @@ import React from 'react'
 import { NavLink } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { resetCurrentEvent, createEvent } from '../../actions/events'
+import CloseXClearErrors from './CloseXClearErrors'
+import ErrorsDisplay from './ErrorsDisplay'
 
 class NewEventForm extends React.Component {
-  state = { name: '', table: 'rect', chairs: [], guests: '', guestQty: '0', descriptions: '', newlyAffectedGuests: '' }
+
+  state = { name: '', table: 'rect', guestQty: '0' }
 
   componentDidMount() {
     this.props.resetCurrentEvent()
@@ -15,31 +18,18 @@ class NewEventForm extends React.Component {
   }
 
   handleSubmit = () => {
-    let submittedState = this.state
-    let qty = parseInt(this.state.guestQty)
-    if (qty < 5) {
-      submittedState.chairs = [null, null, null, null]
-    } else {
-      if (qty %2 !== 0) qty += 1
-      for (let i = qty; i > 0; i--) {
-        submittedState.chairs.push(null)
-      }
-    }
-    const chairString = submittedState.chairs.join(',')
-    const event = {event: {
-      ...this.state,
-      chairs: chairString,
-      user_id: this.props.user.id,
-    }}
-    this.props.createEvent(event)
+    const { user, createEvent } = this.props
+    const event = { event: this.state }
+    createEvent(event, user.id)
   }
 
   render() {
     return (
       <div id='event-form' className='card'>
-        <NavLink id='exit' to='/'>&times;</NavLink>
+        <CloseXClearErrors />
         <form>
           <p><b>ADD AN EVENT</b></p>
+          <ErrorsDisplay />
           <label>
             Event Name&nbsp;&nbsp;
             <input
@@ -92,7 +82,6 @@ class NewEventForm extends React.Component {
 
 const mapStateToProps = (state) => ({
   user: state.currentUser,
-  event: state.events.currentEvent,
 })
 
 export default connect(mapStateToProps, { resetCurrentEvent, createEvent })(NewEventForm)
