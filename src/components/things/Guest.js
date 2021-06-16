@@ -7,7 +7,7 @@ class Guest extends React.Component {
   makeInitials = (guest) => {
     return [
       guest.firstName[0],
-      guest.midName[0],
+      guest.middleName[0],
       guest.lastName[0],
     ]
   }
