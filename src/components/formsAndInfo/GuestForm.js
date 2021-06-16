@@ -1,23 +1,14 @@
 import React from 'react'
 import { NavLink, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { editEvent } from '../../actions/events'
-import { v4 as uuidv4 } from 'uuid'
+import { createGuest } from '../../actions/guests'
 
 class GuestForm extends React.Component {
   state = {
-    id: uuidv4(),
     firstName: '',
     middleName: '',
     lastName: '',
-    neighbors: '',
-    guestsYes: '',
-    guestsNo: '',
-    descriptionsYes: '',
-    descriptionsNo: '',
-    traits: '',
     seated: false,
-    issues: '',
   }
 
   handleChange = (e) => {
@@ -25,26 +16,27 @@ class GuestForm extends React.Component {
   }
 
   handleSubmit = () => {
-    this.props.editEvent(this.state)
+    const { event, createGuest } = this.props
+    createGuest(this.state, event)
     this.setState({
       firstName: '',
       middleName: '',
-      lastName: ''
+      lastName: '',
     })
     document.getElementById('first-name').focus()
   }
 
   handleClick = () => {
-    // if (this.state.first !== '') {
-      const event = {
-        ...this.props.event,
-        guests: [
-          ...this.props.event.guests,
-          this.state,
-        ]
+    const { event, createGuest } = this.props
+    if (this.state.firstName === '') {
+      if (event.guests.length === 0) {
+        alert('There must be at least one guest to proceed')
+      // } else {
+      //   return (<Redirect to='/add-preferences' />)
       }
-      this.props.editEvent(event)
-    // }
+    } else {
+      createGuest(this.state, event.id)
+    }
   }
 
   maxGuests = () => {
@@ -71,7 +63,7 @@ class GuestForm extends React.Component {
             <input
               id='first-name'
               type="text"
-              name='first'
+              name='firstName'
               onChange={this.handleChange}
               value={this.state.firstName}
               maxLength='12'
@@ -82,7 +74,7 @@ class GuestForm extends React.Component {
             Middle Name&nbsp;&nbsp;
             <input
               type="text"
-              name='mid'
+              name='middleName'
               onChange={this.handleChange}
               value={this.state.middleName}
               maxLength='12'/>
@@ -91,7 +83,7 @@ class GuestForm extends React.Component {
             Last Name&nbsp;&nbsp;
             <input
               type="text"
-              name='last'
+              name='lastName'
               onChange={this.handleChange}
               value={this.state.lastName}
               maxLength='12'/>
@@ -111,4 +103,4 @@ const mapStateToProps = (state) => ({
   event: state.events.currentEvent,
 })
 
-export default connect(mapStateToProps, { editEvent })(GuestForm)
+export default connect(mapStateToProps, { createGuest })(GuestForm)
