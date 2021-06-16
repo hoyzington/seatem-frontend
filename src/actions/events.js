@@ -9,10 +9,10 @@ export const addEvent = (event) => {
   }
 }
 
-export const showEvent = (event) => {
+export const showEvent = (eventId) => {
   return {
     type: 'SHOW_EVENT',
-    event,
+    eventId,
   }
 }
 
@@ -80,11 +80,12 @@ export const editEvent = (event) => {
       body: JSON.stringify(event),
     })
       .then(res => res.json())
-      .then(event => {
-        if (event.errors) {
-          dispatch(logErrors(event.errors))
+      .then(result => {
+        if (result.errors) {
+          dispatch(logErrors(result.errors))
         } else {
-          alert(event.notice)
+          updateEvent(event)
+          alert(result.notice)
         }
       })
       .catch(console.log)
