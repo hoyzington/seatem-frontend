@@ -59,7 +59,7 @@ class NavBar extends React.Component {
 const mapStateToProps = (state) => ({
   user: state.currentUser,
   events: state.events.savedEvents,
-  currentEvent: state.currentEvent,
+  currentEvent: state.events.currentEvent,
 })
 
 export default connect(mapStateToProps)(NavBar)
