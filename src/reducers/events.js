@@ -1,4 +1,4 @@
-import { v4 as uuidv4 } from 'uuid'
+// import { v4 as uuidv4 } from 'uuid'
 
 const updatePreviousNeighbor = (guestBefore, neighborId, guests) => {
   const guest = guests.find(guest => guest.id === neighborId)
@@ -207,19 +207,51 @@ const events = (state = {
       }
 
     case 'SHOW_EVENT':
-      event = action.event
+      eventIdx = state.savedEvents.findIndex(event => event.id === action.eventId)
+      event = state.savedEvents[eventIdx]
       if (typeof event.chairs === 'string') {
-        event = {
-          ...action.event,
-          chairs: unJson(action.event.chairs),
-          // guests: unJson(action.event.guests),
-          newlyAffectedGuests: unJson(action.event.newlyAffectedGuests),
-          descriptions: unJson(action.event.descriptions),
+        const unJsonGuests = event.guests.map(guest => ({
+          ...guest,
+          guestsYes: unJson(guest.guestsYes),
+          guestsNo: unJson(guest.guestsNo),
+          descriptionsYes: unJson(guest.descriptionsYes),
+          descriptionsNo: unJson(guest.descriptionsNo),
+          traits: unJson(guest.traits),
+          neighbors: unJson(guest.neighbors),
+          issues: unJson(guest.issues),
+        }))
+        const unJsonEvent = {
+          ...event,
+          chairs: unJson(event.chairs),
+          guests: unJsonGuests,
+          newlyAffectedGuests: unJson(event.newlyAffectedGuests),
+          descriptions: unJson(event.descriptions),
+        }
+        return {
+          ...state,
+          savedEvents: [
+            ...state.savedEvents.slice(0, eventIdx),
+            unJsonEvent,
+            ...state.savedEvents.slice(eventIdx + 1),
+          ],
+          currentEvent: unJsonEvent,
         }
       }
       return {
         ...state,
         currentEvent: event,
+      }
+
+    case 'UPDATE_EVENT':
+      eventIdx = state.savedEvents.findIndex(event => event.id === state.currentEvent.id)
+      return {
+        ...state,
+        savedEvents: [
+          ...state.savedEvents.slice(0, eventIdx),
+          action.event,
+          ...state.savedEvents.slice(eventIdx + 1),
+        ],
+        currentEvent: action.event,
       }
 
     // case 'REMOVE_EVENT':
@@ -237,10 +269,7 @@ const events = (state = {
       eventIdx = state.savedEvents.findIndex(event => event.id === state.currentEvent.id)
       event = state.savedEvents[eventIdx]
       let newGuest = {
-        id: uuidv4(),
-        firstName: action.guest.first,
-        midName: action.guest.mid,
-        lastName: action.guest.last,
+        ...action.guest,
         neighbors: [],
         guestsYes: [],
         guestsNo: [],
