@@ -15,7 +15,14 @@ class EventsList extends React.Component {
   showEvents = () => {
     if (this.props.events.length > 0) {
       return this.props.events.map((event) => (
-        <li key={event.id} className='event' ><NavLink to={`/events/${event.name}`} className='event' onClick={() => this.props.showEvent(event)} >{event.name}</NavLink></li>
+        <li key={event.id} className='event' >
+          <NavLink
+            to={`/events/${event.name}`}
+            className='event'
+            // onClick={() => console.log(event)}
+            onClick={() => this.props.showEvent(event.id)}
+          >{event.name}</NavLink>
+        </li>
       ))
     }
     return (<i>You have no saved events</i>)
