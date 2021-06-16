@@ -22,28 +22,28 @@ class GuestInfo extends React.Component {
   }
 
   buildFullName = (guest) => {
-    const { firstName, midName, lastName } = guest,
+    const { firstName, middleName, lastName } = guest,
           f = firstName,
-          m = (midName.length > 0) ? ` ${midName}` : '',
+          m = (middleName.length > 0) ? ` ${middleName}` : '',
           l = (lastName.length > 0) ? ` ${lastName}` : ''
     return f + m + l
   }
 
   createInfoList = () => {
     const { guests, guest } = this.props
-    const { guestsYes, guestsNo, descriptionsYes, descriptionsNo } = guest.preferences
+    const { guestsYes, guestsNo, descriptionsYes, descriptionsNo, traits, issues } = guest
 
     let list1 = (
       <li key={uuidv4()} className='yes'><i>None</i></li>
     )
 
-    if (guest.issues.length > 0) {
-      list1 = guest.issues.map(issue => (
+    if (issues.length > 0) {
+      list1 = issues.map(issue => (
         <li key={uuidv4()} className='no'>{issue}</li>
       ))
     }
 
-    const list2 = guest.traits.map(trait => (
+    const list2 = traits.map(trait => (
       <li key={uuidv4()}>{trait}</li>
     ))
 
