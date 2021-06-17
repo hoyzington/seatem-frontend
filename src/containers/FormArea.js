@@ -9,6 +9,7 @@ import MyProfile from '../components/formsAndInfo/MyProfile'
 import EditProfile from '../components/formsAndInfo/EditProfile'
 import EventsList from '../components/formsAndInfo/EventsList'
 import NewEventForm from '../components/formsAndInfo/NewEventForm'
+import EditEvent from '../components/formsAndInfo/EditEvent'
 import GuestForm from '../components/formsAndInfo/GuestForm'
 import PreferencesForm from '../components/formsAndInfo/PreferencesForm'
 import ChecklistForm from '../components/formsAndInfo/ChecklistForm'
@@ -51,8 +52,8 @@ class FormArea extends React.Component {
           return (<Redirect to='/edit-profile' />)
         case 'newEvent':
           return (<Redirect to='/new-event' />)
-        // case 'eventUpdate':
-        //   return (<Redirect to='/edit-event' />)
+        case 'eventUpdate':
+          return (<Redirect to='/edit-event' />)
         case 'newGuest':
           return (<Redirect to='/add-guests' />)
         case 'guestUpdate':
@@ -74,7 +75,7 @@ class FormArea extends React.Component {
         <Route exact path='/my-profile' render={() => (<MyProfile user={user} deleteUser={deleteUser} />)} />
         <Route exact path='/edit-profile' component={EditProfile} />
         <Route exact path='/new-event' component={NewEventForm} />
-        {/* <Route exact path='/edit-event' component={EventForm} /> */}
+        <Route exact path='/edit-event' component={EditEvent} />
         <Route exact path='/add-guests' component={GuestForm} />
         <Route exact path='/add-preferences' component={PreferencesForm} />
         <Route exact path='/checklist' component={ChecklistForm} />
