@@ -243,15 +243,19 @@ const events = (state = {
       }
 
     case 'UPDATE_EVENT':
-      eventIdx = state.savedEvents.findIndex(event => event.id === state.currentEvent.id)
+      eventIdx = state.savedEvents.findIndex(event => event.id === action.changes.id)
+      updatedEvent = {
+        ...state.currentEvent,
+        ...action.changes,
+      }
       return {
         ...state,
         savedEvents: [
           ...state.savedEvents.slice(0, eventIdx),
-          action.event,
+          updatedEvent,
           ...state.savedEvents.slice(eventIdx + 1),
         ],
-        currentEvent: action.event,
+        currentEvent: updatedEvent,
       }
 
     // case 'REMOVE_EVENT':

@@ -16,10 +16,10 @@ export const showEvent = (eventId) => {
   }
 }
 
-export const updateEvent = (event) => {
+export const updateEvent = (changes) => {
   return {
     type: 'UPDATE_EVENT',
-    event,
+    changes,
   }
 }
 
@@ -69,23 +69,23 @@ export const createEvent = (event, userId) => {
   }
 }
 
-export const editEvent = (event) => {
+export const editEvent = (updates) => {
   return (dispatch) => {
-    return fetch(`${baseUrl}/events/${event.id}`, {
+    return fetch(`${baseUrl}/events/${updates.id}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
       },
-      body: JSON.stringify(event),
+      body: JSON.stringify(updates),
     })
       .then(res => res.json())
-      .then(result => {
-        if (result.errors) {
-          dispatch(logErrors(result.errors))
+      .then(json => {
+        if (json.errors) {
+          dispatch(logErrors(json.errors))
         } else {
-          updateEvent(event)
-          alert(result.notice)
+          dispatch(updateEvent(updates))
+          alert(json.notice)
         }
       })
       .catch(console.log)
