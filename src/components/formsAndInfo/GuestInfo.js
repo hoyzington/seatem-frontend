@@ -48,7 +48,7 @@ class GuestInfo extends React.Component {
     ))
 
     const list3 = guestsYes.map(pref => {
-      const guest = guests.find(guest => guest.id === pref)
+      const guest = guests.find(guest => guest.id === parseInt(pref))
       return (
         <li key={uuidv4()} className='yes'>
           {this.buildFullName(guest)}
@@ -57,7 +57,7 @@ class GuestInfo extends React.Component {
     })
 
     const list4 = guestsNo.map(pref => {
-      const guest = guests.find(guest => guest.id === pref)
+      const guest = guests.find(guest => guest.id === parseInt(pref))
       return (
         <li key={uuidv4()} className='no'>
           {this.buildFullName(guest)}
@@ -122,7 +122,6 @@ class GuestInfo extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  // user: state.user,
   event: state.events.currentEvent,
   guest: state.events.selectedGuest,
   guests: state.events.currentEvent.guests
