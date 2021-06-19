@@ -1,5 +1,4 @@
 import React from 'react'
-import { NavLink } from 'react-router-dom'
 import { connect } from 'react-redux'
 import Chair from '../components/things/Chair'
 import Table from '../components/things/Table'
