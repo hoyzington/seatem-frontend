@@ -17,17 +17,17 @@ export const showGuest = (guest) => {
   }
 }
 
-// export const updateGuest = (guest) => {
-//   return {
-//     type: 'UPDATE_GUEST',
-//     guest,
-//   }
-// }
+export const updateGuest = (guest) => {
+  return {
+    type: 'UPDATE_GUEST',
+    guest,
+  }
+}
 
-export const selectGuest = (guest) => {
+export const selectGuest = (guestId) => {
   return {
     type: 'SELECT_GUEST',
-    guest,
+    guestId,
   }
 }
 
@@ -63,14 +63,6 @@ export const createGuest = (newGuest, event) => {
         if (savedGuest.errors) {
           dispatch(logErrors(savedGuest.errors))
         } else {
-          // const update = {
-          //   ...event,
-          //   guests: [
-          //     ...event.guests,
-          //     savedGuest,
-          //   ],
-          // }
-          // dispatch(updateEvent(update))
           dispatch(addGuest(savedGuest))
         }
       })
@@ -78,22 +70,23 @@ export const createGuest = (newGuest, event) => {
   }
 }
 
-export const editGuest = (guest) => {
+export const editGuest = (id, guest, guestJson) => {
   return (dispatch) => {
-    return fetch(`${baseUrl}/guests/${guest.id}`, {
+    return fetch(`${baseUrl}/guests/${id}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
       },
-      body: JSON.stringify(guest),
+      body: JSON.stringify(guestJson),
     })
       .then(res => res.json())
-      .then(guest => {
-        if (guest.errors) {
-          dispatch(logErrors(guest.errors))
+      .then(json => {
+        if (json.errors) {
+          dispatch(logErrors(json.errors))
         } else {
-          alert(guest.notice)
+          dispatch(updateGuest(guest))
+          // alert(json.notice)
         }
       })
       .catch(console.log)
