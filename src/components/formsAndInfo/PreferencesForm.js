@@ -104,7 +104,7 @@ class PreferencesForm extends React.Component {
         }
         editEvent(event.id, eventChanges, eventJson)
       }
-      editGuest(selectedGuest.id, updatedGuest, guestJson)
+      editGuest(updatedGuest.id, updatedGuest, guestJson)
       this.setState({ [prefType]: '' })
     }
   }

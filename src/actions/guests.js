@@ -70,9 +70,9 @@ export const createGuest = (newGuest, event) => {
   }
 }
 
-export const editGuest = (id, guest, guestJson) => {
+export const editGuest = (guest, guestJson) => {
   return (dispatch) => {
-    return fetch(`${baseUrl}/guests/${id}`, {
+    return fetch(`${baseUrl}/guests/${guest.id}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
