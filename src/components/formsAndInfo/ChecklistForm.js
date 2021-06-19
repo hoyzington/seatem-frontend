@@ -37,9 +37,9 @@ class ChecklistForm extends React.Component {
   }
 
   buildFullName = (guest) => {
-    const { firstName, midName, lastName } = guest,
+    const { firstName, middleName, lastName } = guest,
           f = firstName,
-          m = (midName.length > 0) ? ` ${midName}` : '',
+          m = (middleName.length > 0) ? ` ${middleName}` : '',
           l = (lastName.length > 0) ? ` ${lastName}` : ''
     return f + m + l
   }
@@ -162,7 +162,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   updateGuest: (guest) => dispatch({ type: 'UPDATE_GUEST', guest }),
-  selectGuest: (id) => dispatch({ type: 'SELECT_GUEST', id })
+  selectGuest: (guestId) => dispatch({ type: 'SELECT_GUEST', guestId })
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChecklistForm)
