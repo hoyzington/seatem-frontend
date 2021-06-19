@@ -193,7 +193,7 @@ a.event {
   box-shadow: .5px .5px 2px rgb(55, 88, 125);
 }
 
-#save {
+/* #save {
   position: absolute;
   top: 14px;
   right: -49px;
@@ -201,7 +201,7 @@ a.event {
   text-align: center;
   background-color: rgba(175, 132, 255, 0.7);
   box-shadow: .5px .5px 2px rgb(55, 88, 125);
-}
+} */
 
 .top {
   position: absolute;

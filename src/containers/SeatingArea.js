@@ -222,18 +222,18 @@ class SeatingArea extends React.Component {
     return this.rectangleTableChairs(qty)
   }
 
-  createSaveButton = () => {
-    const { user, event } = this.props
-    if (user && event && event.id !== '') {
-      return (
-        <NavLink id='save' className='btn' to='/preferences-form' onClick={this.handleClick} >SAVE EVENT</NavLink>
-      )
-    }
-  }
+  // createSaveButton = () => {
+  //   const { user, event } = this.props
+  //   if (user && event && event.id !== '') {
+  //     return (
+  //       <NavLink id='save' className='btn' to='/preferences-form' onClick={this.handleClick} >SAVE EVENT</NavLink>
+  //     )
+  //   }
+  // }
 
-  handleClick = () => {
-    this.props.saveEvent()
-  }
+  // handleClick = () => {
+  //   this.props.saveEvent()
+  // }
 
   render() {
     const type = this.props.tableType,
@@ -248,7 +248,7 @@ class SeatingArea extends React.Component {
       <div id={areaId} style={areaWidth}>
         <Table id={tId} sizeA={tSizeA} sizeB={tSizeB} style={tStyle}/>
         {this.buildChairs(type, qty)}
-        {this.createSaveButton()}
+        {/* {this.createSaveButton()} */}
       </div>
     )
   }
