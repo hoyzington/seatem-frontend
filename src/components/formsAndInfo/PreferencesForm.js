@@ -1,6 +1,8 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 import { connect } from 'react-redux'
+import { editEvent } from '../../actions/events'
+import { selectGuest, editGuest } from '../../actions/guests'
 import { v4 as uuidv4 } from 'uuid'
 
 class PreferencesForm extends React.Component {
@@ -28,9 +30,9 @@ class PreferencesForm extends React.Component {
   }
 
   buildFullName = (guest) => {
-    const { firstName, midName, lastName } = guest,
+    const { firstName, middleName, lastName } = guest,
           f = firstName,
-          m = (midName.length > 0) ? ` ${midName}` : '',
+          m = (middleName.length > 0) ? ` ${middleName}` : '',
           l = (lastName.length > 0) ? ` ${lastName}` : ''
     return f + m + l
   }
@@ -39,9 +41,10 @@ class PreferencesForm extends React.Component {
     const guest = this.props.selectedGuest
     let guests = this.props.guests
     if (type === 'preference' && guest) {
-      const prefGuests = guest.preferences[`guests${bool}`]
+      const prefGuests = guest[`guests${bool}`]
+      const oppPrefGuests = guest[`guests${bool === 'No' ? 'Yes' : 'No'}`]
       guests = guests.filter((guest) => {
-        return (guest.id !== this.state.guestId && !prefGuests.includes(guest.id))
+        return (guest.id !== parseInt(this.state.guestId) && !prefGuests.includes(guest.id.toString()) && !oppPrefGuests.includes(guest.id.toString()))
       })
     }
     return guests.map((guest) => (
@@ -57,7 +60,7 @@ class PreferencesForm extends React.Component {
 
   handleGuestChange = (e) => {
     this.handleChange(e)
-    this.props.selectGuest(e.target.value)
+    this.props.selectGuest(parseInt(e.target.value))
   }
 
   setInputDisplay = (type) => {
@@ -68,11 +71,11 @@ class PreferencesForm extends React.Component {
   }
 
   handleAdd = () => {
-    let guest = this.props.selectedGuest
+    const { selectedGuest, event, editEvent, editGuest } = this.props
     const prefType = this.state.prefType
-    if (guest && prefType !== '') {
+    if (selectedGuest && prefType !== '') {
+      let prefArray = selectedGuest[prefType]
       const newPref = this.state[prefType]
-      let prefArray = guest.preferences[prefType]
       const typeIsGuest = prefType[0] === 'g'
       if (!prefArray.includes(newPref)) {
         if (typeIsGuest && prefArray.length > 1) {
@@ -81,63 +84,73 @@ class PreferencesForm extends React.Component {
           prefArray = [...prefArray, newPref]
         }
       }
-      guest = {
-        ...guest,
-        preferences: {
-          ...guest.preferences,
-          [prefType]: prefArray,
-        }
+      const updatedGuest = {
+        ...selectedGuest,
+        [prefType]: prefArray,
+      }
+      const guestJson = {
+        [prefType]: prefArray.join(','),
       }
       if (!typeIsGuest) {
-        let descriptions = this.props.descriptions
-        descriptions = [
-          ...descriptions,
+        const updatedDescriptions = [
+          ...event.descriptions,
           newPref,
         ]
-        this.props.updateDescriptions(guest, descriptions)
-      } else {
-        this.props.updateGuest(guest)
+        const eventChanges = {
+          descriptions: updatedDescriptions,
+        }
+        const eventJson = {
+          descriptions: updatedDescriptions.join(','),
+        }
+        editEvent(event.id, eventChanges, eventJson)
       }
+      editGuest(selectedGuest.id, updatedGuest, guestJson)
       this.setState({ [prefType]: '' })
     }
   }
 
   handleDelete = (type, bool, pref) => {
-    let guest = this.props.selectedGuest
-    let prefs = guest.preferences[`${type}${bool}`]
+    const { selectedGuest, event, editEvent, editGuest } = this.props
+    let prefs = selectedGuest[`${type}${bool}`]
     const prefIdx = prefs.findIndex(item => item === pref)
-    guest = {
-      ...guest,
-      preferences: {
-        ...guest.preferences,
-        [`${type}${bool}`]: [
-          ...prefs.slice(0, prefIdx),
-          ...prefs.slice(prefIdx + 1),
-        ],
-      }
+    const prefArray = [
+      ...prefs.slice(0, prefIdx),
+      ...prefs.slice(prefIdx + 1),
+    ]
+    const updatedGuest = {
+      ...selectedGuest,
+      [`${type}${bool}`]: prefArray,
+    }
+    const guestJson = {
+      [`${type}${bool}`]: prefArray.join(','),
     }
     if (type === 'descriptions') {
-      let descriptions = this.props.descriptions
+      let descriptions = event.descriptions
       const descIdx = descriptions.findIndex(item => item === pref)
-      descriptions = [
+      const updatedDescriptions = [
         ...descriptions.slice(0, descIdx),
         ...descriptions.slice(descIdx + 1),
       ]
-      this.props.updateDescriptions(guest, descriptions)
-    } else {
-      this.props.updateGuest(guest)
+      const eventChanges = {
+        descriptions: updatedDescriptions,
+      }
+      const eventJson = {
+        descriptions: updatedDescriptions.join(','),
+      }
+      editEvent(event.id, eventChanges, eventJson)
     }
+    editGuest(selectedGuest.id, updatedGuest, guestJson)
   }
 
   renderPreferences = (type, bool) => {
     const guest = this.props.selectedGuest
     if (guest) {
-      const prefs = guest.preferences[`${type}${bool}`]
+      const prefs = guest[`${type}${bool}`]
       const downBool = bool.toLowerCase()
       if (prefs.length > 0) {
         return prefs.map(pref => {
           if (type === 'guests') {
-            const prefGuest = this.props.guests.find(guest => guest.id === pref)
+            const prefGuest = this.props.guests.find(guest => guest.id === parseInt(pref))
             return (
               <li key={uuidv4()} className={downBool}>
                 <b>{this.buildFullName(prefGuest)}</b>
@@ -317,16 +330,9 @@ class PreferencesForm extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  // user: state.user,
-  descriptions: state.events.currentEvent.descriptions,
+  event: state.events.currentEvent,
   guests: state.events.currentEvent.guests,
   selectedGuest: state.events.selectedGuest,
 })
 
-const mapDispatchToProps = (dispatch) => ({
-  updateGuest: (guest) => dispatch({ type: 'UPDATE_GUEST', guest }),
-  updateDescriptions: (guest, descriptions) => dispatch({ type: 'UPDATE_DESCRIPTIONS', guest, descriptions }),
-  selectGuest: (id) => dispatch({ type: 'SELECT_GUEST', id })
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(PreferencesForm)
+export default connect(mapStateToProps, { selectGuest, editGuest, editEvent })(PreferencesForm)
