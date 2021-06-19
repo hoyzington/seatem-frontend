@@ -262,16 +262,16 @@ const events = (state = {
         currentEvent: updatedEvent,
       }
 
-    // case 'REMOVE_EVENT':
-    //   eventIdx = state.savedEvents.findIndex(event => event.id === action.id)
-    //   // ADDRESS currentEvent !!
-    //   return {
-    //     ...state,
-    //     savedEvents: [
-    //       ...state.savedEvents.slice(0, eventIdx),
-    //       ...state.savedEvents.slice(eventIdx + 1),
-    //     ],
-    //   }
+    case 'DESTROY_EVENT':
+      eventIdx = state.savedEvents.findIndex(event => event.id === action.id)
+      return {
+        savedEvents: [
+          ...state.savedEvents.slice(0, eventIdx),
+          ...state.savedEvents.slice(eventIdx + 1),
+        ],
+        currentEvent: null,
+        selectedGuest: null,
+      }
 
     case 'ADD_GUEST':
       eventIdx = state.savedEvents.findIndex(event => event.id === state.currentEvent.id)

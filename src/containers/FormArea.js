@@ -2,6 +2,7 @@ import React from 'react'
 import { Route, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { getCurrentUser, logout, deleteUser } from '../actions/currentUser'
+import { deleteEvent } from '../actions/events'
 import About from '../components/formsAndInfo/About'
 import LoginSignupForm from '../components/formsAndInfo/LoginSignupForm'
 import Account from '../components/formsAndInfo/Account'
@@ -80,7 +81,7 @@ class FormArea extends React.Component {
         <Route exact path='/add-preferences' component={PreferencesForm} />
         <Route exact path='/checklist' component={ChecklistForm} />
         <Route exact path='/events' render={() => (<EventsList style={this.zStyle} />)} />
-        <Route exact path='/event-menu' render={() => (<EventMenu event={event} />)} />
+        <Route exact path='/event-menu' render={() => (<EventMenu event={event} deleteEvent={this.props.deleteEvent} />)} />
         {this.handleErrors()}
       </div>
     )
@@ -93,4 +94,4 @@ const mapStateToProps = (state) => ({
   errors: state.errors,
 })
 
-export default connect(mapStateToProps, { getCurrentUser, logout, deleteUser })(FormArea)
+export default connect(mapStateToProps, { getCurrentUser, logout, deleteUser, deleteEvent })(FormArea)

@@ -2,6 +2,9 @@ import React from 'react'
 import { NavLink } from 'react-router-dom'
 
 const EventMenu = (props) => {
+  const handleClick = () => {
+    props.deleteEvent(props.event.id)
+  }
   const possibleLinks = () => {
     if (props.event.guests.length > 0) {
       return (
@@ -18,6 +21,7 @@ const EventMenu = (props) => {
       <div><NavLink className='event' to='/edit-event'>Edit Event</NavLink></div>
       <div><NavLink className='event' to='/add-guests'>Add Guests</NavLink></div>
       {possibleLinks()}
+      <div className='no'><NavLink className='no' to='/events-list' onClick={handleClick} >Delete Event</NavLink></div>
     </div>
   )
 }

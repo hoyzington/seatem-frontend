@@ -123,6 +123,10 @@ a.event {
   font-weight: bold;
 }
 
+a.no {
+  color: rgb(130, 0, 30, .6);
+}
+
 #exit {
   position: absolute;
   top: 10px;

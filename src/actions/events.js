@@ -42,6 +42,13 @@ export const clearEvents = () => {
   }
 }
 
+export const destroyEvent = (id) => {
+  return {
+    type: 'DESTROY_EVENT',
+    id,
+  }
+}
+
 // Asynchronous Action Creators
 
 const baseUrl = 'http://localhost:3000/api/v1'
@@ -85,6 +92,28 @@ export const editEvent = (id, eventChanges, eventJson) => {
           dispatch(logErrors(json.errors))
         } else {
           dispatch(updateEvent(eventChanges))
+          // alert(json.notice)
+        }
+      })
+      .catch(console.log)
+  }
+}
+
+export const deleteEvent = (id) => {
+  return (dispatch) => {
+    return fetch(`${baseUrl}/events/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+    })
+      .then(res => res.json())
+      .then(json => {
+        if (json.errors) {
+          dispatch(logErrors(json.errors))
+        } else {
+          dispatch(destroyEvent(id))
           // alert(json.notice)
         }
       })
