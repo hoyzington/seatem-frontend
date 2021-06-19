@@ -1,6 +1,7 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 import { connect } from 'react-redux'
+import { selectGuest, editGuest } from '../../actions/guests'
 import { v4 as uuidv4 } from 'uuid'
 
 class ChecklistForm extends React.Component {
@@ -18,14 +19,13 @@ class ChecklistForm extends React.Component {
   componentDidMount() {
     const guest = this.props.selectedGuest
     if (guest) {
-      const guestTraits = guest.traits
-      if (guestTraits.length > 0){
+      if (guest.traits.length > 0){
         this.setState({
           guestId: guest.id,
           traits: this.props.descriptions.reduce(
             (traits, trait) => ({
               ...traits,
-              [trait]: guestTraits.includes(trait)
+              [trait]: guest.traits.includes(trait)
             }),
             {},
           ),
@@ -64,9 +64,9 @@ class ChecklistForm extends React.Component {
   }
 
   handleGuestChange = (e) => {
-    this.props.selectGuest(e.target.value)
+    this.props.selectGuest(parseInt(e.target.value))
     const { guests, descriptions } = this.props
-    const selectedGuest = guests.find(guest => guest.id === e.target.value)
+    const selectedGuest = guests.find(guest => guest.id === parseInt(e.target.value))
     const traits = descriptions.reduce((total, trait) => ({
         ...total,
         [trait]: selectedGuest.traits.includes(trait),
@@ -81,13 +81,13 @@ class ChecklistForm extends React.Component {
   }
 
   buildChecklist = () => {
-    // console.log(this.state)
     return (
       <div id='check-list'>
         {this.props.descriptions.map((trait) => (
           <>
-            <label key={uuidv4()}>
+            <label>
               <input
+                key={uuidv4()}
                 type='checkbox'
                 name={trait}
                 checked={this.state.traits[trait]}
@@ -102,13 +102,15 @@ class ChecklistForm extends React.Component {
   }
 
   handleSubmit = () => {
-    let guest = this.props.selectedGuest
-    const traits = Object.keys(this.state.traits).filter(trait => this.state.traits[trait])
-    guest = {
-      ...guest,
-      traits: traits,
+    const addedTraits = Object.keys(this.state.traits).filter(trait => this.state.traits[trait])
+    const updatedGuest = {
+      ...this.props.selectedGuest,
+      traits: addedTraits,
     }
-    this.props.updateGuest(guest)
+    const guestJson = {
+      traits: addedTraits.join(','),
+    }
+    this.props.editGuest(updatedGuest, guestJson)
   }
 
   render() {
@@ -154,15 +156,9 @@ class ChecklistForm extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  // user: state.user,
   descriptions: state.events.currentEvent.descriptions,
   guests: state.events.currentEvent.guests,
   selectedGuest: state.events.selectedGuest,
 })
 
-const mapDispatchToProps = (dispatch) => ({
-  updateGuest: (guest) => dispatch({ type: 'UPDATE_GUEST', guest }),
-  selectGuest: (guestId) => dispatch({ type: 'SELECT_GUEST', guestId })
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(ChecklistForm)
+export default connect(mapStateToProps, { selectGuest, editGuest })(ChecklistForm)
