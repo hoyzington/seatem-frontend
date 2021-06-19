@@ -1,6 +1,7 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 import { connect } from 'react-redux'
+import { selectGuest } from '../../actions/guests'
 
 class Guest extends React.Component {
 
@@ -52,16 +53,7 @@ class Guest extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  // user: state.user,
-  events: state.events.events,
-  event: state.events.currentEvent,
-  guests: state.events.currentEvent.guests,
   selectedGuest: state.events.selectedGuest,
 })
 
-const mapDispatchToProps = dispatch => ({
-  selectGuest: (id) => dispatch({ type: 'SELECT_GUEST', id }),
-  updateGuest: (guest) => dispatch({ type: 'UPDATE_GUEST', guest }),
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(Guest)
+export default connect(mapStateToProps, { selectGuest })(Guest)
