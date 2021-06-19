@@ -62,7 +62,7 @@ const updateNewNeighbors = (guests, neighborIds, chairs) => {
 const makeInitials = (guest) => {
   return [
     guest.firstName[0],
-    guest.midName[0],
+    guest.middleName[0],
     guest.lastName[0],
   ].join('')
 }
@@ -298,15 +298,15 @@ const events = (state = {
       }
 
     case 'UPDATE_GUEST':
-      eventIdx = state.savedEvents.findIndex(event => event.id === state.currentEvent.id)
-      event = state.savedEvents[eventIdx]
-      guestIdx = event.guests.findIndex(guest => guest.id === action.guest.id)
+      currentEvent = state.currentEvent
+      eventIdx = state.savedEvents.findIndex(event => event.id === currentEvent.id)
+      guestIdx = currentEvent.guests.findIndex(guest => guest.id === action.guest.id)
       updatedEvent = {
-        ...event,
+        ...currentEvent,
         guests: [
-          ...event.guests.slice(0, guestIdx),
+          ...currentEvent.guests.slice(0, guestIdx),
           action.guest,
-          ...event.guests.slice(guestIdx + 1),
+          ...currentEvent.guests.slice(guestIdx + 1),
         ],
       }
       return {
@@ -320,33 +320,33 @@ const events = (state = {
         selectedGuest: action.guest,
       }
 
-      case 'UPDATE_DESCRIPTIONS':
-        eventIdx = state.savedEvents.findIndex(event => event.id === state.currentEvent.id)
-        event = state.savedEvents[eventIdx]
-        guestIdx = event.guests.findIndex(guest => guest.id === action.guest.id)
-        updatedEvent = {
-          ...event,
-          guests: [
-            ...event.guests.slice(0, guestIdx),
-            action.guest,
-            ...event.guests.slice(guestIdx + 1),
-          ],
-          descriptions: action.descriptions,
-        }
-        return {
-          ...state,
-          savedEvents: [
-            ...state.savedEvents.slice(0, eventIdx),
-            updatedEvent,
-            ...state.savedEvents.slice(eventIdx + 1),
-          ],
-          currentEvent: updatedEvent,
-          selectedGuest: action.guest,
-        }
+      // case 'UPDATE_DESCRIPTIONS':
+      //   eventIdx = state.savedEvents.findIndex(event => event.id === state.currentEvent.id)
+      //   event = state.savedEvents[eventIdx]
+      //   guestIdx = event.guests.findIndex(guest => guest.id === action.guest.id)
+      //   updatedEvent = {
+      //     ...event,
+      //     guests: [
+      //       ...event.guests.slice(0, guestIdx),
+      //       action.guest,
+      //       ...event.guests.slice(guestIdx + 1),
+      //     ],
+      //     descriptions: action.descriptions,
+      //   }
+      //   return {
+      //     ...state,
+      //     savedEvents: [
+      //       ...state.savedEvents.slice(0, eventIdx),
+      //       updatedEvent,
+      //       ...state.savedEvents.slice(eventIdx + 1),
+      //     ],
+      //     currentEvent: updatedEvent,
+      //     selectedGuest: action.guest,
+      //   }
 
       case 'SELECT_GUEST':
       currentEvent = state.currentEvent
-      guest = currentEvent.guests.find(guest => guest.id === action.id) || currentEvent.chairs.find(chair => chair.id === action.id)
+      guest = currentEvent.guests.find(guest => guest.id === action.guestId) || currentEvent.chairs.find(chair => chair.id === action.guestId)
       return {
         ...state,
         selectedGuest: guest,
