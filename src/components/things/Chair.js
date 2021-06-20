@@ -1,27 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { NavLink } from 'react-router-dom'
+import { editEvent, updateEvent } from '../../actions/events'
+import { editGuest, unselectGuest } from '../../actions/guests'
 import Guest from './Guest'
 
 class Chair extends React.Component {
-
-  guestInChair = () => {
-    const chairId = this.props.id,
-          event = this.props.event,
-          guestId = event.chairs[parseInt(chairId)]
-    return event.guests.find(guest => guest.id === guestId)
-  }
-
-  handleClick = () => {
-    const { guest, seatGuest, updateNeighbors, checkForIssues } = this.props,
-          chairId = this.props.id,
-          emptyChair = !this.guestInChair()
-    if (guest && emptyChair) {
-      seatGuest(chairId)
-      updateNeighbors(guest)
-      checkForIssues()
-    }
-  }
 
   fillChair = () => {
     const guestInChair = this.guestInChair()
@@ -32,10 +16,167 @@ class Chair extends React.Component {
     }
   }
 
+  guestInChair = () => {
+    const chairId = this.props.id,
+          event = this.props.event,
+          guestId = event.chairs[parseInt(chairId)]
+    return event.guests.find(guest => guest.id === guestId)
+  }
+
+  handleClick = () => {
+    const { selectedGuest } = this.props
+    const emptyChair = !this.guestInChair()
+    if (selectedGuest && emptyChair) {
+      const { event, editEvent, updateEvent, editGuest, unselectGuest } = this.props
+      const newNeighborIds = this.getNewNeighborIds()
+      let affectedGuests
+      if (selectedGuest.seated) {
+        affectedGuests = [
+          this.makeGuestUpdate(newNeighborIds),
+          ...this.updatePrevNeighbors(),
+          ...this.updateNewNeighbors(newNeighborIds),
+        ]
+      } else {
+        affectedGuests = [
+          this.makeGuestUpdate(newNeighborIds),
+          ...this.updateNewNeighbors(newNeighborIds),
+        ]        
+      }
+      const updatedGuests = this.createUpdatedGuests(affectedGuests)
+      const updatedChairs = this.updateChairs()
+      const eventChanges = {
+        chairs: updatedChairs,
+        guests: updatedGuests,
+      }
+      updateEvent(event.id, eventChanges)
+      unselectGuest()
+      affectedGuests.forEach(guest => {
+        const guestJson = {
+          neighbors: guest.neighbors.join(','),
+          seated: true,
+        }
+        editGuest(guest.id, guestJson)
+      });
+      const eventJson = {
+        chairs: updatedChairs.join(','),
+      }
+      editEvent(event.id, eventJson)
+    }
+  }
+
+  updateChairs = () => {
+    const { event, selectedGuest } = this.props
+    const newChairIdx = parseInt(this.props.id)
+    if (selectedGuest.seated) {
+      const prevChairIdx = event.chairs.findIndex(chair => chair === selectedGuest.id)
+      const chairs = [
+        ...event.chairs.slice(0, prevChairIdx),
+        '',
+        ...event.chairs.slice(prevChairIdx + 1),
+      ]
+      return [
+        ...chairs.slice(0, newChairIdx),
+        selectedGuest.id.toString(),
+        ...chairs.slice(newChairIdx + 1),
+      ]
+    }
+    return [
+      ...event.chairs.slice(0, newChairIdx),
+      selectedGuest.id,
+      ...event.chairs.slice(newChairIdx + 1),
+    ]
+  }
+
+  makeGuestUpdate = (newNeighborIds) => {
+    return {
+      ...this.props.selectedGuest,
+      neighbors: newNeighborIds,
+      seated: true,
+    }
+  }
+
+  getNewNeighborIds = () => {
+    const { chairs } = this.props.event
+    const chairIdx = this.props.id
+    let neighbors
+    const last = chairs.length - 1
+    switch (chairIdx) {
+      case 0:
+        neighbors = [
+          chairs[last],
+          chairs[1],
+        ]
+        break
+      case last:
+        neighbors = [
+          chairs[last - 1],
+          chairs[0],
+        ]
+        break
+      default:
+        neighbors = [
+          chairs[chairIdx - 1],
+          chairs[chairIdx + 1],
+        ]
+    }
+    return neighbors.filter(nbrId => nbrId !== '')
+  }
+  
+  updatePrevNeighbors = () => {
+    const neighbors = this.props.selectedGuest.neighbors
+    if (neighbors.length > 0) {
+      return neighbors.map(id => this.updatePrevNeighbor(id))
+    }
+    return []
+  }
+
+  updatePrevNeighbor = (id) => {
+    const { guests, selectedGuest } = this.props
+    const neighbor = guests.find(guest => guest.id === id)
+    const nbrArray = neighbor.neighbors.filter(nbrId => nbrId !== selectedGuest.id)
+    return {
+      ...neighbor,
+      neighbors: nbrArray,
+    }
+  }
+  
+  updateNewNeighbors = (newNeighborIds) => {
+    if (newNeighborIds.length > 0) {
+      return newNeighborIds.map(id => this.updateNewNeighbor(id))
+    }
+    return []
+  }
+  
+  updateNewNeighbor = (id) => {
+    const { guests } = this.props
+    const newNeighbor = guests.find(guest => guest.id === id)
+    return {
+      ...newNeighbor,
+      neighbors: [
+        ...newNeighbor.neighbors,
+        this.props.selectedGuest.id,
+      ]
+    }
+  }
+  
+  createUpdatedGuests = (affectedGuests) => {
+    const { guests } = this.props
+    let updatedGuests = guests
+    affectedGuests.forEach(affectedGuest => {
+      const guestIdx = guests.findIndex(guest => guest.id === affectedGuest.id)
+      updatedGuests = [
+        ...updatedGuests.slice(0, guestIdx),
+        affectedGuest,
+        ...updatedGuests.slice(guestIdx + 1),
+      ]
+    })
+    return updatedGuests
+  }
+
   render() {
     const guestInChair = this.guestInChair()
-    const { guest, id, x, y } = this.props
-    if (guestInChair || !guest) {
+    const { selectedGuest, id, x, y } = this.props
+    if (guestInChair || !selectedGuest) {
       return (
         <div
           id={id}
@@ -65,15 +206,10 @@ class Chair extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  // user: state.user,
+  events: state.events.savedEvents,
   event: state.events.currentEvent,
-  guest: state.events.selectedGuest,
+  guests: state.events.currentEvent.guests,
+  selectedGuest: state.events.selectedGuest,
 })
 
-const mapDispatchToProps = (dispatch) => ({
-  seatGuest: (chairId) => dispatch({ type: 'SEAT_GUEST', chairId }),
-  updateNeighbors: (guest) => dispatch({ type: 'UPDATE_NEIGHBORS', guest }),
-  checkForIssues: () => dispatch({ type: 'CHECK_FOR_ISSUES' }),
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(Chair)
+export default connect(mapStateToProps, { editGuest, unselectGuest, editEvent, updateEvent })(Chair)
