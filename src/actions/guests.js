@@ -1,5 +1,5 @@
 import { logErrors, clearErrors } from './errors'
-// import { updateEvent } from './events'
+import { editEvent } from './events'
 
 // Synchronous Action Creators
 
@@ -31,6 +31,13 @@ export const selectGuest = (guestId) => {
   }
 }
 
+export const unselectGuest = (guestId) => {
+  return {
+    type: 'UNSELECT_GUEST',
+    guestId,
+  }
+}
+
 export const seatGuest = () => {
   return {
     type: 'SEAT_GUEST',
@@ -40,6 +47,12 @@ export const seatGuest = () => {
 export const unseatGuest = () => {
   return {
     type: 'UNSEAT_GUEST',
+  }
+}
+
+export const destroyGuest = () => {
+  return {
+    type: 'DESTROY_GUEST',
   }
 }
 
@@ -70,23 +83,47 @@ export const createGuest = (newGuest, event) => {
   }
 }
 
-export const editGuest = (guest, guestJson) => {
+export const editGuest = (id, changes) => {
   return (dispatch) => {
-    return fetch(`${baseUrl}/guests/${guest.id}`, {
+    return fetch(`${baseUrl}/guests/${id}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
       },
-      body: JSON.stringify(guestJson),
+      body: JSON.stringify(changes),
     })
       .then(res => res.json())
       .then(json => {
         if (json.errors) {
           dispatch(logErrors(json.errors))
         } else {
-          dispatch(updateGuest(guest))
           // alert(json.notice)
+        }
+      })
+      .catch(console.log)
+  }
+}
+
+export const deleteGuest = (guest, neighbors, event) => {
+  return (dispatch) => {
+    return fetch(`${baseUrl}/guests/${guest.id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+    })
+      .then(res => res.json())
+      .then(json => {
+        if (json.errors) {
+          dispatch(logErrors(json.errors))
+        } else {
+          if (guest.seated) {
+            dispatch(editEvent(event))
+          }
+          dispatch(destroyGuest(guest.id))
+          neighbors.forEach(guest => dispatch(editGuest(guest)))
         }
       })
       .catch(console.log)
