@@ -247,7 +247,8 @@ const events = (state = {
       }
 
     case 'UPDATE_EVENT':
-      eventIdx = state.savedEvents.findIndex(event => event.id === action.changes.id)
+      // console.log(action)
+      eventIdx = state.savedEvents.findIndex(event => event.id === action.id)
       updatedEvent = {
         ...state.currentEvent,
         ...action.changes,
@@ -354,6 +355,12 @@ const events = (state = {
       return {
         ...state,
         selectedGuest: guest,
+      }
+
+    case 'UNSELECT_GUEST':
+      return {
+        ...state,
+        selectedGuest: null,
       }
 
     case 'SEAT_GUEST':
@@ -479,7 +486,8 @@ const events = (state = {
         selectedGuest: null,
       }
 
-    // case 'UPDATE_NEIGHBORS':
+    case 'UPDATE_NEIGHBORS':
+      return state
     //   eventIdx = state.savedEvents.findIndex(event => event.id === state.currentEvent.id)
     //   event = state.savedEvents[eventIdx]
     //   guests = event.guests
