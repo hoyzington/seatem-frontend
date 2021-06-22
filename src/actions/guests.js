@@ -1,5 +1,4 @@
 import { logErrors, clearErrors } from './errors'
-import { editEvent } from './events'
 
 // Synchronous Action Creators
 
@@ -47,12 +46,6 @@ export const seatGuest = () => {
 export const unseatGuest = () => {
   return {
     type: 'UNSEAT_GUEST',
-  }
-}
-
-export const destroyGuest = () => {
-  return {
-    type: 'DESTROY_GUEST',
   }
 }
 
@@ -105,9 +98,9 @@ export const editGuest = (id, changes) => {
   }
 }
 
-export const deleteGuest = (guest, neighbors, event) => {
+export const deleteGuest = (id) => {
   return (dispatch) => {
-    return fetch(`${baseUrl}/guests/${guest.id}`, {
+    return fetch(`${baseUrl}/guests/${id}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
@@ -119,11 +112,7 @@ export const deleteGuest = (guest, neighbors, event) => {
         if (json.errors) {
           dispatch(logErrors(json.errors))
         } else {
-          if (guest.seated) {
-            dispatch(editEvent(event))
-          }
-          dispatch(destroyGuest(guest.id))
-          neighbors.forEach(guest => dispatch(editGuest(guest)))
+          // alert(json.notice)
         }
       })
       .catch(console.log)

@@ -1,16 +1,18 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { NavLink } from 'react-router-dom'
+import { editGuest, unselectGuest, deleteGuest } from '../../actions/guests'
+import { editEvent, updateEvent } from '../../actions/events'
 import { v4 as uuidv4 } from 'uuid'
 
 class GuestInfo extends React.Component {
 
   showGuest = () => {
-    const { guest } = this.props
-    if (guest) {
+    const { selectedGuest } = this.props
+    if (selectedGuest) {
       return (
         <>
-          <h4>{this.buildFullName(guest)}</h4>
+          <h4>{this.buildFullName(selectedGuest)}</h4>
           {this.createInfoList()}
           <div id='guest-info-btn-area'>
             {this.addUnseatButton()}
@@ -30,8 +32,8 @@ class GuestInfo extends React.Component {
   }
 
   createInfoList = () => {
-    const { guests, guest } = this.props
-    const { guestsYes, guestsNo, descriptionsYes, descriptionsNo, traits, issues } = guest
+    const { guests, selectedGuest } = this.props
+    const { guestsYes, guestsNo, descriptionsYes, descriptionsNo, traits, issues } = selectedGuest
 
     let list1 = (
       <li key={uuidv4()} className='yes'><i>None</i></li>
@@ -88,7 +90,7 @@ class GuestInfo extends React.Component {
   }
 
   addUnseatButton = () => {
-    if (this.props.guest.seated) {
+    if (this.props.selectedGuest.seated) {
       return (
         <NavLink className='btn unseat' to='/' onClick={this.handleUnseatClick}>Unseat</NavLink>
       )
@@ -96,19 +98,120 @@ class GuestInfo extends React.Component {
   }
 
   handleUnseatClick = () => {
-    const { guest, unseatGuest, updateNeighbors, checkForIssues } = this.props
-    if (guest && guest.seated) {
-      unseatGuest()
-      updateNeighbors(guest)
-      checkForIssues()
+    const { event, editEvent, updateEvent, selectedGuest, editGuest, unselectGuest } = this.props
+    const affectedGuests = [
+      this.makeGuestUpdate(),
+      ...this.updatePrevNeighbors(),
+    ]
+    const updatedGuests = this.createUpdatedGuests(affectedGuests)
+    const updatedChairs = this.updateChairs()
+    const eventChanges = {
+      chairs: updatedChairs,
+      guests: updatedGuests,
+    }
+    updateEvent(event.id, eventChanges)
+    unselectGuest()
+    const selectedGuestJson = {
+      neighbors: selectedGuest.neighbors.join(','),
+      seated: false,
+    }
+    editGuest(selectedGuest.id, selectedGuestJson)
+    affectedGuests.slice(1).forEach(guest => {
+      const guestJson = {
+        neighbors: guest.neighbors.join(','),
+      }
+      editGuest(guest.id, guestJson)
+    })
+    const eventJson = {
+      chairs: updatedChairs.join(','),
+    }
+    editEvent(event.id, eventJson)
+  }
+
+  makeGuestUpdate = () => {
+    return {
+      ...this.props.selectedGuest,
+      neighbors: [],
+      seated: false,
     }
   }
 
+  updatePrevNeighbors = () => {
+    const neighbors = this.props.selectedGuest.neighbors
+    if (neighbors.length > 0) {
+      return neighbors.map(id => this.updatePrevNeighbor(id))
+    }
+    return []
+  }
+
+  updatePrevNeighbor = (id) => {
+    const { guests, selectedGuest } = this.props
+    const neighbor = guests.find(guest => guest.id.toString() === id)
+    const nbrArray = neighbor.neighbors.filter(nbrId => nbrId !== selectedGuest.id.toString())
+    return {
+      ...neighbor,
+      neighbors: nbrArray,
+    }
+  }
+  
+  createUpdatedGuests = (affectedGuests, deletedId) => {
+    const { guests } = this.props
+    let updatedGuests = guests
+    affectedGuests.forEach(affectedGuest => {
+      const guestIdx = guests.findIndex(guest => guest.id === affectedGuest.id)
+      updatedGuests = [
+        ...updatedGuests.slice(0, guestIdx),
+        affectedGuest,
+        ...updatedGuests.slice(guestIdx + 1),
+      ]
+    })
+    if (deletedId) {
+      const deletedGuestIdx = guests.findIndex(guest => guest.id === deletedId)
+      updatedGuests = [
+        ...updatedGuests.slice(0, deletedGuestIdx),
+        ...updatedGuests.slice(deletedGuestIdx + 1),
+      ]
+    }
+    return updatedGuests
+  }
+
+  updateChairs = () => {
+    const { event, selectedGuest } = this.props
+    const chairIdx = event.chairs.findIndex(chair => chair === selectedGuest.id.toString())
+    return [
+      ...event.chairs.slice(0, chairIdx),
+      '',
+      ...event.chairs.slice(chairIdx + 1),
+    ]
+  }
+  
   handleDeleteClick = () => {
-    const { guest, deleteGuest, updateNeighbors, checkForIssues } = this.props
-    deleteGuest()
-    updateNeighbors(guest)
-    checkForIssues()
+    const { event, updateEvent, editEvent, selectedGuest, unselectGuest, deleteGuest } = this.props
+    const affectedGuests = this.updatePrevNeighbors()
+    const updatedGuests = this.createUpdatedGuests(affectedGuests, selectedGuest.id)
+    const updatedChairs = this.updateChairs()
+    let eventChanges
+    if (selectedGuest.seated) {
+      eventChanges = {
+        chairs: updatedChairs,
+        guests: updatedGuests,
+      }
+    } else {
+      eventChanges = { guests: updatedGuests }
+    }
+    unselectGuest()
+    updateEvent(event.id, eventChanges)
+    affectedGuests.forEach(guest => {
+      const guestJson = {
+        neighbors: guest.neighbors.join(','),
+      }
+      editGuest(guest.id, guestJson)
+    })
+    deleteGuest(selectedGuest.id)
+    if (selectedGuest.seated) {
+      const eventJson = { chairs: updatedChairs.join() }
+      editEvent(event.id, eventJson)
+    }
   }
 
   render() {
@@ -123,15 +226,8 @@ class GuestInfo extends React.Component {
 
 const mapStateToProps = (state) => ({
   event: state.events.currentEvent,
-  guest: state.events.selectedGuest,
+  selectedGuest: state.events.selectedGuest,
   guests: state.events.currentEvent.guests
 })
 
-const mapDispatchToProps = (dispatch) => ({
-  unseatGuest: () => dispatch({ type: 'UNSEAT_GUEST' }),
-  deleteGuest: () => dispatch({ type: 'DELETE_GUEST' }),
-  updateNeighbors: (guest) => dispatch({ type: 'UPDATE_NEIGHBORS', guest}),
-  checkForIssues: () => dispatch({ type: 'CHECK_FOR_ISSUES' }),
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(GuestInfo)
+export default connect(mapStateToProps, { editEvent, updateEvent, editGuest, unselectGuest, deleteGuest })(GuestInfo)
