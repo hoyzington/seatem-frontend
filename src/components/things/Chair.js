@@ -20,7 +20,7 @@ class Chair extends React.Component {
     const chairId = this.props.id,
           event = this.props.event,
           guestId = event.chairs[parseInt(chairId)]
-    return event.guests.find(guest => guest.id === guestId)
+    return event.guests.find(guest => guest.id.toString() === guestId)
   }
 
   handleClick = () => {
@@ -68,7 +68,7 @@ class Chair extends React.Component {
     const { event, selectedGuest } = this.props
     const newChairIdx = parseInt(this.props.id)
     if (selectedGuest.seated) {
-      const prevChairIdx = event.chairs.findIndex(chair => chair === selectedGuest.id)
+      const prevChairIdx = event.chairs.findIndex(chair => chair === selectedGuest.id.toString())
       const chairs = [
         ...event.chairs.slice(0, prevChairIdx),
         '',
@@ -82,7 +82,7 @@ class Chair extends React.Component {
     }
     return [
       ...event.chairs.slice(0, newChairIdx),
-      selectedGuest.id,
+      selectedGuest.id.toString(),
       ...event.chairs.slice(newChairIdx + 1),
     ]
   }
@@ -100,26 +100,23 @@ class Chair extends React.Component {
     const chairIdx = this.props.id
     let neighbors
     const last = chairs.length - 1
-    switch (chairIdx) {
-      case 0:
-        neighbors = [
-          chairs[last],
-          chairs[1],
-        ]
-        break
-      case last:
-        neighbors = [
-          chairs[last - 1],
-          chairs[0],
-        ]
-        break
-      default:
-        neighbors = [
-          chairs[chairIdx - 1],
-          chairs[chairIdx + 1],
-        ]
+    if (chairIdx < 1) {
+      neighbors = [
+        chairs[last],
+        chairs[1],
+      ]
+    } else if (chairIdx === last) {
+      neighbors = [
+        chairs[last - 1],
+        chairs[0],
+      ]
+    } else {
+      neighbors = [
+        chairs[chairIdx - 1],
+        chairs[chairIdx + 1],
+      ]
     }
-    return neighbors.filter(nbrId => nbrId !== '')
+    return neighbors.filter(nbrId => (nbrId !== '' && nbrId !== this.props.selectedGuest.id.toString()))
   }
   
   updatePrevNeighbors = () => {
@@ -132,8 +129,8 @@ class Chair extends React.Component {
 
   updatePrevNeighbor = (id) => {
     const { guests, selectedGuest } = this.props
-    const neighbor = guests.find(guest => guest.id === id)
-    const nbrArray = neighbor.neighbors.filter(nbrId => nbrId !== selectedGuest.id)
+    const neighbor = guests.find(guest => guest.id.toString() === id)
+    const nbrArray = neighbor.neighbors.filter(nbrId => nbrId !== selectedGuest.id.toString())
     return {
       ...neighbor,
       neighbors: nbrArray,
@@ -149,12 +146,12 @@ class Chair extends React.Component {
   
   updateNewNeighbor = (id) => {
     const { guests } = this.props
-    const newNeighbor = guests.find(guest => guest.id === id)
+    const newNeighbor = guests.find(guest => guest.id.toString() === id)
     return {
       ...newNeighbor,
       neighbors: [
         ...newNeighbor.neighbors,
-        this.props.selectedGuest.id,
+        this.props.selectedGuest.id.toString(),
       ]
     }
   }
