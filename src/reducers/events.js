@@ -1,64 +1,5 @@
 // import { v4 as uuidv4 } from 'uuid'
 
-// const updatePreviousNeighbor = (guestBefore, neighborId, guests) => {
-//   const guest = guests.find(guest => guest.id === neighborId)
-//   const updatedNeighbors = guest.neighbors.filter(nbrId => nbrId !== guestBefore.id)
-//   return {
-//     ...guest,
-//     neighbors: updatedNeighbors,
-//   }
-// }
-
-// const updatePreviousNeighbors = (guestBefore, guests) => {
-//   const prevNeighborIds = guestBefore.neighbors.filter(guestId => guestId !== '')
-//   if (prevNeighborIds.length > 0) {
-//     return prevNeighborIds.map(id => updatePreviousNeighbor(guestBefore, id, guests))
-//   }
-//   return prevNeighborIds
-// }
-
-// const getNewNeighborIds = (chairs, guest) => {
-//   const chairIdx = chairs.findIndex(chair => chair === guest.id)
-//   let neighbors
-//   const last = chairs.length - 1
-//   switch (chairIdx) {
-//     case 0:
-//       neighbors = [
-//         chairs[last],
-//         chairs[1],
-//       ]
-//       break
-//     case last:
-//       neighbors = [
-//         chairs[last - 1],
-//         chairs[0],
-//       ]
-//       break
-//     default:
-//       neighbors = [
-//         chairs[chairIdx - 1],
-//         chairs[chairIdx + 1],
-//       ]
-//   }
-//   return neighbors.filter(nbrId => nbrId !== '')
-// }
-
-// const updateNewNeighbor = (guests, neighborId, chairs) => {
-//   const newNeighbor = guests.find(guest => guest.id === neighborId)
-//   return {
-//     ...newNeighbor,
-//     neighbors: getNewNeighborIds(chairs, newNeighbor)
-//   }
-// }
-
-// const updateNewNeighbors = (guests, neighborIds, chairs) => {
-//   if (neighborIds.length > 0) {
-//     return neighborIds.map(id => updateNewNeighbor(guests, id, chairs))
-//   } else {
-//     return []
-//   }
-// }
-
 // --------------------------------------------
 
 // const makeInitials = (guest) => {
@@ -161,9 +102,7 @@ const events = (state = {
   selectedGuest: null,
 }, action) => {
 
-  // let eventIdx, event, currentEvent, updatedEvent, guestIdx, guest, guests, selectedGuest, affectedGuests, chairs, chairIdx, chairId
-
-  let eventIdx, event, currentEvent, updatedEvent, guestIdx, guest, selectedGuest, chairIdx, chairId
+  let eventIdx, event, currentEvent, updatedEvent, guestIdx, guest
 
   const unJson = (string) => {
     if (string && string !== '') {
@@ -200,6 +139,7 @@ const events = (state = {
       event = {
         ...action.event,
         chairs: unJson(action.event.chairs),
+        descriptions: [],
       }
       return {
         ...state,
@@ -247,7 +187,6 @@ const events = (state = {
       }
 
     case 'UPDATE_EVENT':
-      // console.log(action)
       eventIdx = state.savedEvents.findIndex(event => event.id === action.id)
       updatedEvent = {
         ...state.currentEvent,
@@ -325,30 +264,6 @@ const events = (state = {
         selectedGuest: action.guest,
       }
 
-      // case 'UPDATE_DESCRIPTIONS':
-      //   eventIdx = state.savedEvents.findIndex(event => event.id === state.currentEvent.id)
-      //   event = state.savedEvents[eventIdx]
-      //   guestIdx = event.guests.findIndex(guest => guest.id === action.guest.id)
-      //   updatedEvent = {
-      //     ...event,
-      //     guests: [
-      //       ...event.guests.slice(0, guestIdx),
-      //       action.guest,
-      //       ...event.guests.slice(guestIdx + 1),
-      //     ],
-      //     descriptions: action.descriptions,
-      //   }
-      //   return {
-      //     ...state,
-      //     savedEvents: [
-      //       ...state.savedEvents.slice(0, eventIdx),
-      //       updatedEvent,
-      //       ...state.savedEvents.slice(eventIdx + 1),
-      //     ],
-      //     currentEvent: updatedEvent,
-      //     selectedGuest: action.guest,
-      //   }
-
     case 'SELECT_GUEST':
       currentEvent = state.currentEvent
       guest = currentEvent.guests.find(guest => guest.id === action.guestId) || currentEvent.chairs.find(chair => chair.id === action.guestId)
@@ -362,187 +277,6 @@ const events = (state = {
         ...state,
         selectedGuest: null,
       }
-
-    case 'SEAT_GUEST':
-      eventIdx = state.savedEvents.findIndex(event => event.id === state.currentEvent.id)
-      event = state.savedEvents[eventIdx]
-      selectedGuest = state.selectedGuest
-      chairId = parseInt(action.chairId)
-      if (selectedGuest.seated) {
-        chairIdx = event.chairs.findIndex(chair => chair === selectedGuest.id)
-        event = {
-          ...event,
-          chairs: [
-            ...event.chairs.slice(0, chairIdx),
-            '',
-            ...event.chairs.slice(chairIdx + 1),
-          ],
-        }
-        updatedEvent = {
-          ...event,
-          chairs: [
-            ...event.chairs.slice(0, chairId),
-            selectedGuest.id,
-            ...event.chairs.slice(chairId + 1),
-          ],
-        }
-      } else {
-        guestIdx = event.guests.findIndex(guest => guest.id === selectedGuest.id)
-        selectedGuest = {
-          ...selectedGuest,
-          seated: true,
-        }
-        updatedEvent = {
-          ...event,
-          guests: [
-            ...event.guests.slice(0, guestIdx),
-            selectedGuest,
-            ...event.guests.slice(guestIdx + 1),
-          ],
-          chairs: [
-            ...event.chairs.slice(0, chairId),
-            selectedGuest.id,
-            ...event.chairs.slice(chairId + 1),
-          ],
-        }
-      }
-      return {
-        ...state,
-        savedEvents: [
-          ...state.savedEvents.slice(0, eventIdx),
-          updatedEvent,
-          ...state.savedEvents.slice(eventIdx + 1),
-        ],
-        currentEvent: updatedEvent,
-        selectedGuest: null,
-      }
-
-    case 'UNSEAT_GUEST':
-      eventIdx = state.savedEvents.findIndex(event => event.id === state.currentEvent.id)
-      event = state.savedEvents[eventIdx]
-      selectedGuest = state.selectedGuest
-      guestIdx = event.guests.findIndex(guest => guest.id === selectedGuest.id)
-      chairIdx = event.chairs.findIndex(chair => chair === selectedGuest.id)
-      selectedGuest = {
-        ...selectedGuest,
-        neighbors: [],
-        seated: false,
-        issues: [],
-      }
-      updatedEvent = {
-        ...event,
-        chairs: [
-          ...event.chairs.slice(0, chairIdx),
-          '',
-          ...event.chairs.slice(chairIdx + 1),
-        ],
-        guests: [
-          ...event.guests.slice(0, guestIdx),
-          selectedGuest,
-          ...event.guests.slice(guestIdx + 1),
-        ],
-      }
-      return {
-        ...state,
-        savedEvents: [
-          ...state.savedEvents.slice(0, eventIdx),
-          updatedEvent,
-          ...state.savedEvents.slice(eventIdx + 1),
-        ],
-        currentEvent: updatedEvent,
-        selectedGuest: null,
-      }
-
-    case 'DESTROY_GUEST':
-      eventIdx = state.savedEvents.findIndex(event => event.id === state.currentEvent.id)
-      event = state.savedEvents[eventIdx]
-      guestIdx = event.guests.findIndex(guest => guest.id === action.guest.id)
-      updatedEvent = {
-        ...event,
-        guests: [
-          ...event.guests.slice(0, guestIdx),
-          ...event.guests.slice(guestIdx + 1),
-        ],
-      }
-      if (action.guest.seated) {
-        chairIdx = event.chairs.findIndex(chair => chair === action.guest.id)
-        updatedEvent = {
-          ...updatedEvent,
-          chairs: [
-            ...updatedEvent.chairs.slice(0, chairIdx),
-            '',
-            ...updatedEvent.chairs.slice(chairIdx + 1),
-          ],
-        }
-      }
-      return {
-        ...state,
-        savedEvents: [
-          ...state.savedEvents.slice(0, eventIdx),
-          updatedEvent,
-          ...state.savedEvents.slice(eventIdx + 1),
-        ],
-        currentEvent: updatedEvent,
-        selectedGuest: null,
-      }
-
-    case 'UPDATE_NEIGHBORS':
-      return state
-    //   eventIdx = state.savedEvents.findIndex(event => event.id === state.currentEvent.id)
-    //   event = state.savedEvents[eventIdx]
-    //   guests = event.guests
-    //   chairs = event.chairs
-    //   const guestBefore = action.guest
-    //   let guestAfter = guests.find(guest => guest.id === guestBefore.id)
-
-    //   const previousNeighbors = updatePreviousNeighbors(guestBefore, guests)
-
-    //   if (guestAfter.seated) {
-    //     const newNeighborIds = getNewNeighborIds(chairs, guestAfter)
-    //     const newNeighbors = updateNewNeighbors(guests, newNeighborIds, chairs)
-    //     guestAfter = {
-    //       ...guestAfter,
-    //       neighbors: newNeighborIds,
-    //     }
-    //     affectedGuests = [
-    //       ...previousNeighbors,
-    //       guestAfter,
-    //       ...newNeighbors,
-    //     ]
-    //   } else {
-    //     affectedGuests = [...previousNeighbors]
-    //   }
-
-    //   if (affectedGuests.length > 0) {
-    //     const updatedGuests = affectedGuests.reduce((allGuests, updatedGuest) => {
-    //       guestIdx = guests.findIndex(guest => guest.id === updatedGuest.id)
-    //       return [
-    //         ...allGuests.slice(0, guestIdx),
-    //         updatedGuest,
-    //         ...allGuests.slice(guestIdx + 1),
-    //       ]
-    //     }, guests) 
-    //     updatedEvent = {
-    //       ...event,
-    //       guests: updatedGuests,
-    //       newlyAffectedGuests: affectedGuests,
-    //     }
-    //   } else {
-    //     updatedEvent = {
-    //       ...event,
-    //       newlyAffectedGuests: [],
-    //     }
-    //   }
-
-    //   return {
-    //     ...state,
-    //     savedEvents: [
-    //       ...state.savedEvents.slice(0, eventIdx),
-    //       updatedEvent,
-    //       ...state.savedEvents.slice(eventIdx + 1),
-    //     ],
-    //     currentEvent: updatedEvent,
-    //   }
 
     case 'CHECK_FOR_ISSUES':
       return state
