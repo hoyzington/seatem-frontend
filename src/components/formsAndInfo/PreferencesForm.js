@@ -1,8 +1,8 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { editEvent } from '../../actions/events'
-import { selectGuest, editGuest } from '../../actions/guests'
+import { editEvent, updateEvent } from '../../actions/events'
+import { selectGuest, editGuest, updateGuest } from '../../actions/guests'
 import { v4 as uuidv4 } from 'uuid'
 
 class PreferencesForm extends React.Component {
@@ -71,7 +71,7 @@ class PreferencesForm extends React.Component {
   }
 
   handleAdd = () => {
-    const { selectedGuest, event, editEvent, editGuest } = this.props
+    const { selectedGuest, event, editEvent, updateEvent, editGuest, updateGuest } = this.props
     const prefType = this.state.prefType
     if (selectedGuest && prefType !== '') {
       let prefArray = selectedGuest[prefType]
@@ -79,7 +79,10 @@ class PreferencesForm extends React.Component {
       const typeIsGuest = prefType[0] === 'g'
       if (!prefArray.includes(newPref)) {
         if (typeIsGuest && prefArray.length > 1) {
-          prefArray = [prefArray[prefArray.length - 1], newPref]
+          prefArray = [
+            prefArray[prefArray.length - 1],
+            newPref.toString(),
+          ]
         } else {
           prefArray = [...prefArray, newPref]
         }
@@ -88,10 +91,7 @@ class PreferencesForm extends React.Component {
         ...selectedGuest,
         [prefType]: prefArray,
       }
-      const guestJson = {
-        [prefType]: prefArray.join(','),
-      }
-      if (!typeIsGuest) {
+      if (!typeIsGuest && !event.descriptions.includes(newPref)) {
         const updatedDescriptions = [
           ...event.descriptions,
           newPref,
@@ -99,18 +99,26 @@ class PreferencesForm extends React.Component {
         const eventChanges = {
           descriptions: updatedDescriptions,
         }
+        updateGuest(updatedGuest)
+        updateEvent(event.id, eventChanges)
+        this.setState({ [prefType]: '' })
         const eventJson = {
           descriptions: updatedDescriptions.join(','),
         }
-        editEvent(event.id, eventChanges, eventJson)
+        editEvent(event.id, eventJson)
+      } else {
+        updateGuest(updatedGuest)
+        this.setState({ [prefType]: '' })
       }
-      editGuest(updatedGuest.id, updatedGuest, guestJson)
-      this.setState({ [prefType]: '' })
+      const guestJson = {
+        [prefType]: prefArray.join(','),
+      }
+      editGuest(updatedGuest.id, guestJson)
     }
   }
 
   handleDelete = (type, bool, pref) => {
-    const { selectedGuest, event, editEvent, editGuest } = this.props
+    const { selectedGuest, editGuest, updateGuest } = this.props
     let prefs = selectedGuest[`${type}${bool}`]
     const prefIdx = prefs.findIndex(item => item === pref)
     const prefArray = [
@@ -121,25 +129,11 @@ class PreferencesForm extends React.Component {
       ...selectedGuest,
       [`${type}${bool}`]: prefArray,
     }
+    updateGuest(updatedGuest)
     const guestJson = {
       [`${type}${bool}`]: prefArray.join(','),
     }
-    if (type === 'descriptions') {
-      let descriptions = event.descriptions
-      const descIdx = descriptions.findIndex(item => item === pref)
-      const updatedDescriptions = [
-        ...descriptions.slice(0, descIdx),
-        ...descriptions.slice(descIdx + 1),
-      ]
-      const eventChanges = {
-        descriptions: updatedDescriptions,
-      }
-      const eventJson = {
-        descriptions: updatedDescriptions.join(','),
-      }
-      editEvent(event.id, eventChanges, eventJson)
-    }
-    editGuest(selectedGuest.id, updatedGuest, guestJson)
+    editGuest(selectedGuest.id, guestJson)
   }
 
   renderPreferences = (type, bool) => {
@@ -335,4 +329,4 @@ const mapStateToProps = (state) => ({
   selectedGuest: state.events.selectedGuest,
 })
 
-export default connect(mapStateToProps, { selectGuest, editGuest, editEvent })(PreferencesForm)
+export default connect(mapStateToProps, { selectGuest, editEvent, updateEvent, editGuest, updateGuest })(PreferencesForm)
