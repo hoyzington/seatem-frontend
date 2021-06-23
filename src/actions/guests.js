@@ -37,15 +37,9 @@ export const unselectGuest = (guestId) => {
   }
 }
 
-export const seatGuest = () => {
+export const checkForIssues = () => {
   return {
-    type: 'SEAT_GUEST',
-  }
-}
-
-export const unseatGuest = () => {
-  return {
-    type: 'UNSEAT_GUEST',
+    type: 'CHECK_FOR_ISSUES',
   }
 }
 

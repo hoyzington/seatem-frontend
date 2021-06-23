@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { NavLink } from 'react-router-dom'
 import { editEvent, updateEvent } from '../../actions/events'
-import { editGuest, unselectGuest } from '../../actions/guests'
+import { checkForIssues, editGuest, unselectGuest } from '../../actions/guests'
 import Guest from './Guest'
 
 class Chair extends React.Component {
@@ -27,7 +27,7 @@ class Chair extends React.Component {
     const { selectedGuest } = this.props
     const emptyChair = !this.guestInChair()
     if (selectedGuest && emptyChair) {
-      const { event, editEvent, updateEvent, editGuest, unselectGuest } = this.props
+      const { event, editEvent, updateEvent, editGuest, unselectGuest, checkForIssues } = this.props
       const newNeighborIds = this.getNewNeighborIds()
       let affectedGuests
       if (selectedGuest.seated) {
@@ -50,6 +50,7 @@ class Chair extends React.Component {
       }
       updateEvent(event.id, eventChanges)
       unselectGuest()
+      checkForIssues()
       affectedGuests.forEach(guest => {
         const guestJson = {
           neighbors: guest.neighbors.join(','),
@@ -209,4 +210,4 @@ const mapStateToProps = (state) => ({
   selectedGuest: state.events.selectedGuest,
 })
 
-export default connect(mapStateToProps, { editGuest, unselectGuest, editEvent, updateEvent })(Chair)
+export default connect(mapStateToProps, { editGuest, unselectGuest, editEvent, updateEvent, checkForIssues })(Chair)

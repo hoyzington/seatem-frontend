@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { NavLink } from 'react-router-dom'
-import { editGuest, unselectGuest, deleteGuest } from '../../actions/guests'
+import { editGuest, unselectGuest, deleteGuest, checkForIssues } from '../../actions/guests'
 import { editEvent, updateEvent } from '../../actions/events'
 import { v4 as uuidv4 } from 'uuid'
 
@@ -98,7 +98,7 @@ class GuestInfo extends React.Component {
   }
 
   handleUnseatClick = () => {
-    const { event, editEvent, updateEvent, selectedGuest, editGuest, unselectGuest } = this.props
+    const { event, editEvent, updateEvent, selectedGuest, editGuest, unselectGuest, checkForIssues } = this.props
     const affectedGuests = [
       this.makeGuestUpdate(),
       ...this.updatePrevNeighbors(),
@@ -111,6 +111,7 @@ class GuestInfo extends React.Component {
     }
     updateEvent(event.id, eventChanges)
     unselectGuest()
+    checkForIssues()
     const selectedGuestJson = {
       neighbors: selectedGuest.neighbors.join(','),
       seated: false,
@@ -186,7 +187,7 @@ class GuestInfo extends React.Component {
   }
   
   handleDeleteClick = () => {
-    const { event, updateEvent, editEvent, selectedGuest, unselectGuest, deleteGuest } = this.props
+    const { event, updateEvent, editEvent, selectedGuest, unselectGuest, deleteGuest, checkForIssues } = this.props
     const affectedGuests = this.updatePrevNeighbors()
     const updatedGuests = this.createUpdatedGuests(affectedGuests, selectedGuest.id)
     const updatedChairs = this.updateChairs()
@@ -201,6 +202,7 @@ class GuestInfo extends React.Component {
     }
     unselectGuest()
     updateEvent(event.id, eventChanges)
+    checkForIssues()
     affectedGuests.forEach(guest => {
       const guestJson = {
         neighbors: guest.neighbors.join(','),
@@ -230,4 +232,4 @@ const mapStateToProps = (state) => ({
   guests: state.events.currentEvent.guests
 })
 
-export default connect(mapStateToProps, { editEvent, updateEvent, editGuest, unselectGuest, deleteGuest })(GuestInfo)
+export default connect(mapStateToProps, { editEvent, updateEvent, editGuest, unselectGuest, deleteGuest, checkForIssues })(GuestInfo)
