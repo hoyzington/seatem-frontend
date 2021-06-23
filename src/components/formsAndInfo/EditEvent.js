@@ -1,7 +1,7 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { editEvent } from '../../actions/events'
+import { editEvent, updateEvent } from '../../actions/events'
 import CloseXClearErrors from './CloseXClearErrors'
 import ErrorsDisplay from './ErrorsDisplay'
 
@@ -16,30 +16,26 @@ class EditEvent extends React.Component {
   handleSubmit = () => {
     const { event, editEvent } = this.props
     const state = this.state
-    const update = Object.keys(state).reduce((newObj, key) => {
+    const changes = Object.keys(state).reduce((newObj, key) => {
       if (state[key] !== '') {
         newObj[key] = state[key]
       }
       return newObj
     }, {})
-    if (update.guestQty) {
-      const qty = parseInt(update.guestQty)
+    if (changes.guestQty) {
+      const qty = parseInt(changes.guestQty)
       const difference = qty - event.guests.length
       if (difference > 0) {
         alert(`You must delete ${difference} guests first if you want the number of guests to be ${qty}`)
         return null
       }
-      update.chairs = this.createChairString()
+      changes.chairs = this.createChairString(qty)
     }
-    const updates = {
-      id: event.id,
-      ...update,
-    }
-    editEvent(updates)
+    updateEvent(event.id, changes)
+    editEvent(event.id, changes)
   }
 
-  createChairString = () => {
-    let qty = parseInt(this.state.guestQty)
+  createChairString = (qty) => {
     let chairs = []
     if (qty %2 !== 0) qty += 1
     for (let i = qty; i > 0; i--) {
@@ -113,4 +109,4 @@ const mapStateToProps = (state) => ({
   event: state.events.currentEvent,
 })
 
-export default connect(mapStateToProps, { editEvent })(EditEvent)
+export default connect(mapStateToProps, { editEvent, updateEvent })(EditEvent)
