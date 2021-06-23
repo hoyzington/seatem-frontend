@@ -1,7 +1,7 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { selectGuest, editGuest } from '../../actions/guests'
+import { selectGuest, editGuest, updateGuest } from '../../actions/guests'
 import { v4 as uuidv4 } from 'uuid'
 
 class ChecklistForm extends React.Component {
@@ -85,9 +85,8 @@ class ChecklistForm extends React.Component {
       <div id='check-list'>
         {this.props.descriptions.map((trait) => (
           <>
-            <label>
+            <label key={uuidv4()}>
               <input
-                key={uuidv4()}
                 type='checkbox'
                 name={trait}
                 checked={this.state.traits[trait]}
@@ -107,10 +106,11 @@ class ChecklistForm extends React.Component {
       ...this.props.selectedGuest,
       traits: addedTraits,
     }
+    this.props.updateGuest(updatedGuest)
     const guestJson = {
       traits: addedTraits.join(','),
     }
-    this.props.editGuest(updatedGuest, guestJson)
+    this.props.editGuest(updatedGuest.id, guestJson)
   }
 
   render() {
@@ -145,7 +145,7 @@ class ChecklistForm extends React.Component {
         <div id='btn-area'>
           <NavLink
             className='btn form bottom'
-            to='/checklist-form'
+            to='/checklist'
             onClick={this.handleSubmit}
           >SUBMIT</NavLink>
         </div>
@@ -161,4 +161,4 @@ const mapStateToProps = (state) => ({
   selectedGuest: state.events.selectedGuest,
 })
 
-export default connect(mapStateToProps, { selectGuest, editGuest })(ChecklistForm)
+export default connect(mapStateToProps, { selectGuest, editGuest, updateGuest })(ChecklistForm)
