@@ -54,7 +54,7 @@ export const destroyEvent = (id) => {
 
 const baseUrl = 'http://localhost:3000/api/v1'
 
-export const createEvent = (event, userId) => {
+export const createEvent = (newEvent, userId) => {
   return (dispatch) => {
     dispatch(clearErrors())
     return fetch(`${baseUrl}/users/${userId}/events`, {
@@ -63,14 +63,14 @@ export const createEvent = (event, userId) => {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
       },
-      body: JSON.stringify(event),
+      body: JSON.stringify(newEvent),
     })
       .then(res => res.json())
-      .then(event => {
-        if (event.errors) {
-          dispatch(logErrors(event.errors))
+      .then(createdEvent => {
+        if (createdEvent.errors) {
+          dispatch(logErrors(createdEvent.errors))
         } else {
-          dispatch(addEvent(event))
+          dispatch(addEvent(createdEvent))
         }
       })
       .catch(console.log)
