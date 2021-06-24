@@ -99,9 +99,10 @@ class GuestInfo extends React.Component {
 
   handleUnseatClick = () => {
     const { event, editEvent, updateEvent, selectedGuest, editGuest, unselectGuest, checkForIssues } = this.props
+    const affectedNeighbors = this.updatePrevNeighbors()
     const affectedGuests = [
       this.makeGuestUpdate(),
-      ...this.updatePrevNeighbors(),
+      ...affectedNeighbors,
     ]
     const updatedGuests = this.createUpdatedGuests(affectedGuests)
     const updatedChairs = this.updateChairs()
@@ -111,10 +112,11 @@ class GuestInfo extends React.Component {
     }
     updateEvent(event.id, eventChanges)
     unselectGuest()
-    checkForIssues()
+    checkForIssues(affectedNeighbors)
     const selectedGuestJson = {
-      neighbors: selectedGuest.neighbors.join(','),
+      neighbors: '',
       seated: false,
+      issues: '',
     }
     editGuest(selectedGuest.id, selectedGuestJson)
     affectedGuests.slice(1).forEach(guest => {
@@ -134,6 +136,7 @@ class GuestInfo extends React.Component {
       ...this.props.selectedGuest,
       neighbors: [],
       seated: false,
+      issues: [],
     }
   }
 
@@ -202,7 +205,7 @@ class GuestInfo extends React.Component {
     }
     unselectGuest()
     updateEvent(event.id, eventChanges)
-    checkForIssues()
+    checkForIssues(affectedGuests)
     affectedGuests.forEach(guest => {
       const guestJson = {
         neighbors: guest.neighbors.join(','),
