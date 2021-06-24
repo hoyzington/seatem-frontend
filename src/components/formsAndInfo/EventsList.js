@@ -19,7 +19,6 @@ class EventsList extends React.Component {
           <NavLink
             to={`/events/${event.name}`}
             className='event'
-            // onClick={() => console.log(event)}
             onClick={() => this.props.showEvent(event.id)}
           >{event.name}</NavLink>
         </li>
