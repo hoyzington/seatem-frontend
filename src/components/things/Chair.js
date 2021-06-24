@@ -50,7 +50,7 @@ class Chair extends React.Component {
       }
       updateEvent(event.id, eventChanges)
       unselectGuest()
-      checkForIssues()
+      checkForIssues(affectedGuests)
       affectedGuests.forEach(guest => {
         const guestJson = {
           neighbors: guest.neighbors.join(','),
