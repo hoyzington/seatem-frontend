@@ -84,8 +84,8 @@ class ChecklistForm extends React.Component {
     return (
       <div id='check-list'>
         {this.props.descriptions.map((trait) => (
-          <>
-            <label key={uuidv4()}>
+          <div key={uuidv4()}>
+            <label>
               <input
                 type='checkbox'
                 name={trait}
@@ -93,8 +93,8 @@ class ChecklistForm extends React.Component {
                 onChange={this.handleCheckboxChange}
               />&nbsp;
               {trait}
-            </label><br/>
-          </>
+            </label>
+          </div>
         ))}
       </div>
     )
