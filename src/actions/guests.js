@@ -37,9 +37,16 @@ export const unselectGuest = (guestId) => {
   }
 }
 
-export const checkForIssues = () => {
+export const checkForIssues = (affectedGuests) => {
   return {
     type: 'CHECK_FOR_ISSUES',
+    affectedGuests,
+  }
+}
+
+export const clearNewlyAffectedGuests = () => {
+  return {
+    type: 'CLEAR_NEWLY_AFFECTED_GUESTS',
   }
 }
 
