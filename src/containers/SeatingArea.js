@@ -1,9 +1,23 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { editGuest, clearNewlyAffectedGuests } from '../actions/guests'
 import Chair from '../components/things/Chair'
 import Table from '../components/things/Table'
 
 class SeatingArea extends React.Component {
+
+  componentDidUpdate() {
+    const affectedGuests = this.props.newlyAffectedGuests
+    if (affectedGuests.length > 0) {
+      affectedGuests.forEach(guest => {
+        const change = {
+          issues: guest.issues.join(','),
+        }
+        this.props.editGuest(guest.id, change)
+      });
+      this.props.clearNewlyAffectedGuests()
+    }
+  }
 
   recommendedTableSize = (tableType, qty) => {
     if (tableType === 'rnd') {
@@ -221,19 +235,6 @@ class SeatingArea extends React.Component {
     return this.rectangleTableChairs(qty)
   }
 
-  // createSaveButton = () => {
-  //   const { user, event } = this.props
-  //   if (user && event && event.id !== '') {
-  //     return (
-  //       <NavLink id='save' className='btn' to='/preferences-form' onClick={this.handleClick} >SAVE EVENT</NavLink>
-  //     )
-  //   }
-  // }
-
-  // handleClick = () => {
-  //   this.props.saveEvent()
-  // }
-
   render() {
     const type = this.props.tableType,
           qty = this.props.chairQty,
@@ -247,7 +248,6 @@ class SeatingArea extends React.Component {
       <div id={areaId} style={areaWidth}>
         <Table id={tId} sizeA={tSizeA} sizeB={tSizeB} style={tStyle}/>
         {this.buildChairs(type, qty)}
-        {/* {this.createSaveButton()} */}
       </div>
     )
   }
@@ -256,10 +256,7 @@ class SeatingArea extends React.Component {
 const mapStateToProps = (state) => ({
   user: state.currentUser,
   event: state.events.currentEvent,
+  newlyAffectedGuests: state.events.currentEvent.newlyAffectedGuests,
 })
 
-const mapDispatchToProps = (dispatch) => ({
-  saveEvent: () => dispatch({ type: 'SAVE_EVENT' })
-})
-
-export default connect(mapStateToProps, mapDispatchToProps)(SeatingArea)
+export default connect(mapStateToProps, { editGuest, clearNewlyAffectedGuests })(SeatingArea)
