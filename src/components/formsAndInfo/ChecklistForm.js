@@ -111,6 +111,15 @@ class ChecklistForm extends React.Component {
       traits: addedTraits.join(','),
     }
     this.props.editGuest(updatedGuest.id, guestJson)
+    const { traits } = this.state
+    const resetTraits = Object.keys(traits).reduce((traitsObj, trait) => {
+      traitsObj[trait] = false
+      return traitsObj
+    }, {})
+    this.setState({
+      guestId: '',
+      traits: resetTraits,
+    })
   }
 
   render() {
