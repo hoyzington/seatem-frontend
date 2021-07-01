@@ -133,6 +133,7 @@ const events = (state = {
         ...action.event,
         chairs: unJson(action.event.chairs),
         descriptions: [],
+        newlyAffectedGuests: [],
       }
       return {
         ...state,
