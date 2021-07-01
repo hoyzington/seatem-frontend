@@ -54,10 +54,10 @@ export const clearNewlyAffectedGuests = () => {
 
 const baseUrl = 'http://localhost:3000/api/v1'
 
-export const createGuest = (newGuest, event) => {
+export const createGuest = (newGuest, eventId) => {
   return (dispatch) => {
     dispatch(clearErrors())
-    return fetch(`${baseUrl}/events/${event.id}/guests`, {
+    return fetch(`${baseUrl}/events/${eventId}/guests`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
