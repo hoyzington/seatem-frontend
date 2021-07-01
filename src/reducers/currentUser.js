@@ -1,4 +1,4 @@
-const sessions = (state = null, action) => {
+const currentUser = (state = null, action) => {
   switch (action.type) {
     case 'SET_CURRENT_USER':
       return action.user
@@ -11,4 +11,4 @@ const sessions = (state = null, action) => {
   }
 }
 
-export default sessions
+export default currentUser
