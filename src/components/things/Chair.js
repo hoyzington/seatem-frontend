@@ -98,28 +98,25 @@ class Chair extends React.Component {
 
   getNewNeighborIds = () => {
     const { chairs } = this.props.event
-    const chairIdx = this.props.id
-    let neighbors
+    const chairIdx = parseInt(this.props.id)
+    let neighborIds
     const last = chairs.length - 1
     if (chairIdx < 1) {
-      neighbors = [
+      neighborIds = [
         chairs[last],
-        chairs[1],
+        chairs[1]
       ]
     } else if (chairIdx === last) {
-      neighbors = [
-        chairs[last - 1],
-        chairs[0],
-      ]
+      neighborIds = [chairs[last - 1], chairs[0]]
     } else {
-      neighbors = [
+      neighborIds = [
         chairs[chairIdx - 1],
-        chairs[chairIdx + 1],
+        chairs[chairIdx + 1]
       ]
     }
-    return neighbors.filter(nbrId => (nbrId !== '' && nbrId !== this.props.selectedGuest.id.toString()))
+    return neighborIds.filter(nbrId => (nbrId !== '' && nbrId !== this.props.selectedGuest.id.toString()))
   }
-  
+
   updatePrevNeighbors = () => {
     const neighbors = this.props.selectedGuest.neighbors
     if (neighbors.length > 0) {
