@@ -240,8 +240,9 @@ a.no {
 }
 
 #about {
-  width: 50vw;
+  width: 45vw;
   padding: 25px 30px 30px 30px;
+  margin-bottom: 5vh;
 }
 
 #login-signup {
