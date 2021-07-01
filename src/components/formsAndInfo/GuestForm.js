@@ -17,7 +17,7 @@ class GuestForm extends React.Component {
 
   handleSubmit = () => {
     const { event, createGuest } = this.props
-    createGuest(this.state, event)
+    createGuest(this.state, event.id)
     this.setState({
       firstName: '',
       middleName: '',
