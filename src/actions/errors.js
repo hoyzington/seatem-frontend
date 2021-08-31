@@ -1,12 +1,8 @@
-export const logErrors = (errors) => {
-  return {
-    type: 'LOG_ERRORS',
-    errors,
-  }
-}
+export const logErrors = (errors) => ({
+	type: 'LOG_ERRORS',
+	errors,
+});
 
-export const clearErrors = () => {
-  return {
-    type: 'CLEAR_ERRORS',
-  }
-}
+export const clearErrors = () => ({
+	type: 'CLEAR_ERRORS',
+});
