@@ -20,7 +20,7 @@
     "rules": {
         "arrow-parens": [
             "error",
-            "always"
+            "as-needed"
         ],
 				"object-curly-spacing": "off"
     }
