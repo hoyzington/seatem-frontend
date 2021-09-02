@@ -22,7 +22,12 @@
       "error",
       "as-needed"
     ],
-		"object-curly-spacing": "off"
-  },
-	"quote-props": ["error", "consistent"]
+		"object-curly-spacing": "off",
+		"quote-props": [
+			"error",
+			"consistent"
+		],
+		"padding-line-between-statements": 0,
+		"one-var": 0
+	}
 }
