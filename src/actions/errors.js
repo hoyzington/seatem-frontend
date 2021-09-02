@@ -1,4 +1,4 @@
-export const logErrors = (errors) => ({
+export const logErrors = errors => ({
 	type: 'LOG_ERRORS',
 	errors,
 });
