@@ -17,21 +17,21 @@ class ChecklistForm extends React.Component {
   }
 
   componentDidMount() {
-    const guest = this.props.selectedGuest
-    if (guest) {
-      if (guest.traits.length > 0){
+    const { selectedGuest, descriptions } = this.props
+    if (selectedGuest) {
+      if (selectedGuest.traits.length > 0){
         this.setState({
-          guestId: guest.id,
-          traits: this.props.descriptions.reduce(
+          guestId: selectedGuest.id,
+          traits: descriptions.reduce(
             (traits, trait) => ({
               ...traits,
-              [trait]: guest.traits.includes(trait)
+              [trait]: selectedGuest.traits.includes(trait)
             }),
             {},
           ),
         })
       } else {
-        this.setState({ guestId: guest.id })
+        this.setState({ guestId: selectedGuest.id })
       }
     }
   }
