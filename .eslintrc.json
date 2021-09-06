@@ -4,9 +4,15 @@
     "es2021": true
   },
   "extends": [
+		"eslint:recommended",
     "plugin:react/recommended",
     "xo"
   ],
+	"settings": {
+		"react": {
+			"version": "detect"
+		}
+	},
   "parserOptions": {
     "ecmaFeatures": {
       "jsx": true
@@ -28,6 +34,17 @@
 			"consistent"
 		],
 		"padding-line-between-statements": 0,
-		"one-var": 0
+		"one-var": 0,
+		"indent": [
+			"error",
+			"tab",
+			{ "VariableDeclarator": {
+					"var": 2,
+					"let": 2,
+					"const": 3
+				},
+				"SwitchCase": 1
+			}
+		]
 	}
 }
