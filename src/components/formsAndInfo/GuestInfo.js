@@ -92,7 +92,7 @@ class GuestInfo extends React.Component {
 		if (this.props.selectedGuest.seated) {
 			return (
 				<NavLink className="btn unseat" to="/" onClick={this.handleUnseatClick}>Unseat</NavLink>
-			)
+			);
 		}
 	}
 

@@ -23,7 +23,7 @@ class PreferencesForm extends React.Component {
 	}
 
 	componentDidMount() {
-		const guest = this.props.selectedGuest
+		const guest = this.props.selectedGuest;
 		if (guest) {
 			this.setState({ guestId: guest.id });
 		}
@@ -45,7 +45,7 @@ class PreferencesForm extends React.Component {
 	}
 
 	createGuestOptions(type, bool) {
-		const guest = this.props.selectedGuest
+		const guest = this.props.selectedGuest;
 		let { guests } = this.props;
 		if (type === 'preference' && guest) {
 			const prefGuests = guest[`guests${bool}`];
@@ -71,7 +71,7 @@ class PreferencesForm extends React.Component {
 	}
 
 	renderPreferences(type, bool) {
-		const guest = this.props.selectedGuest
+		const guest = this.props.selectedGuest;
 		if (guest) {
 			const prefs = guest[`${type}${bool}`];
 			const downBool = bool.toLowerCase();

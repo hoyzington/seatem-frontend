@@ -96,7 +96,7 @@ class Chair extends React.Component {
 	}
 
 	getNewNeighborIds() {
-		const { chairs } = this.props.event
+		const { chairs } = this.props.event;
 		const chairIdx = parseInt(this.props.id, 10);
 		let neighborIds;
 		const last = chairs.length - 1;

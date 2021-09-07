@@ -6,7 +6,7 @@ import Table from '../components/things/Table';
 
 class SeatingArea extends React.Component {
 	componentDidUpdate() {
-		const affectedGuests = this.props.newlyAffectedGuests
+		const affectedGuests = this.props.newlyAffectedGuests;
 		if (affectedGuests.length > 0) {
 			affectedGuests.forEach(guest => {
 				const change = {
