@@ -77,7 +77,6 @@ class ChecklistForm extends React.Component {
 			...total,
 			[trait]: selectedGuest.traits.includes(trait),
 		}), {});
-
 		this.setState({
 			[e.target.name]: e.target.value,
 			traits,
@@ -151,9 +150,7 @@ class ChecklistForm extends React.Component {
 						<i>(check all that apply)</i>
 					</label>
 				</p>
-
 				{this.buildChecklist()}
-
 				<div id="btn-area">
 					<NavLink
 						className="btn form bottom"
@@ -161,7 +158,6 @@ class ChecklistForm extends React.Component {
 						onClick={this.handleSubmit}
 					>SUBMIT</NavLink>
 				</div>
-
 			</div>
 		);
 	}
