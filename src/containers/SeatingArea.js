@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { editGuest, clearNewlyAffectedGuests } from '../actions/guests';
 import Chair from '../components/things/Chair';
@@ -256,9 +257,15 @@ class SeatingArea extends React.Component {
 }
 
 const mapStateToProps = state => ({
-	user: state.currentUser,
-	event: state.events.currentEvent,
 	newlyAffectedGuests: state.events.currentEvent.newlyAffectedGuests,
 });
+
+SeatingArea.propTypes = {
+	tableType: PropTypes.string,
+	chairQty: PropTypes.number,
+	newlyAffectedGuests: PropTypes.array,
+	editGuest: PropTypes.func,
+	clearNewlyAffectedGuests: PropTypes.func,
+};
 
 export default connect(mapStateToProps, { editGuest, clearNewlyAffectedGuests })(SeatingArea);

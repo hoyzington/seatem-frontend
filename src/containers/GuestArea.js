@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Guest from '../components/things/Guest';
 import { connect } from 'react-redux';
 
@@ -18,9 +19,11 @@ class GuestArea extends React.Component {
 }
 
 const mapStateToProps = state => ({
-	events: state.events.events,
 	event: state.events.currentEvent,
-	guest: state.events.selectedGuest,
 });
+
+GuestArea.propTypes = {
+	event: PropTypes.object,
+};
 
 export default connect(mapStateToProps)(GuestArea);

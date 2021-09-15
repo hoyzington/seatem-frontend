@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { editEvent, updateEvent } from '../../actions/events';
@@ -112,8 +113,13 @@ class EditEvent extends React.Component {
 }
 
 const mapStateToProps = state => ({
-	user: state.currentUser,
 	event: state.events.currentEvent,
 });
+
+EditEvent.propTypes = {
+	event: PropTypes.object,
+	editEvent: PropTypes.func,
+	updateEvent: PropTypes.func,
+};
 
 export default connect(mapStateToProps, { editEvent, updateEvent })(EditEvent);
