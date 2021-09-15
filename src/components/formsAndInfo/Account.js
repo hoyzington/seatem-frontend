@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 
 const Account = props => (
@@ -13,5 +14,9 @@ const Account = props => (
 		</div>
 	</div>
 );
+
+Account.propTypes = {
+	logout: PropTypes.func,
+};
 
 export default Account;

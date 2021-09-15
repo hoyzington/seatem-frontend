@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 
 const EventMenu = props => {
@@ -24,6 +25,11 @@ const EventMenu = props => {
 			<div className="no"><NavLink className="no" to="/events-list" onClick={handleClick} >Delete Event</NavLink></div>
 		</div>
 	);
+};
+
+EventMenu.propTypes = {
+	event: PropTypes.object,
+	deleteEvent: PropTypes.func,
 };
 
 export default EventMenu;

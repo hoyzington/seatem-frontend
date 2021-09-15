@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { selectGuest } from '../../actions/guests';
@@ -51,5 +52,11 @@ class Guest extends React.Component {
 const mapStateToProps = state => ({
 	selectedGuest: state.events.selectedGuest,
 });
+
+Guest.propTypes = {
+	guest: PropTypes.object,
+	selectedGuest: PropTypes.object,
+	selectGuest: PropTypes.func,
+};
 
 export default connect(mapStateToProps, { selectGuest })(Guest);

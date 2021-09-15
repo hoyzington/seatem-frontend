@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import SeatingArea from './SeatingArea';
 
 const EventArea = props => (
@@ -9,5 +10,9 @@ const EventArea = props => (
 		/>
 	</div>
 );
+
+EventArea.propTypes = {
+	event: PropTypes.object,
+};
 
 export default EventArea;

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { editGuest, unselectGuest, deleteGuest, checkForIssues } from '../../actions/guests';
@@ -140,7 +141,7 @@ class GuestInfo extends React.Component {
 	}
 
 	updatePrevNeighbors() {
-		const { neighbors } = this.props.selectedGuest
+		const { neighbors } = this.props.selectedGuest;
 		if (neighbors.length > 0) {
 			return neighbors.map(id => this.updatePrevNeighbor(id));
 		}
@@ -233,5 +234,17 @@ const mapStateToProps = state => ({
 	selectedGuest: state.events.selectedGuest,
 	guests: state.events.currentEvent.guests,
 });
+
+GuestInfo.propTypes = {
+	event: PropTypes.object,
+	selectedGuest: PropTypes.object,
+	guests: PropTypes.array,
+	editEvent: PropTypes.func,
+	updateEvent: PropTypes.func,
+	editGuest: PropTypes.func,
+	unselectGuest: PropTypes.func,
+	deleteGuest: PropTypes.func,
+	checkForIssues: PropTypes.func,
+};
 
 export default connect(mapStateToProps, { editEvent, updateEvent, editGuest, unselectGuest, deleteGuest, checkForIssues })(GuestInfo);

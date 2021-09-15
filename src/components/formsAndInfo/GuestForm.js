@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { NavLink, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { createGuest } from '../../actions/guests';
@@ -107,5 +108,11 @@ const mapStateToProps = state => ({
 	errors: state.errors,
 	event: state.events.currentEvent,
 });
+
+GuestForm.propTypes = {
+	errors: PropTypes.array,
+	event: PropTypes.object,
+	createGuest: PropTypes.func,
+};
 
 export default connect(mapStateToProps, { createGuest })(GuestForm);

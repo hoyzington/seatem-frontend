@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getCurrentUser, logout, deleteUser } from '../actions/currentUser';
@@ -91,5 +92,15 @@ const mapStateToProps = state => ({
 	event: state.events.currentEvent,
 	errors: state.errors,
 });
+
+FormArea.propTypes = {
+	user: PropTypes.object,
+	event: PropTypes.object,
+	errors: PropTypes.array,
+	getCurrentUser: PropTypes.func,
+	logout: PropTypes.func,
+	deleteUser: PropTypes.func,
+	deleteEvent: PropTypes.func,
+};
 
 export default connect(mapStateToProps, { getCurrentUser, logout, deleteUser, deleteEvent })(FormArea);

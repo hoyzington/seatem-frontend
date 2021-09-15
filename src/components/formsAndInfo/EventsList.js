@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { showEvent } from '../../actions/events';
@@ -56,5 +57,13 @@ const mapStateToProps = state => ({
 	events: state.events.savedEvents,
 	event: state.events.currentEvent,
 });
+
+EventsList.propTypes = {
+	user: PropTypes.object,
+	events: PropTypes.array,
+	event: PropTypes.object,
+	zStyle: PropTypes.object,
+	showEvent: PropTypes.func,
+};
 
 export default connect(mapStateToProps, { showEvent })(EventsList);

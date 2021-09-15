@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { resetCurrentEvent, createEvent } from '../../actions/events';
@@ -105,5 +106,11 @@ class NewEventForm extends React.Component {
 const mapStateToProps = state => ({
 	user: state.currentUser,
 });
+
+NewEventForm.propTypes = {
+	user: PropTypes.object,
+	resetCurrentEvent: PropTypes.func,
+	createEvent: PropTypes.func,
+};
 
 export default connect(mapStateToProps, { resetCurrentEvent, createEvent })(NewEventForm);

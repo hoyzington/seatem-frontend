@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 
 const renderExit = user => {
@@ -28,5 +29,10 @@ const About = props => (
 		</div>
 	</div>
 );
+
+About.propTypes = {
+	zStyle: PropTypes.object,
+	user: PropTypes.object,
+};
 
 export default About;

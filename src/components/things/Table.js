@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 
 const Table = ({ id, sizeA, sizeB, style }) => {
@@ -15,6 +16,13 @@ const Table = ({ id, sizeA, sizeB, style }) => {
 			</div>
 		</NavLink>
 	);
+};
+
+Table.propTypes = {
+	id: PropTypes.string,
+	sizeA: PropTypes.string,
+	sizeB: PropTypes.string,
+	style: PropTypes.object,
 };
 
 export default Table;

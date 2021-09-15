@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { editEvent, updateEvent } from '../../actions/events';
@@ -337,5 +338,16 @@ const mapStateToProps = state => ({
 	guests: state.events.currentEvent.guests,
 	selectedGuest: state.events.selectedGuest,
 });
+
+PreferencesForm.propTypes = {
+	event: PropTypes.object,
+	guests: PropTypes.array,
+	selectedGuest: PropTypes.object,
+	selectGuest: PropTypes.func,
+	editGuest: PropTypes.func,
+	updateGuest: PropTypes.func,
+	editEvent: PropTypes.func,
+	updateEvent: PropTypes.func,
+};
 
 export default connect(mapStateToProps, { selectGuest, editEvent, updateEvent, editGuest, updateGuest })(PreferencesForm);

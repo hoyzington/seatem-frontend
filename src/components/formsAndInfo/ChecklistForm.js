@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { selectGuest, editGuest, updateGuest } from '../../actions/guests';
@@ -168,5 +169,14 @@ const mapStateToProps = state => ({
 	guests: state.events.currentEvent.guests,
 	selectedGuest: state.events.selectedGuest,
 });
+
+ChecklistForm.propTypes = {
+	descriptions: PropTypes.array,
+	guests: PropTypes.array,
+	selectedGuest: PropTypes.object,
+	selectGuest: PropTypes.func,
+	editGuest: PropTypes.func,
+	updateGuest: PropTypes.func,
+};
 
 export default connect(mapStateToProps, { selectGuest, editGuest, updateGuest })(ChecklistForm);

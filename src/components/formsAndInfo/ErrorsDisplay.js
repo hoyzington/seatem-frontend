@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -26,5 +27,9 @@ class ErrorsDisplay extends React.Component {
 const mapStateToProps = state => ({
 	errors: state.errors,
 });
+
+ErrorsDisplay.propTypes = {
+	errors: PropTypes.array,
+};
 
 export default connect(mapStateToProps)(ErrorsDisplay);

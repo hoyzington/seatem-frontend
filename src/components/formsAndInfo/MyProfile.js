@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 
 const MyProfile = ({ user, deleteUser }) => (
@@ -16,5 +17,10 @@ const MyProfile = ({ user, deleteUser }) => (
 		</div>
 	</div>
 );
+
+MyProfile.propTypes = {
+	user: PropTypes.object,
+	deleteUser: PropTypes.func,
+};
 
 export default MyProfile;

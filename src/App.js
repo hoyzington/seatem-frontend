@@ -42,9 +42,9 @@ class App extends React.Component {
 }
 
 App.propTypes = {
-	user: PropTypes.string.isRequired,
-	currentEvent: PropTypes.objectOf(PropTypes.string).isRequired,
-	errors: PropTypes.arrayOf(PropTypes.string).isRequired,
+	user: PropTypes.object,
+	currentEvent: PropTypes.object,
+	errors: PropTypes.array,
 };
 
 const mapStateToProps = state => ({
