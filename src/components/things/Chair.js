@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { editEvent, updateEvent } from '../../actions/events';
@@ -200,10 +201,23 @@ class Chair extends React.Component {
 }
 
 const mapStateToProps = state => ({
-	events: state.events.savedEvents,
 	event: state.events.currentEvent,
 	guests: state.events.currentEvent.guests,
 	selectedGuest: state.events.selectedGuest,
 });
+
+Chair.propTypes = {
+	event: PropTypes.object,
+	guests: PropTypes.array,
+	selectedGuest: PropTypes.object,
+	x: PropTypes.string,
+	y: PropTypes.string,
+	id: PropTypes.string,
+	editGuest: PropTypes.func,
+	unselectGuest: PropTypes.func,
+	editEvent: PropTypes.func,
+	updateEvent: PropTypes.func,
+	checkForIssues: PropTypes.func,
+};
 
 export default connect(mapStateToProps, { editGuest, unselectGuest, editEvent, updateEvent, checkForIssues })(Chair);

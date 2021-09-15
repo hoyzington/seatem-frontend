@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 
@@ -57,8 +58,13 @@ class NavBar extends React.Component {
 
 const mapStateToProps = state => ({
 	user: state.currentUser,
-	events: state.events.savedEvents,
 	currentEvent: state.events.currentEvent,
 });
+
+NavBar.propTypes = {
+	user: PropTypes.object,
+	currentEvent: PropTypes.object,
+	event: PropTypes.object,
+};
 
 export default connect(mapStateToProps)(NavBar);

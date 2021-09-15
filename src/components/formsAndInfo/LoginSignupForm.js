@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { signup, login } from '../../actions/currentUser';
@@ -158,8 +159,14 @@ class LoginSignupForm extends React.Component {
 }
 
 const mapStateToProps = state => ({
-	events: state.events.savedEvents,
 	errors: state.errors,
 });
+
+LoginSignupForm.propTypes = {
+	errors: PropTypes.array,
+	signup: PropTypes.func,
+	login: PropTypes.func,
+	clearErrors: PropTypes.func,
+};
 
 export default connect(mapStateToProps, { signup, login, clearErrors })(LoginSignupForm);
