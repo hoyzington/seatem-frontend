@@ -29,6 +29,7 @@ class Guest extends React.Component {
 	}
 
 	handleClick() {
+		console.log(this.props.selectGuest);
 		this.props.selectGuest(this.props.guest.id);
 	}
 
@@ -40,7 +41,7 @@ class Guest extends React.Component {
 			<NavLink to={url}>
 				<div
 					className={`guest ${this.setClassName()}`}
-					onClick={this.handleClick}
+					onClick={() => this.handleClick()}
 				>
 					{initials}
 				</div>
