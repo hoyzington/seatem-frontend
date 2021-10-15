@@ -87,11 +87,11 @@ const checkForIssues = (thisGuest, guests) => {
 
 // -----------------------------------------------
 
-const events = (action, state = {
+const events = (state = {
 	savedEvents: [],
 	currentEvent: null,
 	selectedGuest: null,
-}) => {
+}, action) => {
 	let eventIdx, event, currentEvent, updatedEvent, guestIdx, guest, guests, affectedGuests;
 
 	const unJson = string => {

@@ -1,4 +1,4 @@
-const errors = (action, state = null) => {
+const errors = (state = null, action) => {
 	switch (action.type) {
 		case 'LOG_ERRORS':
 			return action.errors;
