@@ -210,7 +210,7 @@ Chair.propTypes = {
 	event: PropTypes.object,
 	guests: PropTypes.array,
 	selectedGuest: PropTypes.object,
-	x: PropTypes.string,
+	x: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
 	y: PropTypes.string,
 	id: PropTypes.string,
 	editGuest: PropTypes.func,
