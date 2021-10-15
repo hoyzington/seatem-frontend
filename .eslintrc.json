@@ -45,6 +45,8 @@
 				},
 				"SwitchCase": 1
 			}
-		]
+		],
+		"no-alert": 0,
+		"default-param-last": 0
 	}
 }
