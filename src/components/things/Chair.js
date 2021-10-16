@@ -190,7 +190,7 @@ class Chair extends React.Component {
 				id={id}
 				className="chair"
 				to="/"
-				onClick={this.handleClick}
+				onClick={() => this.handleClick()}
 				style={{
 					top: `${y}px`,
 					left: `${x}px`,

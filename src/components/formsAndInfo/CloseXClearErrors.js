@@ -13,7 +13,7 @@ class CloseXClearErrors extends React.Component {
 
 	render() {
 		return (
-			<NavLink id="exit" to="/" onClick={this.clearErrors} >&times;</NavLink>
+			<NavLink id="exit" to="/" onClick={() => this.clearErrors()} >&times;</NavLink>
 		);
 	}
 }

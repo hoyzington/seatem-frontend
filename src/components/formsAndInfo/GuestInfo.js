@@ -16,7 +16,7 @@ class GuestInfo extends React.Component {
 					{this.createInfoList()}
 					<div id="guest-info-btn-area">
 						{this.addUnseatButton()}
-						<NavLink className="btn delete" to="/" onClick={this.handleDeleteClick}>Delete</NavLink>
+						<NavLink className="btn delete" to="/" onClick={() => this.handleDeleteClick()}>Delete</NavLink>
 					</div>
 				</>
 			);
@@ -92,7 +92,7 @@ class GuestInfo extends React.Component {
 	addUnseatButton() {
 		if (this.props.selectedGuest.seated) {
 			return (
-				<NavLink className="btn unseat" to="/" onClick={this.handleUnseatClick}>Unseat</NavLink>
+				<NavLink className="btn unseat" to="/" onClick={() => this.handleUnseatClick()}>Unseat</NavLink>
 			);
 		}
 	}
