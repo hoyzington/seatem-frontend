@@ -1,14 +1,14 @@
 const errors = (state = null, action) => {
-	switch (action.type) {
-		case 'LOG_ERRORS':
-			return action.errors;
+  switch (action.type) {
+    case 'LOG_ERRORS':
+      return action.errors;
 
-		case 'CLEAR_ERRORS':
-			return null;
+    case 'CLEAR_ERRORS':
+      return null;
 
-		default:
-			return state;
-	}
+    default:
+      return state;
+  }
 };
 
 export default errors;

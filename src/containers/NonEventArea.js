@@ -4,14 +4,14 @@ import GuestArea from './GuestArea';
 import GuestInfo from '../components/formsAndInfo/GuestInfo';
 
 const NonEventArea = ({ table }) => (
-	<div id={`non-event-area-${table}`}>
-		<GuestArea />
-		<GuestInfo />
-	</div>
+  <div id={`non-event-area-${table}`}>
+    <GuestArea />
+    <GuestInfo />
+  </div>
 );
 
 NonEventArea.propTypes = {
-	table: PropTypes.string,
+  table: PropTypes.string,
 };
 
 export default NonEventArea;

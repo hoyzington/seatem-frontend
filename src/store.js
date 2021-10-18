@@ -5,9 +5,9 @@ import errors from './reducers/errors';
 import thunk from 'redux-thunk';
 
 const reducers = combineReducers({
-	currentUser,
-	events,
-	errors,
+  currentUser,
+  events,
+  errors,
 });
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
