@@ -28,16 +28,11 @@
       "error",
       "as-needed"
     ],
-		"object-curly-spacing": "off",
-		"quote-props": [
-			"error",
-			"consistent"
-		],
-		"padding-line-between-statements": 0,
-		"one-var": 0,
+    "capitalized-comments": 0,
+		"default-param-last": 0,
 		"indent": [
 			"error",
-			"tab",
+			2,
 			{ "VariableDeclarator": {
 					"var": 2,
 					"let": 2,
@@ -47,6 +42,12 @@
 			}
 		],
 		"no-alert": 0,
-		"default-param-last": 0
+		"object-curly-spacing": "off",
+		"one-var": 0,
+		"padding-line-between-statements": 0,
+		"quote-props": [
+			"error",
+			"consistent"
+		]
 	}
 }
