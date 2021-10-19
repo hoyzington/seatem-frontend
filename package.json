@@ -11,7 +11,7 @@
     "react-dom": "^17.0.2",
     "react-redux": "^7.2.3",
     "react-router-dom": "^5.2.0",
-    "react-scripts": "4.0.3",
+    "react-scripts": "^3.4.4",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
     "uuid": "^3.4.0",
@@ -42,8 +42,8 @@
     ]
   },
   "devDependencies": {
-    "eslint": "^7.32.0",
-    "eslint-config-xo": "^0.38.0",
-    "eslint-plugin-react": "^7.25.0"
+    "eslint": "^8.0.1",
+    "eslint-config-xo": "^0.39.0",
+    "eslint-plugin-react": "^7.26.1"
   }
 }
