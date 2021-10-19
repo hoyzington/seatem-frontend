@@ -29,7 +29,7 @@ const mapStateToProps = state => ({
 });
 
 ErrorsDisplay.propTypes = {
-  errors: PropTypes.array,
+  errors: PropTypes.object,
 };
 
 export default connect(mapStateToProps)(ErrorsDisplay);

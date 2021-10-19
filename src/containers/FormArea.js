@@ -96,7 +96,7 @@ const mapStateToProps = state => ({
 FormArea.propTypes = {
   user: PropTypes.object,
   event: PropTypes.object,
-  errors: PropTypes.array,
+  errors: PropTypes.object,
   getCurrentUser: PropTypes.func,
   logout: PropTypes.func,
   deleteUser: PropTypes.func,

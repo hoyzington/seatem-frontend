@@ -23,7 +23,7 @@ const mapStateToProps = state => ({
 });
 
 CloseXClearErrors.propTypes = {
-  errors: PropTypes.array,
+  errors: PropTypes.object,
   clearErrors: PropTypes.func,
 };
 

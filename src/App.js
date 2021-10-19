@@ -44,7 +44,7 @@ class App extends React.Component {
 App.propTypes = {
   user: PropTypes.object,
   currentEvent: PropTypes.object,
-  errors: PropTypes.array,
+  errors: PropTypes.object,
 };
 
 const mapStateToProps = state => ({

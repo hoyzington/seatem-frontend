@@ -163,7 +163,7 @@ const mapStateToProps = state => ({
 });
 
 LoginSignupForm.propTypes = {
-  errors: PropTypes.array,
+  errors: PropTypes.object,
   signup: PropTypes.func,
   login: PropTypes.func,
   clearErrors: PropTypes.func,

@@ -110,7 +110,7 @@ const mapStateToProps = state => ({
 });
 
 GuestForm.propTypes = {
-  errors: PropTypes.array,
+  errors: PropTypes.object,
   event: PropTypes.object,
   createGuest: PropTypes.func,
 };
